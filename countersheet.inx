@@ -1,0 +1,35 @@
+<inkscape-extension>
+  <_name>Create Countersheet</_name>
+  <id>pelles.effect.countersheet</id>
+  <dependency type="executable" location="extensions">countersheet.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <dependency type="executable" location="extensions">csv.py</dependency>
+  <dependency type="executable" location="extensions">vassal.py</dependency>
+  <param name="what" type="string" _gui-text="Name"></param>
+  <param name="data" type="string" _gui-text="Data File (CSV)">countersheet.csv</param>
+  <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
+        max="10000">56</param>
+  <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
+        max="10000">56</param>
+  <param name="registrationmarkslen" type="int"
+        _gui-text="Registration Marks Length" min="0" max="96">0</param>
+  <param name="bitmapsheetsdpi"
+        type="int"
+        _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
+        min="0"
+        max="6000">0</param>
+  <param name="bitmapdir" type="string"
+        _gui-text="Bitmap Output Directory (optional)"></param>
+  <param name="vmod" type="string"
+        _gui-text="VASSAL Output Module (VMOD) File (optional)"></param>
+  <param name="log" type="string" _gui-text="Log File (optional)"></param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+       <submenu _name="Boardgames"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">countersheet.py</command>
+  </script>
+</inkscape-extension>
