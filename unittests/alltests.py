@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
-import os
-import os.path
-import sys
 import unittest
 
-sys.path.insert(0, os.getcwd())
-sys.path.append('/usr/local/share/inkscape/extensions')
-sys.path.append('/usr/share/inkscape/extensions')
+def add_countersheets_paths():
+    import sys
+    import os
+    sys.path.insert(0, os.getcwd())
+    sys.path.append('/usr/local/share/inkscape/extensions')
+    sys.path.append('/usr/share/inkscape/extensions')
+
+add_countersheets_paths()
 
 import csvtest
 import countersheetstest
