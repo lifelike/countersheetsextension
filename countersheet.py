@@ -802,39 +802,39 @@ class CSVCounterFactory (CounterFactory):
             if len(h) > 0:
                 header = self.parse_header(h)
             else:
-                header = EmptyHeader()
+                header = EmptyLayout()
             self.headers.append(header)
 
     def parse_background_header(self, h):
         if self.iscopytoback(h):
-            return CopyToBackHeaderDecorator(
+            return CopyToBackLayoutDecorator(
                 self.parse_background_header(h[:-1]))
         elif len(h):
-            return CounterPartBackgroundHeader(h)
+            return CounterPartBackgroundLayout(h)
         else:
-            return EmptyHeader()
+            return EmptyLayout()
 
     def parse_header(self, h):
         if self.iscopytoback(h):
-            return CopyToBackHeaderDecorator(self.parse_header(h[:-1]))
+            return CopyToBackLayoutDecorator(self.parse_header(h[:-1]))
         elif self.isaddpartheader(h):
-            return CounterPartHeader(h[1:])
+            return CounterPartLayout(h[1:])
         elif self.isaddpartwithoutrectangleheader(h):
-            return CounterPartCopyWithoutRectangleHeader(h[1:])
+            return CounterPartCopyWithoutRectangleLayout(h[1:])
         elif self.isoptionheader(h):
-            return CounterOptionHeader(h[:-1])
+            return CounterOptionLayout(h[:-1])
         elif self.ismultioptionheader(h):
-            return CounterMultiOptionHeader(h[:-2])
+            return CounterMultiOptionLayout(h[:-2])
         elif self.isattributeheader(h):
-            return AttributeHeader(h, self.rects)
+            return AttributeLayout(h, self.rects)
         elif self.isidheader(h):
-            return IDHeader()
+            return IDLayout()
         elif self.isbackheader(h):
-            return BackHeader(h)
+            return BackLayout(h)
         elif self.isdefaultvalueheader(h):
             return self.parse_defaultvalueheader(h)
         else:
-            return CounterSubstHeader(h)
+            return CounterSubstLayout(h)
 
     def create_counter(self, nr, row):
         cfront = Counter(nr)
@@ -886,18 +886,18 @@ class CSVCounterFactory (CounterFactory):
 
     def parse_defaultvalueheader(self, h):
         i = h.find('=')
-        return DefaultValueHeaderDecorator(h[i+1:], self.parse_header(h[:i]))
+        return DefaultValueLayoutDecorator(h[i+1:], self.parse_header(h[:i]))
 
 
 
-class EmptyHeader:
+class EmptyLayout:
     def __init__(self):
         self.raw = ''
 
     def set_setting(self, setting, value):
         pass
 
-class CounterPartHeader:
+class CounterPartLayout:
     def __init__(self, id):
         self.id = id
         self.raw = id
@@ -905,7 +905,7 @@ class CounterPartHeader:
     def set_setting(self, setting, value):
         setting.set(CounterPart(value or self.id))
 
-class CounterPartBackgroundHeader:
+class CounterPartBackgroundLayout:
     def __init__(self, id):
         self.id = id
         self.raw = id
@@ -913,7 +913,7 @@ class CounterPartBackgroundHeader:
     def set_setting(self, setting, value):
         setting.set(CounterPart(self.id))
 
-class CounterPartCopyWithoutRectangleHeader:
+class CounterPartCopyWithoutRectangleLayout:
     def __init__(self, value):
         self.value = value
         self.raw = value
@@ -921,7 +921,7 @@ class CounterPartCopyWithoutRectangleHeader:
     def set_setting(self, setting, value):
         setting.set(CounterPart("@" + (value or self.value)))
 
-class CounterSubstHeader:
+class CounterSubstLayout:
     def __init__(self, id):
         self.raw = id
         self.id = id
@@ -929,7 +929,7 @@ class CounterSubstHeader:
     def set_setting(self, setting, value):
         setting.set(CounterSubst(self.id, value))
 
-class CounterOptionHeader:
+class CounterOptionLayout:
     def __init__(self, id):
         self.id = id
         self.raw = id
@@ -938,7 +938,7 @@ class CounterOptionHeader:
         if value != 'y' and value != 'Y':
             setting.set(CounterExcludeID(self.id))
 
-class CounterMultiOptionHeader:
+class CounterMultiOptionLayout:
     def __init__(self, id):
         self.id = id
         self.raw = id
@@ -950,14 +950,14 @@ class CounterMultiOptionHeader:
                 exclude.addexception(self.id + '-' + s)
         setting.set(exclude)
 
-class BackHeader:
+class BackLayout:
     def __init__(self, h):
         self.raw = h
 
     def set_setting(self, setting, value):
         setting.setback()
 
-class CopyToBackHeaderDecorator:
+class CopyToBackLayoutDecorator:
     def __init__(self, other_header):
         self.raw = other_header.raw
         self.header = other_header
@@ -966,7 +966,7 @@ class CopyToBackHeaderDecorator:
         setting.setcopytoback()
         self.header.set_setting(setting, value)
 
-class DefaultValueHeaderDecorator:
+class DefaultValueLayoutDecorator:
     def __init__(self, value, other_header):
         self.value = value
         self.raw = other_header.raw
@@ -977,7 +977,7 @@ class DefaultValueHeaderDecorator:
             value = self.value
         self.header.set_setting(setting, value)
 
-class AttributeHeader:
+class AttributeLayout:
     def __init__(self, h, rects):
         self.raw = h
         self.rects = rects
@@ -1008,7 +1008,7 @@ class AttributeHeader:
             value = value[:-1]
         return value
 
-class IDHeader:
+class IDLayout:
     def __init__(self):
         self.raw = 'ID'
 
