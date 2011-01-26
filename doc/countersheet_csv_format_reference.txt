@@ -1,0 +1,185 @@
+Inkscape Boardgames Extensions CSV data file reference
+------------------------------------------------------
+Copyright 2009 Eric Hanuise (ehanuise -at- fantasybel _dot_ net)
+           and Pelle Nilsson (ibe@pelle-n.net)
+
+ Distribution of this document in original or modified form
+ is allowed under the Creative Commons Attribution 3.0 License
+ http://creativecommons.org/licenses/by/3.0/
+
+Note that this document is under construction. Please also consult
+the included examples. For most users using one of the included examples
+and modifying it until it produces the output wanted is probably more
+effective than to fully understand the data format.
+
+General structure
+-----------------
+[header]
+[record]
+...
+[record]
+[empty record]
+[header]
+[record]
+...
+[record]
+[end of file]
+
+Each line in the file is a 'record' that contains a series of values,
+or 'fields' separated by a comma or semicolon.
+It is possible to define several recordsets in a single csv file. in
+that case, new header records must be preceded by an empty record,
+or the header must have a non-empty first value that is not a number,
+to distinguish it from a record.
+
+[header]
+--------
+
+[background],[+][@][field][?][>],[+][@][field][?][>],...,[+][@][field][?][>]
+
+The header record defines the relation between the inkscape document
+templates and the values in the csv file.  The first field if present
+is the identifier of the template to use for the background, if any.
+This is used only when all counters defined in recordset shall have
+the same background, otherwise leave this header field empty. Each
+other field in a header records contain a name. That name should match
+the 'id' property of an object to affect in the inkscape document.
+
+To add more groups of objects (templates) to the counters use header
+values starting with a @. The name following the @ symbol is used in
+the same way as for the background template, except the referenced
+rectangle object is not included now. The rectangle is used only to
+get a known id to reference, and to get the relative coordinates of
+the objects in the group when they are duplicated into the resulting
+countersheet.
+
+Alternatively a headerfield with only a @, not followed by an id,
+means that the id will be different for each record, using the
+values in that column.
+
+A field with an id matching a text object from one of the templates
+used in this record group replace the text content with the values
+found in that column of the records in the group.
+
+Newlines can be added in texts by typing \n (a backslash followed by
+the letter n) in the text. This only works for multiline text elements
+("text boxes", called flowRoot in SVG, created by selecting the
+text tool and dragging a rectangle in the drawing)
+(see http://wiki.inkscape.org/wiki/index.php/Inkscape_for_Adobe_Illustrator_users#Text_Boxes)
+Newlines are not inserted if the text is a regular text element (created
+by selecting the text tool and just clicking somewhere).
+
+Note : When looking for parts of counters (ie the ids) the part after
+"-" in the id is ignored. This is used to get the shadow effect on
+some counter values, because an id in the SVG need to be unique, so to
+get the same text set for both the white and black value text they
+have the same id-prefix, but different names after the dash : text
+objects with ids move-fg and move-shadow will both be updated with the
+content of the 'move' field. It should only work one way, ie the title
+in the CSV file must be move, but there can be different move-* names
+in the SVG file.
+
+[+] : The + prefix indicates that the rectangle object id'ed in the
+field must be copied with the group it is contained in. This is the
+same behavior as for the background field.
+
+[?] : The ? suffix indicates that the column is use to select if the
+svg element with the given id should be included or not. If, and only
+if, the cell in this column equals y or Y then that element is included.
+It can be combined with the > suffix (put immediately after the ?) to
+(not) include the same elements for the back of each counter.
+
+[>] : The > suffix indicates that the drawing object should be copied
+to the counter back side as well (for double-sided counters).
+
+[[attribute]] : Appending [attribute] (where attribute is the name of
+a SVG attribute valid for the type of object with id given as the first
+part of the header (ie box[style] means the 'style' attribute of the object
+with id 'box')) means that that column is used to give values for that
+attribute.
+
+[[style:part]] : Special case of the above for [attribute], but replacing
+only one of the parts of a style attribute (ie [style:fill] to only
+modify the fill color of an element).
+
+BACK : A headerfield containing the word BACK means that all parts
+to the right of this column will be used to create the back side of the
+counters in this group. Only counters for rows that also have BACK in
+the field in this row will have a back side created, to make it possible
+to mix single-sided and double-sided counters in the same group.
+
+ID: The special header ID means that the value (if any) in this column
+for each row specifies the id attribute to set for the group created
+in the SVG output for that counter. It is also used as the filename
+(after appending .png) when using the bitmap export feature.
+
+[record] record
+---------------
+
+[num],[value],[value],...,[value]
+OR
+[KEYWORD]
+
+A record can either contain value or a keyword.
+
+When containing values, the first value must be either nothing or an
+integer. If empty, only one copy of the record will be created in the
+inkscape document. If an integer, that many copies of the record will
+be created in the inkscape document.
+
+Note : When there is something other than a number or an empty cell in
+the leftmost column it is corrently (0.93) treated as a new header,
+expecting counter values to follow on rows below. This form is
+deprecated, should not be used, and may not be supported in future
+releases. Instead use an empty row to separate record groups.
+
+The following values should match the fields defined in the header
+record. Alphanumerical values should start and end with a " double
+quote. (the parser tries to be smart about this, but whenever possible
+use quotes).
+
+Keywords : the following keywords can be used instead of a regular
+record. keywords must be in UPPERCASE and be the only content in that
+record.
+
+ENDBOX : When you have a layer in the inkscape document named
+countersheet_layout' dictating the layout of the counters on the sheet
+you can put ENDBOX on a row in the CSV file to say that it should skip
+the rest of the current layout area and start filling the next one (ie
+if there is room for 20 counters in a rectangle in the
+countersheet_layout, but you only want 18 for some reason). Of course
+an alternative would be to fill out with some empty dummy counters.
+
+BACK: As described above, BACK is used in a field of a row that has
+a the header BACK to specify that the counter produced for this row
+should have a back-side.
+
+For [attribute] columns: Cells beginning with '<' mean that the value
+is copied from the same attribute in the rectangle that has the id
+following the '<' in the cell (ie '<foo' will copy the value from the
+rectangle with id 'foo').  If the cell doest not start with '<' then the
+contents of the cell will be used as is.
+
+[empty record]
+--------------
+
+This record should have only empty fields and is used to indicate the
+parser that the next record will be a header record.
+
+VASSAL Specific Headers
+-----------------------
+The following headers have specific meanings when exporting generated
+bitmaps to a VASSAL module (VMOD) file. They can still be used to set
+values for substitution like any other column header.
+
+VASSAL-Name: The name to use for the counter in the VASSAL module. If there
+is no such column the ID will be used instead. Note that a counter need
+a ID anyway to be exported at all, since the ID is used for the bitmap
+filename.
+
+VASSAL-Panel: Name of the panel to put the counter in. If not specified
+the counter will be put on the first panel found in the VMOD file.
+
+VASSAL-Prototype: If given for a counter, this value will be added as a
+prototype in the piece definition for the counter in VASSAL.
+(see: http://www.vassalengine.org/wiki/doku.php?id=faq_modules#what_s_so_good_about_prototypes_anyway)
