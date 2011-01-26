@@ -30,6 +30,10 @@ from copy import deepcopy
 import sys
 import vassal
 
+CSNS = ""
+
+NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
+
 class Counter:
     def __init__(self, nr):
         self.nr = nr
@@ -747,7 +751,7 @@ class CSVCounterDefinitionParser:
             return self.parse_counter_row(row, factory)
         elif self.is_newheaders(row):
             self.logwrite('Found new headers\n')
-            return CounterFactory(self.rects, row)
+            return CSVCounterFactory(self.rects, row)
         else:
             self.logwrite('Empty row... reset headers.\n')
             return False
@@ -769,7 +773,7 @@ class CSVCounterDefinitionParser:
                 try:
                     nr = int(row[0])
                 except ValueError:
-                    return CounterFactory(self.rects, row)
+                    return CSVCounterFactory(self.rects, row)
         self.logwrite('new counter, nr=%d\n' % nr)
         cfront = factory.create_counter(nr, row)
         self.hasback = self.hasback or factory.hasback
@@ -778,11 +782,36 @@ class CSVCounterDefinitionParser:
             cfront.back.id = cfront.id + "_back"
         return factory
 
-class CounterFactory:
-    def __init__(self, rects, row):
+class CounterFactory (object):
+    def __init__(self, rects):
         self.rects = rects
-        self.parse_headers(row)
         self.hasback = False
+
+    def create_counter(self, nr, row):
+        cfront = Counter(nr)
+        c = cfront
+        for i,ho in enumerate(self.headers):
+            h = ho.raw
+            setting = CounterSettingHolder()
+            if i < len(row):
+                value = row[i]
+            else:
+                value = None
+            ho.set_setting(setting, value)
+            if setting.back:
+                if i >= len(row) or row[i] != 'BACK':
+                    break
+                c.hasback = True
+                c = c.doublesided()
+                self.hasback = True
+            if c:
+                setting.applyto(c)
+        return cfront
+
+class CSVCounterFactory (CounterFactory):
+    def __init__(self, rects, row):
+        super(CSVCounterFactory, self).__init__(rects)
+        self.parse_headers(row)
 
     def parse_headers(self, row):
         self.headers = []
@@ -859,26 +888,7 @@ class CounterFactory:
         i = h.find('=')
         return DefaultValueHeaderDecorator(h[i+1:], self.parse_header(h[:i]))
 
-    def create_counter(self, nr, row):
-        cfront = Counter(nr)
-        c = cfront
-        for i,ho in enumerate(self.headers):
-            h = ho.raw
-            setting = CounterSettingHolder()
-            if i < len(row):
-                value = row[i]
-            else:
-                value = None
-            ho.set_setting(setting, value)
-            if setting.back:
-                if i >= len(row) or row[i] != 'BACK':
-                    break
-                c.hasback = True
-                c = c.doublesided()
-                self.hasback = True
-            if c:
-                setting.applyto(c)
-        return cfront
+
 
 class EmptyHeader:
     def __init__(self):

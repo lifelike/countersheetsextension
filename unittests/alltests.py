@@ -16,7 +16,7 @@ import countersheetstest
 import countersheetstyletest
 import countertest
 import csvcounterdefinitionparsertest
-import counterfactorytest
+import csvcounterfactorytest
 
 #FIXME it is a bit silly to manually list all tests like this
 
@@ -28,7 +28,7 @@ tests = (csvtest.CSVTest,
          countersheetstest.SingleCounterTest,
          countertest.SingleCounterTest,
          csvcounterdefinitionparsertest.CSVCounterDefinitionParserTest,
-         counterfactorytest.CounterFactoryTest,
+         csvcounterfactorytest.CSVCounterFactoryTest,
          countersheetstyletest.CountersheetStyleTest,
          )
 
