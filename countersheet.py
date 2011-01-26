@@ -152,13 +152,9 @@ class CountersheetEffect(inkex.Effect):
                                      default = '',
                                      help = 'Name')
         self.OptionParser.add_option('-d', '--data', action = 'store',
-                                     type = 'string', dest = 'csvfile',
+                                     type = 'string', dest = 'datafile',
                                      default = 'countersheet.csv',
-                                     help = 'CSV file to use for data.')
-        self.OptionParser.add_option('-L', '--layout', action = 'store',
-                                     type = 'string', dest = 'layoutfile',
-                                     default = 'countersheet.csv',
-                                     help = 'CSV file to use for data.')
+                                     help = 'CSV or XML data file.')
         self.OptionParser.add_option('-w', '--bitmapw', action = 'store',
                                      type = 'int', dest = 'bitmapwidth',
                                      default = '56',
@@ -534,7 +530,7 @@ class CountersheetEffect(inkex.Effect):
     def effect(self):
         # Get script "--what" option value.
         what = self.options.what
-        csvfile = self.options.csvfile
+        datafile = self.options.datafile
 
         doc = self.document
 
@@ -544,28 +540,29 @@ class CountersheetEffect(inkex.Effect):
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
 
-        if os.path.isfile(os.path.join(os.getcwd(), csvfile)):
-            csvfile = os.path.join(os.getcwd(), csvfile)
-        elif os.path.isfile(csvfile):
+        if os.path.isfile(os.path.join(os.getcwd(), datafile)):
+            datafile = os.path.join(os.getcwd(), datafile)
+        elif os.path.isfile(datafile):
             pass
         else:
             sys.exit('Unable to find file %s. Tried to search for it '
                      'relative to current directory "%s". '
                      'The easiest way to fix this is to use the absolute '
-                     'path of the CSV file when running the effect (eg '
+                     'path of the data file when running the effect (eg '
                      'C:\\where\\my\\files\\are\\%s).'
-                     % (csvfile, os.getcwd(),
-                        os.path.basename(csvfile)))
+                     % (datafile, os.getcwd(),
+                        os.path.basename(datafile)))
 
         rects = {}
         for r in doc.xpath('//svg:rect', namespaces=NSS):
             rects[r.get("id")] = r
 
-        self.logwrite('Using CSV data file %s.\n'
-                      % os.path.abspath(csvfile))
-        reader = csv.reader(open(csvfile, "rb"))
+        self.logwrite('Using data file %s.\n'
+                      % os.path.abspath(datafile))
+        # FIXME load CSV or XML file
+        reader = csv.reader(open(datafile, "rb"))
 
-        parser = CounterDefinitionParser(self.logwrite, rects)
+        parser = CSVCounterDefinitionParser(self.logwrite, rects)
         parser.parse(reader)
         counters = parser.counters
         hasback = parser.hasback
@@ -732,7 +729,7 @@ class CountersheetEffect(inkex.Effect):
     def post(self, counters):
         pass
 
-class CounterDefinitionParser:
+class CSVCounterDefinitionParser:
     def __init__(self, logwrite, rects):
         self.logwrite = logwrite
         self.rects = rects

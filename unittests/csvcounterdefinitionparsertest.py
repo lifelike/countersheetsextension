@@ -11,10 +11,10 @@ def dummy_logwrite(msg):
 def stdout_logwrite(msg):
     print "LOG >> " + msg,
 
-class CounterDefinitionParserTest(unittest.TestCase):
+class CSVCounterDefinitionParserTest(unittest.TestCase):
     def setUp(self):
-        self.parser = countersheet.CounterDefinitionParser(dummy_logwrite,
-                                                           {})
+        self.parser = countersheet.CSVCounterDefinitionParser(dummy_logwrite,
+                                                              {})
     def test_empty(self):
         counters = self.parse_to_counters([[]])
         self.assertEqual([], counters)
