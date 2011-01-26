@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python2.6
 
 
-# Copyright 2010 Pelle Nilsson (ibe@pelle-n.net)
+# Copyright 2011 Pelle Nilsson (krigsspel@pelle-n.net)
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
