@@ -787,27 +787,6 @@ class CounterFactory (object):
         self.rects = rects
         self.hasback = False
 
-    def create_counter(self, nr, row):
-        cfront = Counter(nr)
-        c = cfront
-        for i,ho in enumerate(self.headers):
-            h = ho.raw
-            setting = CounterSettingHolder()
-            if i < len(row):
-                value = row[i]
-            else:
-                value = None
-            ho.set_setting(setting, value)
-            if setting.back:
-                if i >= len(row) or row[i] != 'BACK':
-                    break
-                c.hasback = True
-                c = c.doublesided()
-                self.hasback = True
-            if c:
-                setting.applyto(c)
-        return cfront
-
 class CSVCounterFactory (CounterFactory):
     def __init__(self, rects, row):
         super(CSVCounterFactory, self).__init__(rects)
@@ -856,6 +835,27 @@ class CSVCounterFactory (CounterFactory):
             return self.parse_defaultvalueheader(h)
         else:
             return CounterSubstHeader(h)
+
+    def create_counter(self, nr, row):
+        cfront = Counter(nr)
+        c = cfront
+        for i,ho in enumerate(self.headers):
+            h = ho.raw
+            setting = CounterSettingHolder()
+            if i < len(row):
+                value = row[i]
+            else:
+                value = None
+            ho.set_setting(setting, value)
+            if setting.back:
+                if i >= len(row) or row[i] != 'BACK':
+                    break
+                c.hasback = True
+                c = c.doublesided()
+                self.hasback = True
+            if c:
+                setting.applyto(c)
+        return cfront
 
     def isbackheader(self, h):
         return h == 'BACK'
