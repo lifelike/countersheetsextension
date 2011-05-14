@@ -20,6 +20,7 @@ if not os.path.exists(outputdir):
 
 tests = [
     ['nato1.csv', 'nato.svg'],
+    ['use.csv', 'use.svg'],
 ]
 
 for test in tests:

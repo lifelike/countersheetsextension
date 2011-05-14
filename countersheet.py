@@ -259,23 +259,53 @@ class CountersheetEffect(inkex.Effect):
                 return
         element.set("transform",
                     "translate(%f,%f)" % (dx, dy))
-        self.translate_use_elements(element, dx, dy)
 
-    def translate_use_elements(self, element, dx, dy):
-        for u in element.xpath('//svg:use', namespaces=NSS):
-            self.translate_use_element(u, dx, dy)
+    def translate_use_element(self, use, old_ref, new_ref):
+        self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
+        use_translate = self.get_translation(use)
+        if use_translate:
+            self.logwrite("found transform\n")
+            old_element = self.document.xpath("//*[@id='%s']"% old_ref,
+                                              namespaces=NSS)[0]
+            new_element = self.document.xpath("//*[@id='%s']"% new_ref,
+                                              namespaces=NSS)[0]
+            (old_x, old_y) = self.find_reasonable_center_xy(old_element)
+            (new_x, new_y) = self.find_reasonable_center_xy(new_element)
+            self.logwrite(" use data: %f,%f %f,%f %f,%f\n"
+                          % (use_translate[0],
+                             use_translate[1],
+                             old_x, old_y,
+                             new_x, new_y))
+            use.set("transform",
+                    "translate(%f,%f)" % (
+                    use_translate[0] - new_x + old_x,
+                    use_translate[1] - new_y + old_y))
 
-    # not sure if dx, dy are required.
-    # maybe the relative positions of the original referenced
-    # element and the new element to use is 
-    def translate_use_element(self, use, dx, dy):
-        m = self.translatere.match(use.get('transform'))
-        if m:
-            old_dx = float(m.group(1))
-            old_dy = float(m.group(2))
-            #self.logwrite("old use translate %f %f\n" % (old_dx, old_dy))
-            #use.set("transform",
-            #"translate(%f,%f)" % (old_dx + dx, old_dy + dy))
+    def find_reasonable_center_xy(self, element):
+        x = element.get('x')
+        if x:
+            return ((float(inkex.unittouu(x))
+                     + float(inkex.unittou(element.get('width'))) / 2),
+                    (float(inkex.unittouu(element.get('y')))
+                     + float(inkex.unittou(element.get('height'))) / 2))
+        else:
+            return (float(element.get(inkex.addNS('cx', 'sodipodi'))),
+                    float(element.get(inkex.addNS('cy', 'sodipodi'))))
+
+        y = element.get('y')
+        if y:
+            y = float(inkex.unittouu(y))
+        else:
+            y = float(element.get(inkex.addNS('cy', 'sodipodi')))
+        return (x, y)
+
+    def get_translation(self, element):
+        m = self.translatere.match(element.get('transform'))
+        if not m:
+            return None
+        x = float(m.group(1))
+        y = float(m.group(2))
+        return (x, y)
 
     def setMultilineText(self, element, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
@@ -382,6 +412,17 @@ class CountersheetEffect(inkex.Effect):
                         image = c.subst[imagekey]
                         i.set(inkex.addNS("absref", "sodipodi"), image)
                         i.set(inkex.addNS("href", "xlink"), image)
+                for u in clone.xpath('//svg:use', namespaces=NSS):
+                    useid = u.get("id")
+                    if not useid:
+                        continue
+                    usekey = useid.split("-")[0]
+                    if c.subst.has_key(usekey):
+                        new_ref = c.subst[usekey]
+                        xlink_attribute = inkex.addNS("href", "xlink")
+                        old_ref = u.get(xlink_attribute)[1:]
+                        u.set(xlink_attribute, "#" + new_ref)
+                        self.translate_use_element(u, old_ref, new_ref)
                 if len(c.excludeids):
                     excludeelements = []
                     for e in clone.iterdescendants():
