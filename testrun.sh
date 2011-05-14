@@ -8,4 +8,9 @@ fi
 
 cp *.inx *.py $EXTDIR
 
-inkscape $*
+
+if [ -e /Applications ] ; then
+    /Applications/Inkscape.app/Contents/MacOS/Inkscape
+else
+    inkscape $*
+fi
