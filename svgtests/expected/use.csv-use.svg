@@ -20,10 +20,10 @@
   </g>
 <svg:g inkscape:label="Countersheet  1" id="cs_layer_1" inkscape:groupmode="layer"><svg:g transform="translate(10.000000,10.000000)"><svg:g id="g3893" transform="translate(214.285720,-95.219322)">
       <svg:rect inkscape:label="#rect3076" y="95.219322" x="-214.28572" height="105.71429" width="105.71429" id="red" style="fill:#f72a02;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-      <svg:use height="1052.3622" width="744.09448" transform="translate(-5.0507628,-141.42136)" id="use3891" xlink:href="#blue" y="0" x="0"/>
+      <svg:use height="1052.3622" width="744.09448" transform="translate(-5.050763,-141.421360)" id="use3891" xlink:href="#blue" y="0" x="0"/>
     </svg:g>
   </svg:g><svg:g transform="translate(115.714290,10.000000)"><svg:g id="g3893" transform="translate(214.285720,-95.219322)">
       <svg:rect inkscape:label="#rect3076" y="95.219322" x="-214.28572" height="105.71429" width="105.71429" id="red" style="fill:#f72a02;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-      <svg:use height="1052.3622" width="744.09448" transform="translate(-5.0507628,-141.42136)" id="use3891" xlink:href="#blue" y="0" x="0"/>
+      <svg:use height="1052.3622" width="744.09448" transform="translate(-19.192893,-235.365540)" id="use3891" xlink:href="#green" y="0" x="0"/>
     </svg:g>
   </svg:g><line x1="10.0" y1="0.0" x2="10.0" y2="9.0" style="stroke:#838383"/><line x1="10.0" y1="1042.3622047" x2="10.0" y2="1052.3622047" style="stroke:#838383"/><line x1="115.71429" y1="0.0" x2="115.71429" y2="9.0" style="stroke:#838383"/><line x1="115.71429" y1="1042.3622047" x2="115.71429" y2="1052.3622047" style="stroke:#838383"/><line x1="221.42858" y1="0.0" x2="221.42858" y2="9.0" style="stroke:#838383"/><line x1="221.42858" y1="1042.3622047" x2="221.42858" y2="1052.3622047" style="stroke:#838383"/><line x1="0.0" y1="10.0" x2="9.0" y2="10.0" style="stroke:#838383"/><line x1="734.09448819" y1="10.0" x2="744.09448819" y2="10.0" style="stroke:#838383"/><line x1="0.0" y1="114.71429" x2="9.0" y2="114.71429" style="stroke:#838383"/><line x1="734.09448819" y1="114.71429" x2="744.09448819" y2="114.71429" style="stroke:#838383"/></svg:g></svg>
