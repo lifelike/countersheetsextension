@@ -28,7 +28,6 @@ import lxml
 from lxml import etree
 from copy import deepcopy
 import sys
-import vassal
 
 CSNS = ""
 
@@ -149,8 +148,6 @@ class CountersheetEffect(inkex.Effect):
         self.nextid = 1000000
         self.OptionParser.add_option('-l', '--log', action = 'store',
                                      type = 'string', dest = 'logfile')
-        self.OptionParser.add_option('-V', '--vmod', action = 'store',
-                                     type = 'string', dest = 'vmodfilename')
         self.OptionParser.add_option('-n', '--what', action = 'store',
                                      type = 'string', dest = 'what',
                                      default = '',
@@ -724,49 +721,8 @@ class CountersheetEffect(inkex.Effect):
         if len(layer.getchildren()):
             svg.append(layer)
         exportedbitmaps = self.exportIDBitmaps()
-        if self.options.vmodfilename and exportedbitmaps:
-            self.exporttoVMOD(counters)
-        elif self.options.vmodfilename:
-            exit('VASSAL export depends on bitmap export, but no bitmaps '
-                 'were exported. Check effect settings (and possibly verify '
-                 'that counter bitmap image files have been properly created'
-                 ').')
         self.post(counters)
         self.exportSheetBitmaps()
-
-    def exporttoVMOD(self, counters):
-        self.logwrite('Will output to VMOD file %s.\n' %
-                      self.options.vmodfilename)
-        vmod = vassal.ModuleFile(self.options.vmodfilename)
-        for c in counters:
-            if c.id:
-                imagefilename = self.getbitmapfilename(c.id)
-                name = c.id
-                if c.subst.has_key('VASSAL-Name'):
-                    name = c.subst['VASSAL-Name']
-                self.logwrite("VASSAL counter name: %s image: %s\n"
-                              % (name, imagefilename))
-                piece = vassal.Piece(name,
-                                     self.options.bitmapwidth,
-                                     self.options.bitmapheight,
-                                     imagefilename)
-                vmod.add_imagefile(imagefilename)
-                if c.hasback and c.back and c.back.id:
-                    backimagefilename = self.getbitmapfilename(c.back.id)
-                    piece.set_back(backimagefilename)
-                    vmod.add_imagefile(backimagefilename)
-                    self.logwrite(" VASSAL back image: %s\n"
-                                  % backimagefilename)
-                if c.subst.has_key('VASSAL-Prototype'):
-                    prototype = c.subst['VASSAL-Prototype']
-                    piece.set_prototype(prototype)
-                    self.logwrite(" VASSAL prototype: %s\n" % prototype)
-                panel = None
-                if c.subst.has_key('VASSAL-Panel'):
-                    panel = c.subst['VASSAL-Panel']
-                    self.logwrite(" VASSAL panel: %s\n" % prototype)
-                vmod.add_piece(piece, panel)
-        vmod.save()
 
     def before_counter(self, counter):
         pass

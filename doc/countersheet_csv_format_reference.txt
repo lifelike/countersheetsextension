@@ -165,21 +165,3 @@ contents of the cell will be used as is.
 
 This record should have only empty fields and is used to indicate the
 parser that the next record will be a header record.
-
-VASSAL Specific Headers
------------------------
-The following headers have specific meanings when exporting generated
-bitmaps to a VASSAL module (VMOD) file. They can still be used to set
-values for substitution like any other column header.
-
-VASSAL-Name: The name to use for the counter in the VASSAL module. If there
-is no such column the ID will be used instead. Note that a counter need
-a ID anyway to be exported at all, since the ID is used for the bitmap
-filename.
-
-VASSAL-Panel: Name of the panel to put the counter in. If not specified
-the counter will be put on the first panel found in the VMOD file.
-
-VASSAL-Prototype: If given for a counter, this value will be added as a
-prototype in the piece definition for the counter in VASSAL.
-(see: http://www.vassalengine.org/wiki/doku.php?id=faq_modules#what_s_so_good_about_prototypes_anyway)
