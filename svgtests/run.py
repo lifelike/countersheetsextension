@@ -1,8 +1,10 @@
 #!/usr/bin/env python2.6
 
 import difflib
+import glob
 import os
 import os.path
+import shutil
 import subprocess
 import sys
 
@@ -18,9 +20,13 @@ expecteddir = os.path.join('svgtests', 'expected')
 if not os.path.exists(outputdir):
     os.mkdir(outputdir)
 
+for f in glob.glob(os.path.join(inputdir, "*.png")):
+    shutil.copy(f, outputdir)
+
 tests = [
     ['nato1.csv', 'nato.svg'],
     ['use.csv', 'use.svg'],
+    ['symbols.csv', 'symbols.svg'],
 ]
 
 for test in tests:

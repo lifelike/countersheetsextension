@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="symbols.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="-188.08023"
+     inkscape:cy="877.04322"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="958"
+     inkscape:window-height="910"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3062">
+      <rect
+         inkscape:label="#rect2985"
+         y="83.790756"
+         x="-214.28572"
+         height="160"
+         width="122.85714"
+         id="card"
+         style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <image
+         inkscape:label="#image3055"
+         width="34.308853"
+         height="36.357143"
+         xlink:href="file:///Users/pelle/src/countersheetsextension/svgtests/input/a.png"
+         id="symbol-1"
+         x="-195.64285"
+         y="122.57646" />
+      <image
+         inkscape:label="#image3058"
+         y="126.50504"
+         x="-144.57143"
+         id="symbol-2"
+         xlink:href="file:///Users/pelle/src/countersheetsextension/svgtests/input/a.png"
+         height="36.357143"
+         width="34.308853" />
+      <image
+         inkscape:label="#image3060"
+         width="34.308853"
+         height="36.357143"
+         xlink:href="file:///Users/pelle/src/countersheetsextension/svgtests/input/a.png"
+         id="symbol-3"
+         x="-182.78571"
+         y="185.79076" />
+    </g>
+  </g>
+</svg>
