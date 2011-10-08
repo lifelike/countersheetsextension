@@ -44,8 +44,8 @@ class Counter:
         self.endbox = False
         self.hasback = False
         self.attrs = {}
-        self.excludeids = set()
-        self.includeids = set()
+        self.excludeids = []
+        self.includeids = []
 
     def set(self, setting):
         setting.applyto(self)
@@ -54,10 +54,10 @@ class Counter:
         self.parts.append(id)
 
     def excludeid(self, id):
-        self.excludeids.add(id)
+        self.excludeids.append(id)
 
     def includeid(self, id):
-        self.includeids.add(id)
+        self.includeids.append(id)
 
     def addattr(self, id, attribute, source):
         if not id in self.attrs:
@@ -71,6 +71,15 @@ class Counter:
         if not self.back:
             self.back = Counter(self.nr)
         return self.back
+
+    def is_included(self, eid):
+       for iglob in self.includeids:
+            if fnmatch.fnmatchcase(eid, iglob):
+                return True
+       for eglob in self.excludeids:
+            if fnmatch.fnmatchcase(eid, eglob):
+                return False
+       return True
 
 class CounterSettingHolder:
     def __init__(self):
@@ -192,11 +201,8 @@ class CountersheetEffect(inkex.Effect):
             if not id:
                 continue
             for glob,attr in attrs.iteritems():
-                print >> sys.stderr, "glob", glob, id
                 if fnmatch.fnmatchcase(id, glob):
-                    print >> sys.stderr, "glob", glob, id, "MATCH!"
                     for a,v in attr.iteritems():
-                        print >> sys.stderr, a, v
                         if a.startswith('style:'):
                             pname = a[6:]
                             a = "style"
@@ -403,40 +409,30 @@ class CountersheetEffect(inkex.Effect):
                                                 namespaces=NSS))
                 for t in textishnodes:
                     self.substitute_text(c, t, t.get("id"))
-                    self.substitute_text(c, t, t.get("id").split("-")[0])
                 for i in clone.xpath('//svg:image', namespaces=NSS):
                     imageid = i.get("id")
                     if not imageid:
                         continue
-                    imagekey = imageid.split("-")[0]
-                    if c.subst.has_key(imagekey):
-                        image = c.subst[imagekey]
-                        i.set(inkex.addNS("absref", "sodipodi"), image)
-                        i.set(inkex.addNS("href", "xlink"), image)
+                    for glob,image in c.subst.iteritems():
+                        if fnmatch.fnmatchcase(imageid, glob):
+                            i.set(inkex.addNS("absref", "sodipodi"), image)
+                            i.set(inkex.addNS("href", "xlink"), image)
                 for u in clone.xpath('//svg:use', namespaces=NSS):
                     useid = u.get("id")
                     if not useid:
                         continue
                     usekey = useid.split("-")[0]
-                    if c.subst.has_key(usekey):
-                        new_ref = c.subst[usekey]
-                        xlink_attribute = inkex.addNS("href", "xlink")
-                        old_ref = u.get(xlink_attribute)[1:]
-                        u.set(xlink_attribute, "#" + new_ref)
-                        self.translate_use_element(u, old_ref, new_ref)
+                    for glob,new_ref in c.subst.iteritems():
+                        if fnmatch.fnmatchcase(useid, glob):
+                            xlink_attribute = inkex.addNS("href", "xlink")
+                            old_ref = u.get(xlink_attribute)[1:]
+                            u.set(xlink_attribute, "#" + new_ref)
+                            self.translate_use_element(u, old_ref, new_ref)
                 if len(c.excludeids):
                     excludeelements = []
                     for e in clone.iterdescendants():
                         eid = e.get("id")
-                        if not eid:
-                            continue
-                        eidparts = eid.split("-")
-                        ekey = eidparts[0]
-                        if len(eidparts) > 2:
-                            ikey = "-".join(eidparts[:-1])
-                        else:
-                            ikey = eid
-                        if ekey in c.excludeids and not ikey in c.includeids:
+                        if not c.is_included(eid):
                             excludeelements.append(e)
                     for ee in excludeelements:
                         eeparent = ee.getparent()
@@ -453,17 +449,17 @@ class CountersheetEffect(inkex.Effect):
         return res
 
     def substitute_text(self, c, t, textid):
-        if c.subst.has_key(textid):
-            subst = c.subst[textid]
-            if t.text:
-                t.text = subst
-            if (t.tag == inkex.addNS('flowRoot','svg')
-                and subst.find("\\n") >= 0):
-                self.setMultilineText(t, subst.split("\\n"))
-            elif not self.setFirstTextChild(t, subst):
-                self.logwrite("...failed to set subst %s\n" % textid)
-            if c.id:
-                t.set("id", textid + "_" + c.id)
+        for glob,subst in c.subst.iteritems():
+            if fnmatch.fnmatchcase(textid, glob):
+                if t.text:
+                    t.text = subst
+                if (t.tag == inkex.addNS('flowRoot','svg')
+                    and subst.find("\\n") >= 0):
+                    self.setMultilineText(t, subst.split("\\n"))
+                elif not self.setFirstTextChild(t, subst):
+                    self.logwrite("...failed to set subst %s\n" % textid)
+                if c.id:
+                    t.set("id", textid + "_" + c.id)
 
     def readLayout(self, svg):
         for g in svg.xpath('//svg:g', namespaces=NSS):
@@ -945,7 +941,7 @@ class CounterMultiOptionLayout:
         self.raw = id
 
     def set_setting(self, setting, value):
-        exclude = CounterExcludeID(self.id)
+        exclude = CounterExcludeID(self.id + "-*")
         for s in value.split(" "):
             if len(s):
                 exclude.addexception(self.id + '-' + s)

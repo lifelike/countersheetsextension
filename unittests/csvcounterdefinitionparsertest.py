@@ -90,32 +90,32 @@ class CSVCounterDefinitionParserTest(unittest.TestCase):
         counters = self.parse_to_counters([['', 'e?'],
                                            ['1', 'y']])
         counter = self.assert_get_counter(counters, 0)
-        self.assertEqual(set([]), counter.excludeids)
+        self.assertEqual([], counter.excludeids)
 
     def test_single_option_exclude(self):
         counters = self.parse_to_counters([['', 'e?'],
                                            ['1', '']])
         counter = self.assert_get_counter(counters, 0)
-        self.assertEqual(set(['e']), counter.excludeids)
+        self.assertEqual(['e'], counter.excludeids)
 
     def test_single_multioption_exclude(self):
         counters = self.parse_to_counters([['', 'e-?'],
                                            ['1', '']])
         counter = self.assert_get_counter(counters, 0)
-        self.assertEqual(set(['e']), counter.excludeids)
+        self.assertEqual(['e-*'], counter.excludeids)
 
     def test_single_multioption_include_one(self):
         counters = self.parse_to_counters([['', 'e-?'],
                                            ['1', 'one']])
         counter = self.assert_get_counter(counters, 0)
-        self.assertEqual(set(['e']), counter.excludeids)
-        self.assertEqual(set(['e-one']), counter.includeids)
+        self.assertEqual(['e-*'], counter.excludeids)
+        self.assertEqual(['e-one'], counter.includeids)
 
     def test_single_multioption_include_two(self):
         counters = self.parse_to_counters([['', 'e-?'],
                                            ['1', 'one two']])
         counter = self.assert_get_counter(counters, 0)
-        self.assertEqual(set(['e']), counter.excludeids)
+        self.assertEqual(['e-*'], counter.excludeids)
         self.assertEqual(2, len(counter.includeids))
         self.assertTrue('e-one' in counter.includeids)
         self.assertTrue('e-two' in counter.includeids)
