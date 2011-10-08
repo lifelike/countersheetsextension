@@ -421,7 +421,6 @@ class CountersheetEffect(inkex.Effect):
                     useid = u.get("id")
                     if not useid:
                         continue
-                    usekey = useid.split("-")[0]
                     for glob,new_ref in c.subst.iteritems():
                         if fnmatch.fnmatchcase(useid, glob):
                             xlink_attribute = inkex.addNS("href", "xlink")
