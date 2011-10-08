@@ -56,8 +56,9 @@ for test in tests:
     expectedfile = os.path.join(expecteddir, svgoutbasename)
     #FIXME xml diff, not line diff, would be nice
     import difflib
-    for line in difflib.unified_diff(open(svgoutfile).readlines(),
-                                     open(expectedfile).readlines(),
-                                     fromfile=svgoutfile,
-                                     tofile=expectedfile):
-        print line
+    if not '-q' in sys.argv:
+        for line in difflib.unified_diff(open(svgoutfile).readlines(),
+                                         open(expectedfile).readlines(),
+                                         fromfile=svgoutfile,
+                                         tofile=expectedfile):
+            print line
