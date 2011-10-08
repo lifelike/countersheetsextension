@@ -25,6 +25,7 @@ for f in glob.glob(os.path.join(inputdir, "*.png")):
 
 tests = [
     ['nato1.csv', 'nato.svg'],
+    ['nato2.csv', 'nato.svg'],
     ['use.csv', 'use.svg'],
     ['symbols.csv', 'symbols.svg'],
 ]

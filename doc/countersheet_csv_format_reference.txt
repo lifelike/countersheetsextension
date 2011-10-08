@@ -69,15 +69,17 @@ text tool and dragging a rectangle in the drawing)
 Newlines are not inserted if the text is a regular text element (created
 by selecting the text tool and just clicking somewhere).
 
-Note : When looking for parts of counters (ie the ids) the part after
-"-" in the id is ignored. This is used to get the shadow effect on
-some counter values, because an id in the SVG need to be unique, so to
-get the same text set for both the white and black value text they
-have the same id-prefix, but different names after the dash : text
-objects with ids move-fg and move-shadow will both be updated with the
-content of the 'move' field. It should only work one way, ie the title
-in the CSV file must be move, but there can be different move-* names
-in the SVG file.
+Note : When looking for parts of counters (ie the ids), standard globs
+are used for matching. * matches one or more of any character,
+? matches any single character. For instance for something to
+apply to elements with id elem-a, elem-b, and elem-c, you can use
+the glob elem-* (or in this case, equally, elem-?). You can also
+use the * or ? in the beginning of middle. This is a change from
+1.x versions of the countersheet effect where automatic matching
+was attempted for ids containg dashes, but no such autoautomatic
+matching is attempted now (you need to add "-*" at the end of
+ids to get much the same effect, but now you have more control
+and can avoid some problems that was caused by the old solution).
 
 [+] : The + prefix indicates that the rectangle object id'ed in the
 field must be copied with the group it is contained in. This is the

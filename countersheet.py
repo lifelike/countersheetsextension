@@ -21,6 +21,7 @@
 import inkex
 from inkex import NSS
 import csv
+import fnmatch
 import re
 import os
 import os.path
@@ -190,17 +191,20 @@ class CountersheetEffect(inkex.Effect):
             id = n.get("id")
             if not id:
                 continue
-            elementid = id.split("-")[0]
-            if elementid in attrs:
-                for a,v in attrs[elementid].iteritems():
-                    if a.startswith('style:'):
-                        pname = a[6:]
-                        a = "style"
-                        v = stylereplace(n.get(a), pname, v)
-                    if ':' in a:
-                        [ns,tag] = a.split(':')
-                        a = inkex.addNS(tag, ns)
-                    n.set(a, v)
+            for glob,attr in attrs.iteritems():
+                print >> sys.stderr, "glob", glob, id
+                if fnmatch.fnmatchcase(id, glob):
+                    print >> sys.stderr, "glob", glob, id, "MATCH!"
+                    for a,v in attr.iteritems():
+                        print >> sys.stderr, a, v
+                        if a.startswith('style:'):
+                            pname = a[6:]
+                            a = "style"
+                            v = stylereplace(n.get(a), pname, v)
+                        if ':' in a:
+                            [ns,tag] = a.split(':')
+                            a = inkex.addNS(tag, ns)
+                        n.set(a, v)
 
     def fix_gradients(self, group, dx, dy):
         self.logwrite('fix_gradients %s:\n' % group.get('id'))
@@ -1028,7 +1032,6 @@ def stylereplace(oldv, pname, v):
         elif len(part):
             out += part + ";"
     return out
-
 
 if __name__ == '__main__':
     effect = CountersheetEffect()

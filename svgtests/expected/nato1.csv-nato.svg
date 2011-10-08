@@ -12,6 +12,7 @@
   </metadata>
   <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
     <rect style="fill:#bfdb9f;fill-opacity:0.75294119;fill-rule:evenodd;stroke:#bfdba0;stroke-opacity:1" id="green" width="56.25" height="56.25" x="-118.49964" y="13.181602" inkscape:label="#rect3023"/>
+    <rect style="fill:#cc0000;fill-opacity:0.75294119;fill-rule:evenodd;stroke:#bfdba0;stroke-opacity:1" id="red" width="56.25" height="56.25" x="-118.49964" y="80.181602" inkscape:label="#rect3023"/>
     <g id="g5162">
       <rect inkscape:label="#rect3023" y="163.8206" x="-105.87273" height="56.25" width="56.25" id="inf" style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"/>
       <path inkscape:connector-curvature="0" id="path5129" d="m -94.82807,199.54089 33.713841,-23.61231" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"/>
