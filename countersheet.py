@@ -581,17 +581,19 @@ class CountersheetEffect(inkex.Effect):
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
 
-        if os.path.isfile(os.path.join(os.getcwd(), datafile)):
-            datafile = os.path.join(os.getcwd(), datafile)
-        elif os.path.isfile(datafile):
-            pass
+        search_paths = get_search_paths(datafile)
+        for path in search_paths:
+            if os.path.isfile(path):
+                datafile = path
+                break
         else:
-            sys.exit('Unable to find file %s. Tried to search for it '
-                     'relative to current directory "%s". '
+            sys.exit('Unable to find data file. Looked for:\n'
+                     '%s\n'
                      'The easiest way to fix this is to use the absolute '
                      'path of the data file when running the effect (eg '
-                     'C:\\where\\my\\files\\are\\%s).'
-                     % (datafile, os.getcwd(),
+                     'C:\\where\\my\\files\\are\\%s), or put '
+                     'the file in any of the locations listed above.'
+                     % ('\n'.join(search_paths),
                         os.path.basename(datafile)))
 
         rects = {}
@@ -1027,6 +1029,15 @@ def stylereplace(oldv, pname, v):
         elif len(part):
             out += part + ";"
     return out
+
+def get_search_paths(filename):
+    home = os.path.expanduser('~')
+    return [filename,
+            os.path.join(home, ".countersheetsextension", filename),
+            os.path.join(home, filename),
+            os.path.join(home, 'Documents', filename),
+            os.path.join(home, 'Documents', 'countersheets', filename),
+            ]
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
