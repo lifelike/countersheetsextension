@@ -4,7 +4,6 @@
   <dependency type="executable" location="extensions">countersheet.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">csv.py</dependency>
-  <dependency type="executable" location="extensions">vassal.py</dependency>
   <param name="what" type="string" _gui-text="Name"></param>
   <param name="data" type="string" _gui-text="Data File (CSV)">countersheet.csv</param>
   <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
@@ -20,8 +19,6 @@
         max="6000">0</param>
   <param name="bitmapdir" type="string"
         _gui-text="Bitmap Output Directory (optional)"></param>
-  <param name="vmod" type="string"
-        _gui-text="VASSAL Output Module (VMOD) File (optional)"></param>
   <param name="log" type="string" _gui-text="Log File (optional)"></param>
   <effect>
     <object-type>all</object-type>
