@@ -45,6 +45,9 @@ for test in tests:
                    svginfile
                    ]
 
+    if ['-v' in sys.argv]:
+        print >> sys.stderr, ' '.join(commandline)
+
     effect = subprocess.Popen(commandline,
                               stdout=svgout)
     effect.wait()
