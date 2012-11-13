@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/usr/bin/env python2
 
 
 # Copyright 2011 Pelle Nilsson (krigsspel@pelle-n.net)
