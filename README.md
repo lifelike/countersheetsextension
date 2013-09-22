@@ -2,7 +2,7 @@ Countersheets Extension for Inkscape
 ====================================
 
 Inkscape extension for the layout of sheets of cards, tiles, or counters
-for boardgames. It was originally part of the NN_Inkscape Board Game
+for boardgames. It was originally part of the Inkscape Board Game
 Extensions project (see http://www.lysator.liu.se/~perni/iboardgameexts/).
 
 Since the extension was originally created for wargame counters, the
@@ -18,7 +18,7 @@ Main Features
 * Two-sided counters with back of sheets properly mirrored.
 * Templates for counters to generate drawn in Inkscape.
 * Use Comma Separated Values (CSV) files for describing what counters to make.
-* First row in the CSV says how many of each counter to make.
+* First column in the CSV says how many of each counter to make.
 * Several templates can be combined to make up a single counter.
 * Automatically make as many sheets needed to fit all counters.
 * Replace text strings and bitmap images for each counter.
