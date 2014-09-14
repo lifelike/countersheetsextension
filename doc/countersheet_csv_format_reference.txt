@@ -152,6 +152,10 @@ if there is room for 20 counters in a rectangle in the
 countersheet_layout, but you only want 18 for some reason). Of course
 an alternative would be to fill out with some empty dummy counters.
 
+ENDROW: Similar to ENDBOX, but only ends the current row. If there is
+no room in the current box for another row the effect will be identical
+to ENDBOX.
+
 BACK: As described above, BACK is used in a field of a row that has
 a the header BACK to specify that the counter produced for this row
 should have a back-side.

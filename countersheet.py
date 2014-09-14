@@ -42,6 +42,7 @@ class Counter:
         self.back = None
         self.id = None
         self.endbox = False
+        self.endrow = False
         self.hasback = False
         self.attrs = {}
         self.excludeids = []
@@ -674,7 +675,7 @@ class CountersheetEffect(inkex.Effect):
                 xregistrationmarks.add(colx)
                 if rowy + height > nextrowy:
                     nextrowy = rowy + height
-                if colx + width > positions[box]['w'] or c.endbox:
+                if colx + width > positions[box]['w'] or c.endbox or c.endrow:
                     col = 0
                     colx = 0
                     row = row + 1
@@ -766,6 +767,10 @@ class CSVCounterDefinitionParser:
             if row[0] == 'ENDBOX':
                 if len(self.counters) > 0:
                     self.counters[-1].endbox = True
+                return factory
+            elif row[0] == 'ENDROW':
+                if len(self.counters) > 0:
+                    self.counters[-1].endrow = True
                 return factory
             else:
                 try:
