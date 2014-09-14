@@ -406,6 +406,8 @@ class CountersheetEffect(inkex.Effect):
                             break
                 textishnodes = []
                 textishnodes.extend(clone.xpath('//svg:text', namespaces=NSS))
+                textishnodes.extend(clone.xpath('//svg:flowSpan',
+                                                namespaces=NSS))
                 textishnodes.extend(clone.xpath('//svg:flowRoot',
                                                 namespaces=NSS))
                 for t in textishnodes:
