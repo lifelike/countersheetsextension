@@ -167,3 +167,10 @@ contents of the cell will be used as is.
 
 This record should have only empty fields and is used to indicate the
 parser that the next record will be a header record.
+
+autonumber
+----------
+This is not in the CSV data. If you set the id of a text object in a
+template in the SVG to autonumber every generated counter will have a
+uniqe number starting from 1 inserted instead of the text in the
+countersheet.
