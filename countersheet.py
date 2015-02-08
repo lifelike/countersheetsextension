@@ -155,6 +155,9 @@ class CounterID:
 class CountersheetEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        # quick attempt compatibility with Inkscape older than 0.91:
+        if not hasattr(self, 'unittouu'):
+            self.unittouu = inkex.unittouu
         self.log = False
         self.nextid = 1000000
         self.OptionParser.add_option('-l', '--log', action = 'store',
@@ -292,17 +295,17 @@ class CountersheetEffect(inkex.Effect):
     def find_reasonable_center_xy(self, element):
         x = element.get('x')
         if x:
-            return ((float(inkex.unittouu(x))
-                     + float(inkex.unittou(element.get('width'))) / 2),
-                    (float(inkex.unittouu(element.get('y')))
-                     + float(inkex.unittou(element.get('height'))) / 2))
+            return ((float(self.unittouu(x))
+                     + float(self.unittouu(element.get('width'))) / 2),
+                    (float(self.unittouu(element.get('y')))
+                     + float(self.unittouu(element.get('height'))) / 2))
         else:
             return (float(element.get(inkex.addNS('cx', 'sodipodi'))),
                     float(element.get(inkex.addNS('cy', 'sodipodi'))))
 
         y = element.get('y')
         if y:
-            y = float(inkex.unittouu(y))
+            y = float(self.unittouu(y))
         else:
             y = float(element.get(inkex.addNS('cy', 'sodipodi')))
         return (x, y)
@@ -474,10 +477,10 @@ class CountersheetEffect(inkex.Effect):
                 for c in g.getchildren():
                     if c.tag == inkex.addNS('rect','svg'):
                         res.append(
-                            {'x':float(inkex.unittouu(c.get('x'))),
-                             'y':float(inkex.unittouu(c.get('y'))),
-                             'w':float(inkex.unittouu(c.get('width'))),
-                             'h':float(inkex.unittouu(c.get('height')))
+                            {'x':float(self.unittouu(c.get('x'))),
+                             'y':float(self.unittouu(c.get('y'))),
+                             'w':float(self.unittouu(c.get('width'))),
+                             'h':float(self.unittouu(c.get('height')))
                              })
                     elif c.tag == inkex.addNS('text','svg'):
                         pass # use to set countersheet label?
@@ -621,7 +624,7 @@ class CountersheetEffect(inkex.Effect):
         if hasback:
             backlayer = self.addLayer(what, 1, "back")
 
-        docwidth = float(inkex.unittouu(svg.get('width')))
+        docwidth = float(self.unittouu(svg.get('width')))
 
         haslayout = True
         positions = self.readLayout(svg)
@@ -630,7 +633,7 @@ class CountersheetEffect(inkex.Effect):
             positions = [{'x' : 0.0,
                           'y' : 0.0,
                           'w' : docwidth,
-                          'h' : float(inkex.unittouu(svg.get('height')))
+                          'h' : float(self.unittouu(svg.get('height')))
                           }]
             if self.options.registrationmarkslen > 0:
                 margin = self.options.registrationmarkslen
