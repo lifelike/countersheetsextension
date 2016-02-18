@@ -50,7 +50,7 @@ After you (re)start Inscape you should find "Create Countersheet"
 in the "Boardgames" submenu of the "Extensions" menu.
 
 There is an old tutorial also on youtube by Erulisseuiin:
-http://www.youtube.com/watch?v-sZ__PwMZp_8
+http://www.youtube.com/watch?v=sZ__PwMZp_8
 While it is for an older version of the Inkscape Board Game Extensions,
 it might still be easier to follow than my short instructions above.
 
