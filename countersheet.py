@@ -463,7 +463,8 @@ class CountersheetEffect(inkex.Effect):
                     and subst.find("\\n") >= 0):
                     self.setMultilineText(t, subst.split("\\n"))
                 elif not self.setFirstTextChild(t, subst):
-                    self.logwrite("...failed to set subst %s\n" % textid)
+                    sys.exit("Failed to put substitute text in '%s'"
+                             % textid)
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
