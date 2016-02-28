@@ -383,8 +383,9 @@ class CountersheetEffect(inkex.Effect):
                 killrect = True
                 rectname = rectname[1:]
             if not rects.has_key(rectname):
-                self.logwrite("COULD NOT FIND rect '%s'.\n" % rectname)
-                continue
+                sys.exit("Unable to find rectangle with id '%s' "
+                         "that was specified in the CSV data file."
+                         % rectname)
             rect = rects[rectname]
             x = float(rect.get('x'))
             y = float(rect.get('y'))
