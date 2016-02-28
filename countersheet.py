@@ -505,7 +505,7 @@ class CountersheetEffect(inkex.Effect):
         else:
             exportsize = "-w %d -h %d" % (width, height)
         for id in ids:
-            cmd="inkscape -i %s -j -e %s %s %s" % (
+            cmd='inkscape -i %s -j -e "%s" "%s" "%s"' % (
                 id, self.getbitmapfilename(id),
                 exportsize, tmpfilename)
             self.logwrite(cmd + "\n")
