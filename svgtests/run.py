@@ -28,6 +28,8 @@ tests = [
     ['nato2.csv', 'nato.svg'],
     ['use.csv', 'use.svg'],
     ['symbols.csv', 'symbols.svg'],
+    ['commas_in_semicolons.csv', 'card.svg'],
+    ['semicolons_in_commas.csv', 'card.svg'],
 ]
 
 for test in tests:

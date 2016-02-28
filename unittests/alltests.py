@@ -11,7 +11,6 @@ def add_countersheets_paths():
 
 add_countersheets_paths()
 
-import csvtest
 import countersheetstest
 import countersheetstyletest
 import countertest
@@ -23,8 +22,7 @@ import csvcounterfactorytest
 def make_suite(test):
     return unittest.makeSuite(test, 'test_')
 
-tests = (csvtest.CSVTest,
-         countersheetstest.CountersheetsTest,
+tests = (countersheetstest.CountersheetsTest,
          countersheetstest.SingleCounterTest,
          countertest.SingleCounterTest,
          csvcounterdefinitionparsertest.CSVCounterDefinitionParserTest,

@@ -608,8 +608,10 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite('Using data file %s.\n'
                       % os.path.abspath(datafile))
-        # FIXME load CSV or XML file
-        reader = csv.reader(open(datafile, "rb"))
+        csv_file = open(datafile, "rb")
+        csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
+        csv_file.seek(0)
+        reader = csv.reader(csv_file, csv_dialect)
 
         parser = CSVCounterDefinitionParser(self.logwrite, rects)
         parser.parse(reader)

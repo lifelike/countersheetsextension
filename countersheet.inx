@@ -3,7 +3,6 @@
   <id>pelles.effect.countersheet</id>
   <dependency type="executable" location="extensions">countersheet.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
-  <dependency type="executable" location="extensions">csv.py</dependency>
   <param name="what" type="string" _gui-text="Name"></param>
   <param name="data" type="string" _gui-text="Data File (CSV)">countersheet.csv</param>
   <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
