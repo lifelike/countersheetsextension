@@ -608,6 +608,15 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite('Using data file %s.\n'
                       % os.path.abspath(datafile))
+
+        try:
+            csv.Sniffer
+        except:
+            sys.exit("Not able to find csv.Sniffer. "
+                     "Please delete csv.py and csv.pyc "
+                     "files from your Inkscape extensions."
+                     "folder. They are no longer used.");
+
         csv_file = open(datafile, "rb")
         csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         csv_file.seek(0)
