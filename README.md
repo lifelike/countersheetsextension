@@ -39,7 +39,7 @@ use the bitmap instead.
 Installation
 ------------
 
-You need Inkscape installed (version 0.48, although 0.47 might still work too).
+You need Inkscape installed (version 0.91, although 0.48 or 0.47 might still work).
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
