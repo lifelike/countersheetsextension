@@ -41,7 +41,7 @@ Installation
 
 You need Inkscape installed (version 0.48, although 0.47 might still work too).
 
-Copy countersheet.py, csv.py, and countersheet.inx to where Inkscape
+Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
 .config/inkscape/extensions.  In Windows it will be something like
 C:\Program Files\Inkscape\share\extensions.
