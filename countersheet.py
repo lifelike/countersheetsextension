@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 
-# Copyright 2011 Pelle Nilsson (krigsspel@pelle-n.net)
+# Copyright 2016 Pelle Nilsson
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 #along with this program; if not, write to the Free Software
 #Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
 
 
 import inkex
@@ -151,6 +150,13 @@ class CounterID:
 
     def applyto(self, counter):
         counter.id = self.id
+
+class Rectangle:
+    def __init__(self, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
 
 class CountersheetEffect(inkex.Effect):
     def __init__(self):
@@ -389,8 +395,10 @@ class CountersheetEffect(inkex.Effect):
             rect = rects[rectname]
             x = float(rect.get('x'))
             y = float(rect.get('y'))
-            width = float(rect.get('width'))
-            height = float(rect.get('height'))
+            x = self.geometry[rectname].x
+            y = self.geometry[rectname].y
+            width = self.geometry[rectname].w
+            height = self.geometry[rectname].h
             res[0] = max(res[0], width)
             res[1] = max(res[1], height)
             group = rect.getparent()
@@ -496,6 +504,25 @@ class CountersheetEffect(inkex.Effect):
                                      layer,
                                      docwidth - x,
                                      y)
+
+    # Looked a bit at code in Inkscape text_merge.py for this idea.
+    # That file is Copyright (C) 2013 Nicolas Dufour (jazzynico).
+    # See README file for license.
+    def queryAll(self, filename):
+        "Return geometry Rectangle (x, y, w, h) for each element id, as dict."
+        geometry = {}
+        cmd = 'inkscape --query-all "%s"' % filename
+        _, f, err = os.popen3(cmd, 'r')
+        reader = csv.reader(f)
+        err.close()
+        for line in reader:
+            if len(line) == 5:
+                geometry[line[0]] = Rectangle(float(line[1]),
+                                              float(line[2]),
+                                              float(line[3]),
+                                              float(line[4]))
+        f.close()
+        return geometry
 
     def exportBitmaps(self, ids, width, height, dpi=0):
         tmpfilename = os.path.join(self.options.bitmapdir, ".__tmp__.svg")
@@ -607,6 +634,9 @@ class CountersheetEffect(inkex.Effect):
         rects = {}
         for r in doc.xpath('//svg:rect', namespaces=NSS):
             rects[r.get("id")] = r
+
+        self.logwrite("queryAll for: %s" % sys.argv[-1])
+        self.geometry = self.queryAll(sys.argv[-1])
 
         self.logwrite('Using data file %s.\n'
                       % os.path.abspath(datafile))
