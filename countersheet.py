@@ -329,8 +329,6 @@ class CountersheetEffect(inkex.Effect):
                          "that was specified in the CSV data file."
                          % rectname)
             rect = rects[rectname]
-            x = float(rect.get('x'))
-            y = float(rect.get('y'))
             x = self.geometry[rectname].x
             y = self.geometry[rectname].y
             width = self.geometry[rectname].w
