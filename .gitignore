@@ -1,3 +1,8 @@
 *.pyc
 *~
 inkex.py
+bezmisc.py
+simplestyle.py
+cubicsuperpath.py
+simplepath.py
+simpletransform.py

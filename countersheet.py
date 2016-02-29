@@ -20,6 +20,7 @@
 import inkex
 from inkex import NSS
 import csv
+import simpletransform
 import fnmatch
 import re
 import os
@@ -221,6 +222,7 @@ class CountersheetEffect(inkex.Effect):
                             a = inkex.addNS(tag, ns)
                         n.set(a, v)
 
+
     def translate_element(self, element, dx, dy):
         transform = element.get("transform")
         if transform:
@@ -233,50 +235,30 @@ class CountersheetEffect(inkex.Effect):
 
     def translate_use_element(self, use, old_ref, new_ref):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
-        use_translate = self.get_translation(use)
-        if use_translate:
-            self.logwrite("found transform\n")
-            old_element = self.document.xpath("//*[@id='%s']"% old_ref,
-                                              namespaces=NSS)[0]
-            new_element = self.document.xpath("//*[@id='%s']"% new_ref,
-                                              namespaces=NSS)[0]
-            (old_x, old_y) = self.find_reasonable_center_xy(old_element)
-            (new_x, new_y) = self.find_reasonable_center_xy(new_element)
-            self.logwrite(" use data: %f,%f %f,%f %f,%f\n"
-                          % (use_translate[0],
-                             use_translate[1],
-                             old_x, old_y,
-                             new_x, new_y))
-            use.set("transform",
-                    "translate(%f,%f)" % (
-                    use_translate[0] - new_x + old_x,
-                    use_translate[1] - new_y + old_y))
+        old_element = self.document.xpath("//*[@id='%s']"% old_ref,
+                                          namespaces=NSS)[0]
+        new_element = self.document.xpath("//*[@id='%s']"% new_ref,
+                                          namespaces=NSS)[0]
+        (old_x, old_y) = self.find_reasonable_center_xy(old_element)
+        (new_x, new_y) = self.find_reasonable_center_xy(new_element)
+        self.logwrite(" use data: old %f,%f   new %f,%f\n"
+                      % (old_x, old_y,
+                         new_x, new_y))
+        simpletransform.applyTransformToNode(
+            simpletransform.parseTransform("translate(%f,%f)" % (
+                old_x - new_x,
+                old_y - new_y)),
+            use
+        )
 
     def find_reasonable_center_xy(self, element):
-        x = element.get('x')
-        if x:
-            return ((float(self.unittouu(x))
-                     + float(self.unittouu(element.get('width'))) / 2),
-                    (float(self.unittouu(element.get('y')))
-                     + float(self.unittouu(element.get('height'))) / 2))
-        else:
-            return (float(element.get(inkex.addNS('cx', 'sodipodi'))),
-                    float(element.get(inkex.addNS('cy', 'sodipodi'))))
+        rect = self.geometry[element.get('id')]
+        return (rect.x + rect.w / 2.0,
+                rect.y + rect.h / 2.0)
 
-        y = element.get('y')
-        if y:
-            y = float(self.unittouu(y))
-        else:
-            y = float(element.get(inkex.addNS('cy', 'sodipodi')))
-        return (x, y)
-
-    def get_translation(self, element):
-        m = self.translatere.match(element.get('transform'))
-        if not m:
-            return None
-        x = float(m.group(1))
-        y = float(m.group(2))
-        return (x, y)
+    def get_transform(self, element):
+        transform = element.get('transform')
+        return simpletransform.parseTransform(transform)
 
     def setMultilineText(self, element, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
