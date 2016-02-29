@@ -197,7 +197,6 @@ class CountersheetEffect(inkex.Effect):
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
-        self.fillgradientre=re.compile("(.*fill:url[(]#)([^)]+Gradient)([0-9]+)(.*)")
 
     def logwrite(self, msg):
         if not self.log and self.options.logfile:
@@ -221,51 +220,6 @@ class CountersheetEffect(inkex.Effect):
                             [ns,tag] = a.split(':')
                             a = inkex.addNS(tag, ns)
                         n.set(a, v)
-
-    def fix_gradients(self, group, dx, dy):
-        self.logwrite('fix_gradients %s:\n' % group.get('id'))
-        for e in group.getiterator():
-            style = e.get('style')
-            if style != None:
-                m = self.fillgradientre.match(style)
-                if m != None:
-                    gradient_type = m.group(2)
-                    gradient_id = gradient_type + m.group(3)
-                    prestyle = m.group(1)
-                    poststyle = m.group(4)
-                    self.logwrite("found gradient %s %s\n"
-                                  % (gradient_type, gradient_id))
-                    gpath = ("//svg:%s[@id='%s']" %
-                             (gradient_type, gradient_id))
-                    for t in self.document.xpath(gpath,
-                                                 namespaces=NSS):
-                        gradient_clone = deepcopy(t)
-                        gradient_clone_id = self.gen_id(gradient_id)
-                        gradient_clone.set('id', gradient_clone_id)
-                        self.translate_gradient(gradient_clone, dx, dy)
-                        t.getparent().append(gradient_clone)
-                        e.set('style',
-                              '%s%s%s' % (prestyle,
-                                          gradient_clone_id,
-                                          poststyle))
-                        break
-    def gen_id(self, base=None):
-        if base == None:
-            base = 'cs_gen_id'
-        res = '%s_%d' % (base, self.nextid)
-        self.nextid = self.nextid + 1
-        return res
-
-    def translate_gradient(self, element, dx, dy):
-        transform = element.get("gradientTransform")
-        if transform:
-            m = self.translatere.match(transform)
-            if m == None:
-                return
-        self.logwrite("gradient transform %s: %f  %f\n" % (element.get('id'),
-                                                           dx, dy))
-        element.set("gradientTransform",
-                    "translate(%f,%f)" % (dx, dy))
 
     def translate_element(self, element, dx, dy):
         transform = element.get("transform")
@@ -408,7 +362,6 @@ class CountersheetEffect(inkex.Effect):
                 clone.set('x', "0.0")
                 clone.set('y', "0.0")
                 self.replaceattrs([clone], c.attrs)
-                self.fix_gradients(clone, -x, -y)
             else:
                 clone = deepcopy(group)
                 if killrect:
@@ -454,7 +407,6 @@ class CountersheetEffect(inkex.Effect):
                             ee.getparent().remove(ee)
                 self.replaceattrs(clone.iterdescendants(), c.attrs)
                 self.translate_element(clone, -x, -y)
-                self.fix_gradients(clone, -x, -y)
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
         if not foundold:

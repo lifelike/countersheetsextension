@@ -30,6 +30,7 @@ tests = [
     ['symbols.csv', 'symbols.svg'],
     ['commas_in_semicolons.csv', 'card.svg'],
     ['semicolons_in_commas.csv', 'card.svg'],
+    ['fills.csv', 'fills.svg'],
 ]
 
 for test in tests:
