@@ -13,7 +13,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="nato.svg">
   <defs
      id="defs4" />
@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="-179.94248"
-     inkscape:cy="873.4281"
+     inkscape:zoom="0.5"
+     inkscape:cx="284.50611"
+     inkscape:cy="881.30583"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="svg2"
      showgrid="false"
      inkscape:window-width="1276"
      inkscape:window-height="944"
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,24 +51,31 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:#bfdb9f;fill-opacity:0.75294119;fill-rule:evenodd;stroke:#bfdba0;stroke-opacity:1"
-       id="green"
-       width="56.25"
-       height="56.25"
-       x="-118.49964"
-       y="13.181602"
-       inkscape:label="#rect3023" />
-    <rect
-       style="fill:#cc0000;fill-opacity:0.75294119;fill-rule:evenodd;stroke:#bfdba0;stroke-opacity:1"
-       id="red"
-       width="56.25"
-       height="56.25"
-       x="-118.49964"
-       y="80.181602"
-       inkscape:label="#rect3023" />
     <g
-       id="g5162">
+       id="g104201">
+      <rect
+         inkscape:label="#rect3023"
+         y="11.767388"
+         x="-118.49964"
+         height="56.25"
+         width="56.25"
+         id="green"
+         style="fill:#bfdb9f;fill-opacity:1;fill-rule:evenodd;stroke:#bfdb9f;stroke-opacity:1" />
+    </g>
+    <g
+       id="g104204">
+      <rect
+         inkscape:label="#rect3023"
+         y="80.181602"
+         x="-118.49964"
+         height="56.25"
+         width="56.25"
+         id="red"
+         style="fill:#cd0000;fill-opacity:1;fill-rule:evenodd;stroke:#cd0000;stroke-opacity:1" />
+    </g>
+    <g
+       id="g5162"
+       transform="matrix(0.98253273,0,0,0.98253275,-1.3580402,3.3527616)">
       <rect
          inkscape:label="#rect3023"
          y="163.8206"
@@ -76,22 +83,23 @@
          height="56.25"
          width="56.25"
          id="inf"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.0177778;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
          id="path5129"
-         d="m -94.82807,199.54089 33.713841,-23.61231"
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         d="m -94.204067,199.10488 32.465842,-22.73085"
+         style="fill:none;stroke:#000000;stroke-width:1.0177778px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
          id="path5131"
-         d="m -95.080608,175.92858 34.218917,23.86485"
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         d="M -94.447257,176.37403 -61.495036,199.348"
+         style="fill:none;stroke:#000000;stroke-width:1.0177778px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
     <g
-       id="g5272">
+       id="g5272"
+       transform="matrix(0.98253273,0,0,0.98253275,-75.047125,16.381083)">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.0177778;stroke-opacity:1"
          id="symbolrect"
          width="56.25"
          height="56.25"
@@ -105,13 +113,14 @@
          height="23.864855"
          width="33.587574"
          id="symbolbackground"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.0177778;stroke-opacity:1"
          inkscape:label="#rect5269" />
     </g>
     <g
-       id="g5299">
+       id="g5299"
+       transform="matrix(0.98253273,0,0,0.98253275,-2.6857969,3.8357821)">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.0177778;stroke-opacity:1"
          id="unitvalues"
          width="56.25"
          height="56.25"
@@ -124,7 +133,7 @@
          id="attack"
          y="244.49268"
          x="-171.13025"
-         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
          xml:space="preserve"><tspan
            y="244.49268"
            x="-171.13025"
@@ -133,7 +142,7 @@
       <text
          inkscape:label="#text5265"
          xml:space="preserve"
-         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans Bold';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none"
          x="-130.12846"
          y="244.49268"
          id="move"
@@ -145,7 +154,7 @@
       <text
          inkscape:label="#text5295"
          xml:space="preserve"
-         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
          x="-153.6958"
          y="244.49268"
          id="defend"

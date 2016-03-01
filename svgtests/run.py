@@ -16,12 +16,11 @@ add_countersheets_paths()
 inputdir = os.path.join('svgtests', 'input')
 outputdir = os.path.join('svgtests', 'output')
 expecteddir = os.path.join('svgtests', 'expected')
+bitmapsdir = os.path.join('svgtests', 'bitmaps')
+logdir = os.path.join('svgtests', 'log')
 
 if not os.path.exists(outputdir):
     os.mkdir(outputdir)
-
-for f in glob.glob(os.path.join(inputdir, "*.png")):
-    shutil.copy(f, outputdir)
 
 tests = [
     ['nato1.csv', 'nato.svg'],
@@ -31,7 +30,14 @@ tests = [
     ['commas_in_semicolons.csv', 'card.svg'],
     ['semicolons_in_commas.csv', 'card.svg'],
     ['fills.csv', 'fills.svg'],
+    ['layout11.csv', 'layout.svg'],
+    ['layout12.csv', 'layout.svg'],
+    ['layout10+10+10.csv', 'layout.svg'],
 ]
+
+for f in glob.glob(os.path.join(inputdir, "*.png")):
+    shutil.copy(f, outputdir)
+    shutil.copy(f, bitmapsdir)
 
 for test in tests:
     [basedatafile, basesvginfile] = test
@@ -41,10 +47,15 @@ for test in tests:
     svginfile = os.path.join(inputdir, basesvginfile)
     svgout = open(svgoutfile, "w")
     command = os.path.join('.', 'countersheet.py')
+    logfile = os.path.join(logdir, 'cs_svgtests-%s.txt' % svgoutbasename)
+    layer_names = "cs_" + svgoutbasename
     commandline = [command,
                    '-d', datafile,
-                   '-l', '/tmp/cs_svgtests.log',
+                   '-l', logfile,
                    '-r', '10',
+                   '-f', '90',
+                   '-b', bitmapsdir,
+                   '-N', svgoutbasename + '--',
                    svginfile
                    ]
 

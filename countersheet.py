@@ -174,6 +174,8 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'string', dest = 'what',
                                      default = '',
                                      help = 'Name')
+        self.OptionParser.add_option('-N', '--sheets-bitmap-name', dest='bitmapname',
+                                     default = '') # undocumented, for svgtests
         self.OptionParser.add_option('-d', '--data', action = 'store',
                                      type = 'string', dest = 'datafile',
                                      default = 'countersheet.csv',
@@ -448,6 +450,9 @@ class CountersheetEffect(inkex.Effect):
         else:
             exportsize = "-w %d -h %d" % (width, height)
         for id in ids:
+            if len(self.document.xpath("//*[@id='%s']" % id,
+                                       namespaces=NSS)) == 0:
+                continue
             cmd='inkscape -i %s -j -e "%s" "%s" "%s"' % (
                 id, self.getbitmapfilename(id),
                 exportsize, tmpfilename)
@@ -458,7 +463,8 @@ class CountersheetEffect(inkex.Effect):
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id):
-        return os.path.join(self.options.bitmapdir, id) + ".png"
+        return os.path.join(self.options.bitmapdir,
+                            self.bitmapname + id) + ".png"
 
     def exportSheetBitmaps(self):
         if (self.options.bitmapsheetsdpi > 0
@@ -535,6 +541,7 @@ class CountersheetEffect(inkex.Effect):
 
         self.exportids = []
         self.cslayers = []
+        self.bitmapname = self.options.bitmapname
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
@@ -695,6 +702,7 @@ class CountersheetEffect(inkex.Effect):
 
         if len(layer.getchildren()):
             svg.append(layer)
+
         exportedbitmaps = self.exportIDBitmaps()
         self.post(counters)
         self.exportSheetBitmaps()
