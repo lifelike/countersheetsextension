@@ -20,7 +20,6 @@
 import inkex
 from inkex import NSS
 import csv
-import simpletransform
 import fnmatch
 import re
 import os
@@ -224,14 +223,12 @@ class CountersheetEffect(inkex.Effect):
 
 
     def translate_element(self, element, dx, dy):
-        transform = element.get("transform")
-        if transform:
-            mm = self.matrixre.match(transform)
-            if mm != None:
-                element.set("transform", "%s%f,%f)" % (mm.group(1),dx, dy))
-                return
-        element.set("transform",
-                    "translate(%f,%f)" % (dx, dy))
+        translate = "translate(%f,%f)" % (dx, dy)
+        old_transform = element.get('transform')
+        if old_transform:
+            element.set('transform', translate + " " + old_transform)
+        else:
+            element.set('transform', translate)
 
     def translate_use_element(self, use, old_ref, new_ref):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
@@ -244,21 +241,12 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite(" use data: old %f,%f   new %f,%f\n"
                       % (old_x, old_y,
                          new_x, new_y))
-        simpletransform.applyTransformToNode(
-            simpletransform.parseTransform("translate(%f,%f)" % (
-                old_x - new_x,
-                old_y - new_y)),
-            use
-        )
+        self.translate_element(use, old_x - new_x, old_y - new_y)
 
     def find_reasonable_center_xy(self, element):
         rect = self.geometry[element.get('id')]
         return (rect.x + rect.w / 2.0,
                 rect.y + rect.h / 2.0)
-
-    def get_transform(self, element):
-        transform = element.get('transform')
-        return simpletransform.parseTransform(transform)
 
     def setMultilineText(self, element, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
