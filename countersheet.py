@@ -33,6 +33,8 @@ CSNS = ""
 
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
+BOX_MARGIN = 2.0
+
 class Counter:
     def __init__(self, nr):
         self.nr = nr
@@ -317,64 +319,62 @@ class CountersheetEffect(inkex.Effect):
                          "that was specified in the CSV data file."
                          % rectname)
             rect = rects[rectname]
-            x = self.geometry[rectname].x
-            y = self.geometry[rectname].y
-            width = self.geometry[rectname].w
-            height = self.geometry[rectname].h
+            group = rect.getparent()
+            groupid = group.get('id')
+            x = self.geometry[groupid].x
+            y = self.geometry[groupid].y
+            width = self.geometry[groupid].w
+            height = self.geometry[groupid].h
             res[0] = max(res[0], width)
             res[1] = max(res[1], height)
-            group = rect.getparent()
             if group.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
                 self.logwrite("rect not in group '%s'.\n" % rectname)
-                clone = deepcopy(rect)
-                clone.set('x', "0.0")
-                clone.set('y', "0.0")
-                self.replaceattrs([clone], c.attrs)
-            else:
-                clone = deepcopy(group)
-                if killrect:
-                    for r in clone.xpath('//svg:rect', namespaces=NSS):
-                        if r.get("id") == rectname:
-                            clone.remove(r)
-                            break
-                textishnodes = []
-                textishnodes.extend(clone.xpath('//svg:text', namespaces=NSS))
-                textishnodes.extend(clone.xpath('//svg:flowSpan',
-                                                namespaces=NSS))
-                textishnodes.extend(clone.xpath('//svg:flowRoot',
-                                                namespaces=NSS))
-                for t in textishnodes:
-                    self.substitute_text(c, t, t.get("id"))
-                for i in clone.xpath('//svg:image', namespaces=NSS):
-                    imageid = i.get("id")
-                    if not imageid:
-                        continue
-                    for glob,image in c.subst.iteritems():
-                        if fnmatch.fnmatchcase(imageid, glob):
-                            i.set(inkex.addNS("absref", "sodipodi"), image)
-                            i.set(inkex.addNS("href", "xlink"), image)
-                for u in clone.xpath('//svg:use', namespaces=NSS):
-                    useid = u.get("id")
-                    if not useid:
-                        continue
-                    for glob,new_ref in c.subst.iteritems():
-                        if fnmatch.fnmatchcase(useid, glob):
-                            xlink_attribute = inkex.addNS("href", "xlink")
-                            old_ref = u.get(xlink_attribute)[1:]
-                            u.set(xlink_attribute, "#" + new_ref)
-                            self.translate_use_element(u, old_ref, new_ref)
-                if len(c.excludeids):
-                    excludeelements = []
-                    for e in clone.iterdescendants():
-                        eid = e.get("id")
-                        if not c.is_included(eid):
-                            excludeelements.append(e)
-                    for ee in excludeelements:
-                        eeparent = ee.getparent()
-                        if eeparent is not None:
-                            ee.getparent().remove(ee)
-                self.replaceattrs(clone.iterdescendants(), c.attrs)
-                self.translate_element(clone, -x, -y)
+                sys.exit("Rectangle '%s' not in a group. Can not be template."
+                         % rectname)
+            clone = deepcopy(group)
+            if killrect:
+                for r in clone.xpath('//svg:rect', namespaces=NSS):
+                    if r.get("id") == rectname:
+                        clone.remove(r)
+                        break
+            textishnodes = []
+            textishnodes.extend(clone.xpath('//svg:text', namespaces=NSS))
+            textishnodes.extend(clone.xpath('//svg:flowSpan',
+                                            namespaces=NSS))
+            textishnodes.extend(clone.xpath('//svg:flowRoot',
+                                            namespaces=NSS))
+            for t in textishnodes:
+                self.substitute_text(c, t, t.get("id"))
+            for i in clone.xpath('//svg:image', namespaces=NSS):
+                imageid = i.get("id")
+                if not imageid:
+                    continue
+                for glob,image in c.subst.iteritems():
+                    if fnmatch.fnmatchcase(imageid, glob):
+                        i.set(inkex.addNS("absref", "sodipodi"), image)
+                        i.set(inkex.addNS("href", "xlink"), image)
+            for u in clone.xpath('//svg:use', namespaces=NSS):
+                useid = u.get("id")
+                if not useid:
+                    continue
+                for glob,new_ref in c.subst.iteritems():
+                    if fnmatch.fnmatchcase(useid, glob):
+                        xlink_attribute = inkex.addNS("href", "xlink")
+                        old_ref = u.get(xlink_attribute)[1:]
+                        u.set(xlink_attribute, "#" + new_ref)
+                        self.translate_use_element(u, old_ref, new_ref)
+            if len(c.excludeids):
+                excludeelements = []
+                for e in clone.iterdescendants():
+                    eid = e.get("id")
+                    if not c.is_included(eid):
+                        excludeelements.append(e)
+                for ee in excludeelements:
+                    eeparent = ee.getparent()
+                    if eeparent is not None:
+                        ee.getparent().remove(ee)
+            self.replaceattrs(clone.iterdescendants(), c.attrs)
+            self.translate_element(clone, -x, -y)
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
         if not foundold:
@@ -403,15 +403,9 @@ class CountersheetEffect(inkex.Effect):
                      == 'countersheet_layout')):
                 res = []
                 self.logwrite("Found layout layer!\n")
-                #  for r in g.xpath('//svg:rect', namespaces=NSS):
                 for c in g.getchildren():
                     if c.tag == inkex.addNS('rect','svg'):
-                        res.append(
-                            {'x':float(self.unittouu(c.get('x'))),
-                             'y':float(self.unittouu(c.get('y'))),
-                             'w':float(self.unittouu(c.get('width'))),
-                             'h':float(self.unittouu(c.get('height')))
-                             })
+                        res.append(self.geometry[c.get('id')])
                     elif c.tag == inkex.addNS('text','svg'):
                         pass # use to set countersheet label?
                 return res
@@ -500,28 +494,37 @@ class CountersheetEffect(inkex.Effect):
         linelen = self.options.registrationmarkslen
         if linelen < 1:
             return
+        max_x = 0
+        max_y = 0
         for x in xregistrationmarks:
             layer.append(
-                self.create_registrationline(position['x'] + x,
-                                             position['y'] - linelen,
-                                             position['x'] + x,
-                                             position['y'] - 1))
+                self.create_registrationline(position.x + x,
+                                             position.y - linelen,
+                                             position.x + x,
+                                             position.y - 1))
+            max_x = max(max_x, x)
+
+        for y in yregistrationmarks:
+            layer.append(self.create_registrationline(position.x - linelen,
+                                                      position.y + y,
+                                                      position.x - 1,
+                                                      position.y + y))
+            max_y = max(max_y, y)
+
+        for x in xregistrationmarks:
             layer.append(
                 self.create_registrationline(
-                position['x'] + x,
-                position['y'] + position['h'],
-                position['x'] + x,
-                position['y'] + position['h'] + linelen))
+                position.x + x,
+                position.y + max_y,
+                position.x + x,
+                position.y + max_y + linelen))
+
         for y in yregistrationmarks:
-            layer.append(self.create_registrationline(position['x'] - linelen,
-                                                      position['y'] + y,
-                                                      position['x'] - 1,
-                                                      position['y'] + y))
             layer.append(self.create_registrationline(
-                position['x'] + position['w'],
-                position['y'] + y,
-                position['x'] + position['w'] + linelen,
-                position['y'] + y))
+                position.x + max_x,
+                position.y + y,
+                position.x + max_x + linelen,
+                position.y + y))
 
     def effect(self):
         # Get script "--what" option value.
@@ -593,21 +596,20 @@ class CountersheetEffect(inkex.Effect):
         positions = self.readLayout(svg)
         if not positions or len(positions) < 1:
             haslayout = False
-            positions = [{'x' : 0.0,
-                          'y' : 0.0,
-                          'w' : docwidth,
-                          'h' : float(self.unittouu(svg.get('height')))
-                          }]
+            positions = [Rectangle(0.0,
+                                   0.0,
+                                   docwidth,
+                                   float(self.unittouu(svg.get('height'))))]
             if self.options.registrationmarkslen > 0:
                 margin = self.options.registrationmarkslen
-                positions[0]['x'] += margin
-                positions[0]['y'] += margin
-                positions[0]['w'] -= margin * 2
-                positions[0]['h'] -= margin * 2
+                positions[0].x += margin
+                positions[0].y += margin
+                positions[0].w -= margin * 2
+                positions[0].h -= margin * 2
 
         for n,p in enumerate(positions):
             self.logwrite("layout position %d: %f %f %f %f\n"
-                          % (n, p['x'], p['y'], p['w'], p['h']))
+                          % (n, p.x, p.y, p.w, p.h))
 
         row = 0
         col = 0
@@ -632,25 +634,26 @@ class CountersheetEffect(inkex.Effect):
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
                 width, height=self.generatecounter(c, rects, layer,
-                                                   positions[box]['x']+colx,
-                                                   positions[box]['y']+rowy)
+                                                   positions[box].x+colx,
+                                                   positions[box].y+rowy)
                 if c.hasback:
-                    c.backxs.append(positions[box]['x'] + colx + width)
-                    c.backys.append(positions[box]['y'] + rowy)
+                    c.backxs.append(positions[box].x + colx + width)
+                    c.backys.append(positions[box].y + rowy)
                     bstack.append(c)
                 col = col + 1
                 colx = colx + width
                 xregistrationmarks.add(colx)
                 if rowy + height > nextrowy:
                     nextrowy = rowy + height
-                if colx + width > positions[box]['w'] or c.endbox or c.endrow:
+                if (colx + width > positions[box].w + BOX_MARGIN
+                    or c.endbox or c.endrow):
                     col = 0
                     colx = 0
                     row = row + 1
                     rowy = nextrowy
                     nextrowy = rowy + 1
-                    yregistrationmarks.add(nextrowy - 1)
-                    if (nextrowy + height > positions[box]['h']
+                    yregistrationmarks.add(rowy)
+                    if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
                         if hasback:
                             self.addbacks(backlayer, bstack, docwidth,
@@ -662,10 +665,12 @@ class CountersheetEffect(inkex.Effect):
                         yregistrationmarks = set([0])
                         bstack = []
                         box = box + 1
+                        self.logwrite(" now at box %d of %d\n" % (box, len(positions)))
+                        self.logwrite(" i: %d    len(counters): %d\n" % (i, len(counters)))
                         row = 0
                         rowy = 0
-                        nextrowy = 1
-                        if box == len(positions) and i < len(counters) - 1:
+                        nextrowy = 0
+                        if box == len(positions) and i < len(counters):
                             csn = csn + 1
                             if hasback:
                                 svg.append(backlayer)
@@ -677,7 +682,7 @@ class CountersheetEffect(inkex.Effect):
         if ((len(xregistrationmarks) > 1
              or len(yregistrationmarks) > 1)
             and len(layer.getchildren())):
-            yregistrationmarks.add(nextrowy - 1)
+            yregistrationmarks.add(nextrowy)
             self.addregistrationmarks(
                 xregistrationmarks, yregistrationmarks,
                 positions[box], layer)

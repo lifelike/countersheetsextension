@@ -28,14 +28,6 @@ Main Features
 * Registration marks for manual cutting of the sheets.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
 
-Main Problem
-------------
-
-Not everything you can draw in Inkscape can be handled by the
-extension. Known to work are rectangles, bitmap images, paths, and
-text. If something you need isn't supported, render it to a bitmap and
-use the bitmap instead.
-
 Installation
 ------------
 
