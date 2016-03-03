@@ -33,7 +33,15 @@ CSNS = ""
 
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
+
+# A bit of a hack because of rounding errors sometimes
+# making boxes not fill up properly.
+# There should be a better fix.
 BOX_MARGIN = 2.0
+
+# Hardcoded (for now?) what DPI to use for
+# some non-vector content in exported PDF.
+PDF_DPI = 300
 
 class Counter:
     def __init__(self, nr):
@@ -479,7 +487,9 @@ class CountersheetEffect(inkex.Effect):
     def exportSheetPDFs(self):
         if (self.options.pdfdir
             and len(self.cslayers) > 0):
-            self.export_using_inkscape(self.cslayers, "", "-A",
+            self.export_using_inkscape(self.cslayers,
+                                       "-d %d" % PDF_DPI,
+                                       "-A",
                                        self.options.pdfdir,
                                        "pdf")
 
