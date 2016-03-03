@@ -2,15 +2,14 @@ Countersheets Extension for Inkscape
 ====================================
 
 Inkscape extension for the layout of sheets of cards, tiles, or counters
-for boardgames. It was originally part of the Inkscape Board Game
-Extensions project (see http://www.lysator.liu.se/~perni/iboardgameexts/).
+for boardgames.
 
 Since the extension was originally created for wargame counters, the
 generated images in this document will be refered to as counters,
 except in examples explicitly about making something else (like sheets
 of cards). There is very little in the tool that is specific to
 counters though, or to board games. It can be used as a
-generic templating tool.
+generic templating tool (mail merge).
 
 Main Features
 -------------
@@ -27,6 +26,8 @@ Main Features
 * Any counters can be mixed on the same sheet (even different sizes).
 * Registration marks for manual cutting of the sheets.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
+* Export created sheets to PNG or PDF.
+* Export individual counters to PNG images.
 
 Installation
 ------------
@@ -119,3 +120,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Documentation is Copyright 2009-2016 Eric Hanuise and Pelle Nilsson,
+available under the Creative Commons Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+
+Included examples in the documentation (the SVG and CSV files) are copyright
+Pelle Nilsson and made avilable under the Creative Commons Zero License
+(https://creativecommons.org/publicdomain/zero/1.0/) for any use (including
+commercial). All images used in the examples are by
+KenneyNL (https://kenney.itch.io/) made available under the Creative Commons
+Zero License.

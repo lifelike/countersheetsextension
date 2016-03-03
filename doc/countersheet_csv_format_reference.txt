@@ -1,7 +1,7 @@
 Inkscape Boardgames Extensions CSV data file reference
 ------------------------------------------------------
-Copyright 2009 Eric Hanuise (ehanuise -at- fantasybel _dot_ net)
-           and Pelle Nilsson (ibe@pelle-n.net)
+Copyright 2009-2016 Eric Hanuise (ehanuise -at- fantasybel _dot_ net)
+           and Pelle Nilsson (perni -at- lysator _dot_ liu _dot_ se)
 
  Distribution of this document in original or modified form
  is allowed under the Creative Commons Attribution 3.0 License
