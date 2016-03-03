@@ -17,6 +17,7 @@ inputdir = os.path.join('svgtests', 'input')
 outputdir = os.path.join('svgtests', 'output')
 expecteddir = os.path.join('svgtests', 'expected')
 bitmapsdir = os.path.join('svgtests', 'bitmaps')
+pdfdir = os.path.join('svgtests', 'pdf')
 logdir = os.path.join('svgtests', 'log')
 
 if not os.path.exists(outputdir):
@@ -38,6 +39,7 @@ tests = [
 for f in glob.glob(os.path.join(inputdir, "*.png")):
     shutil.copy(f, outputdir)
     shutil.copy(f, bitmapsdir)
+    shutil.copy(f, pdfdir)
 
 for test in tests:
     [basedatafile, basesvginfile] = test
@@ -55,6 +57,7 @@ for test in tests:
                    '-r', '10',
                    '-f', '90',
                    '-b', bitmapsdir,
+                   '-p', pdfdir,
                    '-N', svgoutbasename + '--',
                    svginfile
                    ]

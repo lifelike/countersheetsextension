@@ -18,6 +18,8 @@
         max="6000">0</param>
   <param name="bitmapdir" type="string"
         _gui-text="Bitmap Output Directory (optional)"></param>
+  <param name="pdfdir" type="string"
+        _gui-text="PDF Output Directory (optional)"></param>
   <param name="log" type="string" _gui-text="Log File (optional)"></param>
   <effect>
     <object-type>all</object-type>

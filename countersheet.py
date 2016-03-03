@@ -194,6 +194,8 @@ class CountersheetEffect(inkex.Effect):
                                      default = '0')
         self.OptionParser.add_option('-b', '--bitmapdir', action = 'store',
                                      type = 'string', dest = 'bitmapdir')
+        self.OptionParser.add_option('-p', '--pdfdir', action = 'store',
+                                     type = 'string', dest = 'pdfdir')
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
                                      type = 'int',
@@ -441,30 +443,45 @@ class CountersheetEffect(inkex.Effect):
         return geometry
 
     def exportBitmaps(self, ids, width, height, dpi=0):
-        tmpfilename = os.path.join(self.options.bitmapdir, ".__tmp__.svg")
-        tmpfile = open(tmpfilename, 'w')
-        self.document.write(tmpfile)
-        tmpfile.close()
         if dpi > 0:
             exportsize = "-d %d" % dpi
         else:
             exportsize = "-w %d -h %d" % (width, height)
+        self.export_using_inkscape(ids, exportsize, "-e",
+                                   self.options.bitmapdir,
+                                   "png")
+
+    def export_using_inkscape(self, ids, size_flags, export_flags,
+                              exportdir, extension):
+        tmpfilename = os.path.join(exportdir, ".__tmp__.svg")
+        tmpfile = open(tmpfilename, 'w')
+        self.document.write(tmpfile)
+        tmpfile.close()
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
                 continue
-            cmd='inkscape -i %s -j -e "%s" "%s" "%s"' % (
-                id, self.getbitmapfilename(id),
-                exportsize, tmpfilename)
+            cmd='inkscape -i %s -j %s "%s" %s "%s"' % (
+                id,
+                export_flags,
+                self.getbitmapfilename(id, exportdir, extension), #FIXME
+                size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
             f = os.popen(cmd,'r')
             f.read()
             f.close()
         os.remove(tmpfilename)
 
-    def getbitmapfilename(self, id):
-        return os.path.join(self.options.bitmapdir,
-                            self.bitmapname + id) + ".png"
+    def getbitmapfilename(self, id, directory, extension):
+        return os.path.join(directory,
+                            self.bitmapname + id) + "." + extension
+
+    def exportSheetPDFs(self):
+        if (self.options.pdfdir
+            and len(self.cslayers) > 0):
+            self.export_using_inkscape(self.cslayers, "", "-A",
+                                       self.options.pdfdir,
+                                       "pdf")
 
     def exportSheetBitmaps(self):
         if (self.options.bitmapsheetsdpi > 0
@@ -706,6 +723,7 @@ class CountersheetEffect(inkex.Effect):
         exportedbitmaps = self.exportIDBitmaps()
         self.post(counters)
         self.exportSheetBitmaps()
+        self.exportSheetPDFs()
 
     def before_counter(self, counter):
         pass
