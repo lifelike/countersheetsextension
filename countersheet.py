@@ -438,7 +438,7 @@ class CountersheetEffect(inkex.Effect):
         "Return geometry Rectangle (x, y, w, h) for each element id, as dict."
         geometry = {}
         cmd = 'inkscape --query-all "%s"' % filename
-        _, f, err = os.popen3(cmd, 'r')
+        _, f, err = os.popen3(cmd, 't')
         reader = csv.reader(f)
         err.close()
         for line in reader:
