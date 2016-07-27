@@ -278,7 +278,7 @@ class CountersheetEffect(inkex.Effect):
     def setFirstTextChild(self, element, text):
         for c in element.getchildren():
             if c.text:
-                c.text = text
+                c.text = text.decode('utf8') # this fixes possible issues with accents and non-ASCII symbols
                 return True
             elif self.setFirstTextChild(c, text):
                 return True
