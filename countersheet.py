@@ -28,6 +28,7 @@ import lxml
 from lxml import etree
 from copy import deepcopy
 import sys
+import simpletransform
 
 CSNS = ""
 
@@ -300,6 +301,26 @@ class CountersheetEffect(inkex.Effect):
         layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
         return layer
 
+    def is_layer( self, element ):
+        try:
+            return element.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
+        except:
+            return False
+
+    def get_layer( self, element, sourceElementId = None ):
+        '''
+        finds the layer that the svg element is under
+
+        Should be called without the sourceElementId. The routine fills that in.
+        '''
+        if sourceElementId is None: sourceElementId = element.get( "id" )
+        if self.is_layer( element ): return element
+        parent = element.getparent()
+        if parent is None:
+            raise ValueError( "Unable to find layer for element [" + sourceElementId + "]" )
+        if self.is_layer( parent ): return parent
+        return self.get_layer( parent, sourceElementId )
+        
     def generatecounter(self, c, rects, layer, colx, rowy):
         res = [0, 0]
         foundold = False
@@ -332,6 +353,7 @@ class CountersheetEffect(inkex.Effect):
                          % rectname)
             rect = rects[rectname]
             group = rect.getparent()
+            source_layer = self.get_layer( rect )
             groupid = group.get('id')
             x = self.geometry[groupid].x
             y = self.geometry[groupid].y
@@ -339,7 +361,7 @@ class CountersheetEffect(inkex.Effect):
             height = self.geometry[groupid].h
             res[0] = max(res[0], width)
             res[1] = max(res[1], height)
-            if group.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
+            if self.is_layer( group ):
                 self.logwrite("rect not in group '%s'.\n" % rectname)
                 sys.exit("Rectangle '%s' not in a group. Can not be template."
                          % rectname)
@@ -386,7 +408,9 @@ class CountersheetEffect(inkex.Effect):
                     if eeparent is not None:
                         ee.getparent().remove(ee)
             self.replaceattrs(clone.iterdescendants(), c.attrs)
-            self.translate_element(clone, -x, -y)
+            converter = DocumentTopLeftCoordinateConverter( source_layer )
+            ( source_layer_adjusted_x, source_layer_adjusted_y) = converter.SVG_to_dtl( ( -x, -y ) )
+            self.translate_element(clone, source_layer_adjusted_x, source_layer_adjusted_y)
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
         if not foundold:
@@ -1027,6 +1051,52 @@ class IDLayout:
     def set_setting(self, setting, value):
         if len(value):
             setting.set(CounterID(value))
+
+
+class DocumentTopLeftCoordinateConverter:
+    '''
+    Converts SVG coordinates from/to coordinates with origin at the top-left of the document. 
+    These coordinates can get out of sync when the page size is changed. 
+
+    The class computes any offset at time of initialization. If an instance of the class is changed
+    then the page size is changed, the results of calculation will be wrong. Construct and discard
+    instances of this class as needed; do not keep instances for long times. 
+
+    Different layers in the svg document can have different offsets. Create a separate converter for every
+    layer you are working with.
+
+    This class only works with simple translation transforms of the layer group element. I am hoping that
+    those are the only transforms that are ever applied to layer group elements. If any other type of
+    transform is applied to a layer group element, hilarity will ensue.
+    '''
+
+    def __init__(self, layerElement):
+        '''
+        '''
+        transform = layerElement.get( "transform" )
+        if not transform is None:
+           matrix = simpletransform.parseTransform( transform )
+           dx = matrix[ 0 ][ 2 ]
+           dy = matrix[ 1 ][ 2 ]
+        else:
+           dx = 0
+           dy = 0
+        self._transformX = dx
+        self._transformY = dy
+
+
+    def dtl_to_SVG(self, dtl_point ):
+        '''
+        :param point: 2-tuple (pair) of numerics (x,y) in document-top-left-coordinates (pixels)
+        :type arg1: 2-tuple (pair) of numerics
+        :return: returns 2-tuple of floats with values in SVG coordinates (pixels)
+        :rtype: 2-tuple
+        '''
+        return ( dtl_point[ 0 ] - self._transformX, dtl_point[ 1 ] - self._transformY )
+
+    def SVG_to_dtl( self, svg_point ):
+        return ( svg_point[ 0 ] + self._transformX, svg_point[ 1 ] + self._transformY )
+
 
 def find_stylepart(oldv, pname):
     pstart = oldv.find(pname + ":")

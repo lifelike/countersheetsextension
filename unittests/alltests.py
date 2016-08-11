@@ -24,6 +24,8 @@ def make_suite(test):
 
 tests = (countersheetstest.CountersheetsTest,
          countersheetstest.SingleCounterTest,
+         countersheetstest.LayerTranslationTest,
+         countersheetstest.DocumentTopLeftCoordinateConverterTest,
          countertest.SingleCounterTest,
          csvcounterdefinitionparsertest.CSVCounterDefinitionParserTest,
          csvcounterfactorytest.CSVCounterFactoryTest,

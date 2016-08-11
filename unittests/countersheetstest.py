@@ -3,6 +3,7 @@
 
 import unittest
 
+import inkex
 import countersheet
 
 def dummy_logwrite(msg):
@@ -101,6 +102,117 @@ class SingleCounterTest(unittest.TestCase):
         self.assertEqual('v', self.counter.subst['n'])
         self.assertFalse(self.counter.hasback)
         self.assertTrue(self.counter.back)
+
+class MockGroup:
+    def __init__(self, group_type, transform, parent = None):
+        self._group_type = group_type
+        self._transform = transform
+        self._parent = parent	
+
+    def get(self, attribute):
+        if ( attribute == inkex.addNS('groupmode', 'inkscape') and self._group_type == "layer" ):
+            return "layer";
+        elif ( attribute == "transform" ):
+            return self._transform
+        return "something besides layer"
+
+    def getparent(self):
+        return self._parent
+
+
+class LayerTranslationTest(unittest.TestCase):
+    def setUp(self):
+        self.countersheet_effect = countersheet.CountersheetEffect()
+
+    def test_number_is_not_a_layer(self):
+        self.assertFalse(self.countersheet_effect.is_layer( 4 ) )
+
+    def test_None_is_not_a_layer(self):
+        self.assertFalse(self.countersheet_effect.is_layer( None ) )
+
+    def test_a_layer_like_object_is_a_layer(self):
+        mock_layer = MockGroup( "layer", None )
+        self.assertTrue(self.countersheet_effect.is_layer( mock_layer ) )
+
+    def test_a_non_layer_like_object_is_not_a_layer(self):
+        mock_not_a_layer = MockGroup( "group not layer", None )
+        self.assertFalse(self.countersheet_effect.is_layer( mock_not_a_layer ) )
+
+    def test_get_layer_on_layer(self):
+        mock_layer = MockGroup( "layer", None )
+        self.assertEqual(self.countersheet_effect.get_layer(mock_layer), mock_layer)
+
+    def test_get_layer_on_group(self):
+        mock_layer = MockGroup( "layer", None )
+        mock_group = MockGroup( "not a layer", None, mock_layer )
+        self.assertEqual(self.countersheet_effect.get_layer(mock_group), mock_layer)
+
+    def test_get_layer_on_object_without_parent(self):
+        mock_group = MockGroup( "not a layer", None )
+        with self.assertRaises(ValueError):
+            self.countersheet_effect.get_layer(mock_group)
+
+
+class DocumentTopLeftCoordinateConverterTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def test_no_transform_dtl_to_SVG(self):
+        mock_layer = MockGroup( "layer", None )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.dtl_to_SVG( in_point )
+        self.assertEqual( in_point, converted_point )
+ 
+    def test_no_transform_SVG_to_dtl(self):
+        mock_layer = MockGroup( "layer", None )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.SVG_to_dtl( in_point )
+        self.assertEqual( in_point, converted_point )
+
+    def test_translate_0_0_dtl_to_SVG(self):
+        mock_layer = MockGroup( "layer", "translate(0,0)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.dtl_to_SVG( in_point )
+        self.assertEqual( in_point, converted_point )
+
+    def test_translate_0_0_SVG_to_dtl(self):
+        mock_layer = MockGroup( "layer", "translate(0,0)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.SVG_to_dtl( in_point )
+        self.assertEqual( in_point, converted_point )
+
+    def test_translate_25_30_dtl_to_SVG(self):
+        mock_layer = MockGroup( "layer", "translate(25,30)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.dtl_to_SVG( in_point )
+        self.assertEqual( converted_point, ( -25, -30 ) )
+
+    def test_translate_25_30_SVG_to_dtl(self):
+        mock_layer = MockGroup( "layer", "translate(25,30)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.SVG_to_dtl( in_point )
+        self.assertEqual( converted_point, ( 25, 30 ) )
+
+    def test_translate_minus_25_minus_30_dtl_to_SVG(self):
+        mock_layer = MockGroup( "layer", "translate(-25,-30)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.dtl_to_SVG( in_point )
+        self.assertEqual( converted_point, ( 25, 30 ) )
+
+    def test_translate_minus_25_minus_30_SVG_to_dtl(self):
+        mock_layer = MockGroup( "layer", "translate(-25,-30)" )
+        converter = countersheet.DocumentTopLeftCoordinateConverter(mock_layer)
+        in_point = ( 0, 0 )
+        converted_point = converter.SVG_to_dtl( in_point )
+        self.assertEqual( converted_point, ( -25, -30 ) )
+
 
 if __name__ == '__main__':
     unittest.main()
