@@ -423,7 +423,7 @@ class CountersheetEffect(inkex.Effect):
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
                     t.text = subst
-                if (t.tag == inkex.addNS('flowRoot','svg')
+                elif (t.tag == inkex.addNS('flowRoot','svg')
                     and subst.find("\\n") >= 0):
                     self.setMultilineText(t, subst.split("\\n"))
                 elif not self.setFirstTextChild(t, subst):
