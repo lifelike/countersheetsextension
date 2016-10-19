@@ -455,6 +455,11 @@ class CountersheetEffect(inkex.Effect):
             for c in g.getchildren():
                 if c.tag == inkex.addNS('rect','svg'):
                     res.append(self.geometry[c.get('id')])
+                elif c.tag == inkex.addNS('use','svg'):
+                    # using all clones even if they might not be rectangles
+                    # not sure if that is a problem in practice
+                    # but perhaps worth a FIXME some rainy day
+                    res.append(self.geometry[c.get('id')])
                 elif c.tag == inkex.addNS('text','svg'):
                     pass # use to set countersheet label?
             return res
