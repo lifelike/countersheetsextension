@@ -285,7 +285,7 @@ class CountersheetEffect(inkex.Effect):
                 return True
         return False
 
-    def addLayer(self, what, nr, extra=""):
+    def addLayer(self, svg, what, nr, extra=""):
         if len(extra) > 0:
             extralabel = " (%s)" % extra
             extraid = "_%s" % extra
@@ -294,6 +294,13 @@ class CountersheetEffect(inkex.Effect):
             extraid = ""
         llabel = 'Countersheet %s %d%s' % (what, nr, extralabel)
         lid = 'cs_layer_%d%s' % (nr, extraid)
+
+        if self.find_layer(svg, llabel) is not None:
+            sys.exit("Image already contains a layer '%s'. "
+                     "Remove that layer before running extension again. "
+                     "Or set a different Name when running the extension. "
+                     "Or just rename the existing layer." % llabel)
+
         self.cslayers.append(lid)
         layer = etree.Element(inkex.addNS('g', 'svg'))
         layer.set(inkex.addNS('label', 'inkscape'), llabel)
@@ -432,19 +439,31 @@ class CountersheetEffect(inkex.Effect):
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
-    def readLayout(self, svg):
+    def find_layer(self, svg, layer_name):
+        """Find a layer with given label in the SVG.
+
+        Returns None if there is none, so always
+        check the return value. Nothing exceptional
+        about a SVG not containing a specific layer
+        so not going to throw an exception."""
+
         for g in svg.xpath('//svg:g', namespaces=NSS):
             if (g.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
                 and (g.get(inkex.addNS('label', 'inkscape'))
-                     == 'countersheet_layout')):
-                res = []
-                self.logwrite("Found layout layer!\n")
-                for c in g.getchildren():
-                    if c.tag == inkex.addNS('rect','svg'):
-                        res.append(self.geometry[c.get('id')])
-                    elif c.tag == inkex.addNS('text','svg'):
-                        pass # use to set countersheet label?
-                return res
+                     == layer_name)):
+                return g
+
+    def readLayout(self, svg):
+        g = self.find_layer(svg, "countersheet_layout")
+        if g is not None:
+            res = []
+            self.logwrite("Found layout layer!\n")
+            for c in g.getchildren():
+                if c.tag == inkex.addNS('rect','svg'):
+                    res.append(self.geometry[c.get('id')])
+                elif c.tag == inkex.addNS('text','svg'):
+                    pass # use to set countersheet label?
+            return res
         return False
 
     def addbacks(self, layer, bstack, docwidth, rects):
@@ -641,12 +660,12 @@ class CountersheetEffect(inkex.Effect):
         hasback = parser.hasback
 
         # Create a new layer.
-        layer = self.addLayer(what, 1)
+        layer = self.addLayer(svg, what, 1)
 
         backlayer = False
 
         if hasback:
-            backlayer = self.addLayer(what, 1, "back")
+            backlayer = self.addLayer(svg, what, 1, "back")
 
         docwidth = float(self.unittouu(svg.get('width')))
 
@@ -732,9 +751,10 @@ class CountersheetEffect(inkex.Effect):
                             csn = csn + 1
                             if hasback:
                                 svg.append(backlayer)
-                                backlayer = self.addLayer(what, csn, "back")
+                                backlayer = self.addLayer(svg, what,
+                                                          csn, "back")
                             svg.append(layer)
-                            layer = self.addLayer(what, csn)
+                            layer = self.addLayer(svg, what, csn)
                             box = 0
 
         if ((len(xregistrationmarks) > 1
