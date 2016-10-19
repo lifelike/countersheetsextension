@@ -330,19 +330,14 @@ class CountersheetEffect(inkex.Effect):
         
     def generatecounter(self, c, rects, layer, colx, rowy):
         res = [0, 0]
-        foundold = False
-        clonegroup = None
-        if c.id:
-            oldc = self.document.xpath("//svg:g[@id='%s']"% c.id,
-                                       namespaces=NSS)
-            if oldc:
-                foundold = True
-                clonegroup = oldc[0]
-                layer = clonegroup.getparent()
-                for i in clonegroup.iterchildren():
-                    clonegroup.remove(i)
-        if not foundold:
-            clonegroup = etree.Element(inkex.addNS('g', 'svg'))
+        oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
+                                    namespaces=NSS)
+        if len(oldcs):
+            self.logwrite("Found existing %d old counters for %s"
+                          % (len(oldcs), c.id))
+            for oldc in oldcs:
+                oldc.set('id', '')
+        clonegroup = etree.Element(inkex.addNS('g', 'svg'))
         if c.id != None and len(c.id):
             clonegroup.set('id', c.id)
             self.exportids.append(c.id)
@@ -420,8 +415,7 @@ class CountersheetEffect(inkex.Effect):
             self.translate_element(clone, source_layer_adjusted_x, source_layer_adjusted_y)
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
-        if not foundold:
-            self.translate_element(clonegroup, colx, rowy)
+        self.translate_element(clonegroup, colx, rowy)
         layer.append(clonegroup)
         return res
 
