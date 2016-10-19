@@ -5,7 +5,7 @@ Inkscape extension for the layout of sheets of cards, tiles, or counters
 for boardgames.
 
 Since the extension was originally created for wargame counters, the
-generated images in this document will be refered to as counters,
+generated images are refered to as counters,
 except in examples explicitly about making something else (like sheets
 of cards). There is very little in the tool that is specific to
 counters though, or to board games. It can be used as a
