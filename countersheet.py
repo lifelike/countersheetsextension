@@ -390,6 +390,13 @@ class CountersheetEffect(inkex.Effect):
                     if fnmatch.fnmatchcase(imageid, glob):
                         i.set(inkex.addNS("absref", "sodipodi"), image)
                         i.set(inkex.addNS("href", "xlink"), image)
+                    elif is_valid_name_to_replace(glob):
+                        absref = i.get(inkex.addNS("absref", "sodipodi"), image)
+                        href = i.get(inkex.addNS("href", "xlink"), image)
+                        i.set(inkex.addNS("absref", "sodipodi"),
+                              absref.replace("%%%s%%" % glob, image))
+                        i.set(inkex.addNS("href", "xlink"),
+                              href.replace("%%%s%%" % glob, image))
 
             for u in clone.xpath('//svg:use', namespaces=NSS):
                 useid = u.get("id")
