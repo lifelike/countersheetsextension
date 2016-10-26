@@ -213,6 +213,18 @@ class DocumentTopLeftCoordinateConverterTest(unittest.TestCase):
         converted_point = converter.SVG_to_dtl( in_point )
         self.assertEqual( converted_point, ( -25, -30 ) )
 
+    def test_valid_replace_name(self):
+        self.assertTrue(countersheet.is_valid_name_to_replace(
+            "ABC_DEF.-GHIabc09zZ"))
+
+    def test_valid_replace_name_not_empty(self):
+        self.assertFalse(countersheet.is_valid_name_to_replace(""))
+
+    def test_valid_replace_name_not_percent(self):
+        self.assertFalse(countersheet.is_valid_name_to_replace("A%BC"))
+
+    def test_valid_replace_name_not_amp(self):
+        self.assertFalse(countersheet.is_valid_name_to_replace("A&"))
 
 if __name__ == '__main__':
     unittest.main()

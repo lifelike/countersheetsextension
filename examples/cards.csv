@@ -2,4 +2,8 @@ card,title,text
 ,HELLO,Just and example.
 3,A Title,Three cards like this one.
 ,Another,Yet another card.
-13,Thirteen,13 more cards to make 18.
+11,Eleven,11 more cards to make 18.
+
+rcard,rtitle,HERE,there
+,"Repl XY",X,Y
+,Replaced,word,ok

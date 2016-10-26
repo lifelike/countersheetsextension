@@ -381,6 +381,7 @@ class CountersheetEffect(inkex.Effect):
                                             namespaces=NSS))
             for t in textishnodes:
                 self.substitute_text(c, t, t.get("id"))
+
             for i in clone.xpath('//svg:image', namespaces=NSS):
                 imageid = i.get("id")
                 if not imageid:
@@ -389,6 +390,7 @@ class CountersheetEffect(inkex.Effect):
                     if fnmatch.fnmatchcase(imageid, glob):
                         i.set(inkex.addNS("absref", "sodipodi"), image)
                         i.set(inkex.addNS("href", "xlink"), image)
+
             for u in clone.xpath('//svg:use', namespaces=NSS):
                 useid = u.get("id")
                 if not useid:
@@ -399,6 +401,11 @@ class CountersheetEffect(inkex.Effect):
                         old_ref = u.get(xlink_attribute)[1:]
                         u.set(xlink_attribute, "#" + new_ref)
                         self.translate_use_element(u, old_ref, new_ref)
+
+            for name,value in c.subst.iteritems():
+                if is_valid_name_to_replace(name):
+                    string_replace_xml_text(clone, "%%%s%%" % name, value)
+
             if len(c.excludeids):
                 excludeelements = []
                 for e in clone.iterdescendants():
@@ -1124,6 +1131,15 @@ def find_stylepart(oldv, pname):
     pend = oldv.find(";", pstart) + 1
     return [pstart, pend]
 
+def get_part(style, pname):
+    [pstart, pend] = find_stylepart(style, pname)
+    if pstart >= 0 and pend > pstart:
+        return style[pstart:pend].split(":")[1]
+    elif pstart >= 0:
+        return style[pstart:].split(":")[1]
+    else:
+        return ""
+
 def stylereplace(oldv, pname, v):
     out = ""
     for part in oldv.split(";"):
@@ -1132,6 +1148,23 @@ def stylereplace(oldv, pname, v):
         elif len(part):
             out += part + ";"
     return out
+
+validreplacenamere = re.compile("^[-\w.:]+$", re.UNICODE)
+
+def is_valid_name_to_replace(s):
+    """True if s is a string that would be OK to use
+    as identifier between % for substitutions. IE if
+    it matches validreplacenamere (English alphanumerics and dashes
+    and underscores and slashes and periods and colons)."""
+    return bool(validreplacenamere.match(s))
+
+def string_replace_xml_text(element, pattern, value):
+    """Find all text in XML element and its children
+    and replace %name% with value."""
+    if element.text:
+        element.text = element.text.replace(pattern, value)
+    for c in element.getchildren():
+        string_replace_xml_text(c, pattern, value)
 
 def get_search_paths(filename):
     home = os.path.expanduser('~')
