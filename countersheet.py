@@ -341,6 +341,8 @@ class CountersheetEffect(inkex.Effect):
         if c.id != None and len(c.id):
             clonegroup.set('id', c.id)
             self.exportids.append(c.id)
+        self.logwrite("adding counter with %d parts at %d,%d\n"
+                      % (len(c.parts), colx, rowy))
         for p in c.parts:
             if len(p) == 0:
                 continue
@@ -466,6 +468,7 @@ class CountersheetEffect(inkex.Effect):
         return False
 
     def addbacks(self, layer, bstack, docwidth, rects):
+        self.logwrite("addbacks %d\n" % len(bstack))
         for c in bstack:
             for x,y in zip(c.backxs, c.backys):
                 self.generatecounter(c.back, rects,
@@ -634,7 +637,7 @@ class CountersheetEffect(inkex.Effect):
         for r in doc.xpath('//svg:rect', namespaces=NSS):
             rects[r.get("id")] = r
 
-        self.logwrite("queryAll for: %s" % sys.argv[-1])
+        self.logwrite("queryAll for: %s\n" % sys.argv[-1])
         self.geometry = self.queryAll(sys.argv[-1])
 
         self.logwrite('Using data file %s.\n'
@@ -706,6 +709,8 @@ class CountersheetEffect(inkex.Effect):
             c.backys = []
             for n in range(c.nr):
                 nr = nr + 1
+                self.logwrite("laying out counter %d (nr %d, c.nr %d) (hasback: %s)\n"
+                              % (i, nr, c.nr, c.hasback))
                 c.addsubst("autonumber", str(nr))
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
@@ -797,11 +802,10 @@ class CSVCounterDefinitionParser:
             factory = self.parse_row(row, factory)
 
     def parse_row(self, row, factory):
-#        self.logwrite(":".join(row) + "\n")
         if self.is_counterrow(factory, row):
             return self.parse_counter_row(row, factory)
         elif self.is_newheaders(row):
-            self.logwrite('Found new headers\n')
+            self.logwrite('Found new headers: %s\n' % ';'.join(row))
             return CSVCounterFactory(self.rects, row)
         else:
             self.logwrite('Empty row... reset headers.\n')
@@ -829,9 +833,11 @@ class CSVCounterDefinitionParser:
                     nr = int(row[0])
                 except ValueError:
                     return CSVCounterFactory(self.rects, row)
-        self.logwrite('new counter, nr=%d\n' % nr)
+        self.logwrite('new counter: %s\n' % ';'.join(row))
         cfront = factory.create_counter(nr, row)
         self.hasback = self.hasback or factory.hasback
+        self.logwrite('self.hasback: %s  factory.hasback: %s\n'
+                      % (str(self.hasback), str(factory.hasback)))
         self.counters.append(cfront)
         if cfront.id and cfront.hasback and not cfront.back.id:
             cfront.back.id = cfront.id + "_back"
