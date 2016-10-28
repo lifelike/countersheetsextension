@@ -60,7 +60,7 @@ the Create Countersheet extension and provide the name of
 the data file (the other options in the dialog window you can
 ignore for now).
 
-See the [tutorials on the wiki] for more.
+See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Tutorials) for more.
 
 License
 --------
