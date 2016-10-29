@@ -48,6 +48,7 @@ tests = [
     ['imagereplace.csv', 'imagereplace.svg'],
     ['numbers.csv', 'numbers.svg'],
     ['numbers-endrow.csv', 'numbers.svg'],
+    ['autonumbers.csv', 'numbers.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
