@@ -35,6 +35,8 @@ tests = [
     ['layout12.csv', 'layout.svg'],
     ['layout10+10+10.csv', 'layout.svg'],
     ['cards.csv', 'cards.svg'],
+    ['counters.csv', 'counters.svg'],
+    ['counters-2sides.csv', 'counters.svg'],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],
     ['bold.csv', 'bold.svg'],
     ['yndice-en.csv', 'yndice.svg'],
@@ -44,6 +46,8 @@ tests = [
     ['labels17mm-140.csv', 'labels17mm-140.svg'],
     ['cloneslayout.csv', 'cloneslayout.svg'],
     ['imagereplace.csv', 'imagereplace.svg'],
+    ['numbers.csv', 'numbers.svg'],
+    ['numbers-endrow.csv', 'numbers.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):

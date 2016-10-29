@@ -42,6 +42,8 @@ C:\Program Files\Inkscape\share\extensions.
 After you (re)start Inscape you should find "Create Countersheet"
 in the "Boardgames" submenu of the "Extensions" menu.
 
+See more complete instructions [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Install).
+
 There is an old tutorial also on youtube by Erulisseuiin:
 http://www.youtube.com/watch?v=sZ__PwMZp_8
 While it is for an older version of the Inkscape Board Game Extensions,
@@ -58,24 +60,7 @@ the Create Countersheet extension and provide the name of
 the data file (the other options in the dialog window you can
 ignore for now).
 
-Of course making a SVG file and corresponding CSV can be a bit tricky
-at first, since the included documentation isn't very helpful, so I
-recommend trying to start with the included examples, as
-described below.
-
-Example
--------
-
-Open the file svgtests/input/nato.svg in Inkscape. Run the Create
-Countersheet extension. For Data File enter the full name, including
-absolute path, of the nato1.csv file in the same directory (eg
-C:\your\files\countersheetsextension\svgtests\input\nato1.csv).  Leave
-other values at their defaults and run the extension. You should see
-two new layers with the fronts and backs of two identical counters.
-Experiment with adding rows of values in nato1.csv and re-running the
-extension to see what happens (tip: after generating the countersheets,
-use the undo function (ctrl-Z) to go back to a blank document between
-runs).
+See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Tutorials) for more.
 
 License
 --------
