@@ -34,6 +34,8 @@ Installation
 
 You need Inkscape installed (version 0.91, although 0.48 or 0.47 might still work).
 
+*Inkscape 0.92 is not yet supported. See issues #15 and #16.*
+
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
 .config/inkscape/extensions.  In Windows it will be something like
