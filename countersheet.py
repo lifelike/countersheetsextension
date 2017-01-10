@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 
-# Copyright 2016 Pelle Nilsson
+# Copyright 2017 Pelle Nilsson
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -238,9 +238,12 @@ class CountersheetEffect(inkex.Effect):
 
 
     def translate_element(self, element, dx, dy):
+        self.logwrite("translate_element %f,%f\n"
+                      % (dx, dy))
         translate = "translate(%f,%f)" % (dx, dy)
         old_transform = element.get('transform')
         if old_transform:
+            self.logwrite("old transform: %s\n" % old_transform)
             element.set('transform', translate + " " + old_transform)
         else:
             element.set('transform', translate)
@@ -502,10 +505,15 @@ class CountersheetEffect(inkex.Effect):
         err.close()
         for line in reader:
             if len(line) == 5:
-                geometry[line[0]] = Rectangle(float(line[1]),
-                                              float(line[2]),
-                                              float(line[3]),
-                                              float(line[4]))
+                element_id = line[0]
+                r = Rectangle(self.unittouu("%fin" % (float(line[1]) / 96.0)),
+                              self.unittouu("%fin" % (float(line[2]) / 96.0)),
+                              self.unittouu("%fin" % (float(line[3]) / 96.0)),
+                              self.unittouu("%fin" % (float(line[4]) / 96.0)))
+                self.logwrite("+ %s %f,%f %fx%f\n"
+                              % (element_id, r.x, r.y, r.w, r.h))
+                geometry[element_id] = r
+
         f.close()
         return geometry
 
@@ -573,17 +581,21 @@ class CountersheetEffect(inkex.Effect):
         return False
 
     def create_registrationline(self, x1, y1, x2, y2):
+        self.logwrite("create_registrationline %f,%f %f,%f\n"
+                      % (x1, y1, x2, y2))
         line = etree.Element('line')
         line.set("x1", str(x1))
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-        line.set("style", "stroke:#838383")
+	line.set("style", "stroke:#838383")
+	line.set("stroke-width", str(PS)) 
         return line
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer):
-        linelen = self.options.registrationmarkslen
+        linelen = self.unittouu("%fin" % (self.options.registrationmarkslen / 90.0))
+        self.logwrite("addregistrationmarks linelen=%f\n" % linelen)
         if linelen < 1:
             return
         max_x = 0
@@ -591,15 +603,15 @@ class CountersheetEffect(inkex.Effect):
         for x in xregistrationmarks:
             layer.append(
                 self.create_registrationline(position.x + x,
-                                             position.y - linelen,
+                                             position.y - linelen + PS,
                                              position.x + x,
-                                             position.y - 1))
+                                             position.y - PS))
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
-            layer.append(self.create_registrationline(position.x - linelen,
+            layer.append(self.create_registrationline(position.x - linelen + PS, 
                                                       position.y + y,
-                                                      position.x - 1,
+                                                      position.x - PS,
                                                       position.y + y))
             max_y = max(max_y, y)
 
@@ -607,18 +619,20 @@ class CountersheetEffect(inkex.Effect):
             layer.append(
                 self.create_registrationline(
                 position.x + x,
-                position.y + max_y,
+                position.y + max_y + PS,
                 position.x + x,
-                position.y + max_y + linelen))
+                position.y + max_y + linelen + PS))
 
         for y in yregistrationmarks:
             layer.append(self.create_registrationline(
-                position.x + max_x,
+                position.x + max_x + PS,
                 position.y + y,
-                position.x + max_x + linelen,
+                position.x + max_x + linelen - PS,
                 position.y + y))
 
     def effect(self):
+	global PS
+
         # Get script "--what" option value.
         what = self.options.what
         datafile = self.options.datafile
@@ -646,6 +660,11 @@ class CountersheetEffect(inkex.Effect):
                      'the file in any of the locations listed above.'
                      % ('\n'.join(search_paths),
                         os.path.basename(datafile)))
+
+        # a small, "pixel-size", length, to use for making small
+        # adjustments that works in Inkscape 0.91 and later, similar
+        # to what "1px" always was in earlier Inkscape versions
+        PS = self.unittouu("%fin" % (1.0 / 90))
 
         rects = {}
         for r in doc.xpath('//svg:rect', namespaces=NSS):
@@ -694,7 +713,7 @@ class CountersheetEffect(inkex.Effect):
                                    docwidth,
                                    float(self.unittouu(svg.get('height'))))]
             if self.options.registrationmarkslen > 0:
-                margin = self.options.registrationmarkslen
+                margin = self.unittouu("%fin" % (self.options.registrationmarkslen / 90.0))
                 positions[0].x += margin
                 positions[0].y += margin
                 positions[0].w -= margin * 2
@@ -731,6 +750,8 @@ class CountersheetEffect(inkex.Effect):
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
                                                    positions[box].y+rowy)
+                self.logwrite("generated counter size: %fx%f\n"
+                              % (width, height))
                 if c.hasback:
                     c.backxs.append(positions[box].x + colx + width)
                     c.backys.append(positions[box].y + rowy)

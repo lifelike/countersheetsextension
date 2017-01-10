@@ -32,9 +32,12 @@ Main Features
 Installation
 ------------
 
-You need Inkscape installed (version 0.91, although 0.48 or 0.47 might still work).
+You need Inkscape 0.92 installed.
 
-*Inkscape 0.92 is not yet supported. See issues #15 and #16.*
+(Documents created with versions of Inkscape before 0.92 may not work
+well with this extension. The work-around is to select all templates
+in the old document and then copy-paste them into an empty new document
+in 0.92. Hopefully this will be fixed eventually.)
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
@@ -67,7 +70,7 @@ See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextensi
 License
 --------
 
-Copyright (C) 2016 Pelle Nilsson
+Copyright (C) 2017 Pelle Nilsson
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
