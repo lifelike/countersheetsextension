@@ -594,7 +594,7 @@ class CountersheetEffect(inkex.Effect):
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer):
-        linelen = self.unittouu("%fin" % (self.options.registrationmarkslen / 90.0))
+        linelen = self.unittouu("%fpt" % self.options.registrationmarkslen)
         self.logwrite("addregistrationmarks linelen=%f\n" % linelen)
         if linelen < 1:
             return
@@ -603,15 +603,15 @@ class CountersheetEffect(inkex.Effect):
         for x in xregistrationmarks:
             layer.append(
                 self.create_registrationline(position.x + x,
-                                             position.y - linelen + PS,
+                                             position.y - linelen,
                                              position.x + x,
-                                             position.y - PS))
+                                             position.y))
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
-            layer.append(self.create_registrationline(position.x - linelen + PS, 
+            layer.append(self.create_registrationline(position.x - linelen,
                                                       position.y + y,
-                                                      position.x - PS,
+                                                      position.x,
                                                       position.y + y))
             max_y = max(max_y, y)
 
@@ -619,15 +619,15 @@ class CountersheetEffect(inkex.Effect):
             layer.append(
                 self.create_registrationline(
                 position.x + x,
-                position.y + max_y + PS,
+                position.y + max_y,
                 position.x + x,
-                position.y + max_y + linelen + PS))
+                position.y + max_y + linelen))
 
         for y in yregistrationmarks:
             layer.append(self.create_registrationline(
-                position.x + max_x + PS,
+                position.x + max_x,
                 position.y + y,
-                position.x + max_x + linelen - PS,
+                position.x + max_x + linelen,
                 position.y + y))
 
     def effect(self):
@@ -713,7 +713,7 @@ class CountersheetEffect(inkex.Effect):
                                    docwidth,
                                    float(self.unittouu(svg.get('height'))))]
             if self.options.registrationmarkslen > 0:
-                margin = self.unittouu("%fin" % (self.options.registrationmarkslen / 90.0))
+                margin = self.unittouu("%fpt" % self.options.registrationmarkslen)
                 positions[0].x += margin
                 positions[0].y += margin
                 positions[0].w -= margin * 2
