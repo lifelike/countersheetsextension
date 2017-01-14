@@ -702,7 +702,7 @@ class CountersheetEffect(inkex.Effect):
         if hasback:
             backlayer = self.addLayer(svg, what, 1, "back")
 
-        docwidth = float(self.unittouu(svg.get('width')))
+        docwidth = float(self.unittouu(self.getDocumentWidth()))
 
         haslayout = True
         positions = self.readLayout(svg)
@@ -711,7 +711,7 @@ class CountersheetEffect(inkex.Effect):
             positions = [Rectangle(0.0,
                                    0.0,
                                    docwidth,
-                                   float(self.unittouu(svg.get('height'))))]
+                                   float(self.unittouu(self.getDocumentHeight())))]
             if self.options.registrationmarkslen > 0:
                 margin = self.unittouu("%fpt" % self.options.registrationmarkslen)
                 positions[0].x += margin
