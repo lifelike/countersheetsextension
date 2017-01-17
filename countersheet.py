@@ -505,12 +505,13 @@ class CountersheetEffect(inkex.Effect):
         err.close()
         for line in reader:
             if len(line) == 5:
+                self.logwrite(",".join(line) + "\n")
                 element_id = line[0]
-                r = Rectangle(self.unittouu("%fin" % (float(line[1]) / 96.0)),
-                              self.unittouu("%fin" % (float(line[2]) / 96.0)),
-                              self.unittouu("%fin" % (float(line[3]) / 96.0)),
-                              self.unittouu("%fin" % (float(line[4]) / 96.0)))
-                self.logwrite("+ %s %f,%f %fx%f\n"
+                r = Rectangle(float(line[1]) / self.xscale,
+                              float(line[2]) / self.yscale,
+                              float(line[3]) / self.xscale,
+                              float(line[4]) / self.yscale)
+                self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
                 geometry[element_id] = r
 
@@ -630,6 +631,23 @@ class CountersheetEffect(inkex.Effect):
                 position.x + max_x + linelen,
                 position.y + y))
 
+    def calculateScale(self, svg):
+        """Calculates scale of the document (user-units size) and
+        saves as self.xscale and self.yscale.
+        Because of this bug:
+        https://bugs.launchpad.net/inkscape/+bug/1508400
+        Code is based on code in measure.py included in the Inkscape 0.92
+        distribution (see that file for credits), license GPLv2 like
+        the rest of this extension.
+        Error-handling is lacking.
+        """
+        if svg.get('viewBox'):
+            (viewx, viewy, vieww, viewh) = re.sub(' +|, +|,',' ',svg.get('viewBox')).strip().split(' ', 4)
+            self.xscale = self.unittouu(svg.get('width')) / float(vieww) / self.unittouu("1px")
+            self.yscale = self.unittouu(svg.get('height')) / float(viewh) / self.unittouu("1px")
+        else:
+            self.xscale = self.yscale = self.unittouu('1px')
+
     def effect(self):
 	global PS
 
@@ -645,6 +663,8 @@ class CountersheetEffect(inkex.Effect):
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
+
+        self.calculateScale(svg)
 
         search_paths = get_search_paths(datafile)
         for path in search_paths:
@@ -703,6 +723,13 @@ class CountersheetEffect(inkex.Effect):
             backlayer = self.addLayer(svg, what, 1, "back")
 
         docwidth = float(self.unittouu(self.getDocumentWidth()))
+
+        self.logwrite("user-units in 1 inch: %f\n" % self.unittouu("1in"))
+        self.logwrite("user-units in 1 px: %f\n" % self.unittouu("1px"))
+#        self.logwrite("uuconv['in']: %f\n" % self.__uuconv["in"])
+
+        self.logwrite("calculated document scale: %f %f\n"
+                      % (self.xscale, self.yscale))
 
         haslayout = True
         positions = self.readLayout(svg)
