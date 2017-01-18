@@ -641,12 +641,28 @@ class CountersheetEffect(inkex.Effect):
         the rest of this extension.
         Error-handling is lacking.
         """
-        if svg.get('viewBox'):
-            (viewx, viewy, vieww, viewh) = re.sub(' +|, +|,',' ',svg.get('viewBox')).strip().split(' ', 4)
-            self.xscale = self.unittouu(svg.get('width')) / float(vieww) / self.unittouu("1px")
-            self.yscale = self.unittouu(svg.get('height')) / float(viewh) / self.unittouu("1px")
-        else:
-            self.xscale = self.yscale = self.unittouu('1px')
+        self.xscale = self.yscale = 1.0 / self.unittouu('1px')
+        xscale = yscale = 0.0
+        try:
+            viewbox = svg.get('viewBox')
+            if viewbox:
+                self.logwrite("viewBox: %s\n" % viewbox)
+                (viewx, viewy, vieww, viewh) = map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4))
+                svgwidth = svg.get('width')
+                svgheight = svg.get('height')
+                svguuwidth = self.unittouu(svgwidth)
+                svguuheight = self.unittouu(svgheight)
+                self.logwrite("SVG widthxheight: %sx%s\n"
+                              % (svgwidth, svgheight))
+                self.logwrite("SVG size in user-units: %fx%f\n"
+                              % (svguuwidth, svguuheight))
+                xscale = self.unittouu(svg.get('width')) / vieww / self.unittouu("1px")
+                yscale = self.unittouu(svg.get('height')) / viewh / self.unittouu("1px")
+                self.xscale = xscale
+                self.yscale = yscale
+        except Exception, e:
+            self.logwrite("Failed to calculate document scale:\n%s\n" % repr(e))
+
 
     def effect(self):
 	global PS
