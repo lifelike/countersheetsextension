@@ -56,6 +56,7 @@ for f in glob.glob(os.path.join(inputdir, "*.png")):
     shutil.copy(f, bitmapsdir)
     shutil.copy(f, pdfdir)
 
+successes = 0
 for test in tests:
     [basedatafile, basesvginfile] = test
     svgoutbasename = basedatafile + '-' + basesvginfile
@@ -89,11 +90,12 @@ for test in tests:
                  % (datafile, svginfile))
 
     expectedfile = os.path.join(expecteddir, svgoutbasename)
-    #FIXME xml diff, not line diff, would be nice
-    import difflib
-    if not '-q' in sys.argv:
-        for line in difflib.unified_diff(open(svgoutfile).readlines(),
-                                         open(expectedfile).readlines(),
-                                         fromfile=svgoutfile,
-                                         tofile=expectedfile):
-            print line
+    outputsvg = open(svgoutfile).read()
+    expectedsvg = open(expectedfile).read()
+    if outputsvg == expectedsvg:
+        successes += 1
+    else:
+        print "FAIL: diff %s %s" % (svgoutfile, expectedfile)
+
+print ("%d/%d tests OK (%d FAILED)\n"
+       % (successes, len(tests), len(tests)-successes))
