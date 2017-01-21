@@ -34,11 +34,6 @@ Installation
 
 You need Inkscape 0.92 installed.
 
-(Documents created with versions of Inkscape before 0.92 may not work
-well with this extension. The work-around is to select all templates
-in the old document and then copy-paste them into an empty new document
-in 0.92. Hopefully this will be fixed eventually.)
-
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
 .config/inkscape/extensions.  In Windows it will be something like
