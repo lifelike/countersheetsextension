@@ -663,6 +663,21 @@ class CountersheetEffect(inkex.Effect):
         except Exception, e:
             self.logwrite("Failed to calculate document scale:\n%s\n" % repr(e))
 
+    def getDocumentViewBoxValue(self, svg, n, fallback):
+        try:
+            return float(svg.get('viewBox').split(' ')[n])
+        except:
+            return float(svg.get(fallback)) # let it crash if this fails
+
+    # Because getDocumentWiddth in inkex fails because it makes assumptions about
+    # user-units. Trusting the viewBox instead for now.
+    def getViewBoxWidth(self, svg):
+        return self.getDocumentViewBoxValue(svg, 2, "width")
+
+    # Because getDocumentHeight in inkex fails because it makes assumptions about
+    # user-units. Trusting the viewBox instead for now.
+    def getViewBoxHeight(self, svg):
+        return self.getDocumentViewBoxValue(svg, 3, "height")
 
     def effect(self):
 	global PS
@@ -738,7 +753,7 @@ class CountersheetEffect(inkex.Effect):
         if hasback:
             backlayer = self.addLayer(svg, what, 1, "back")
 
-        docwidth = float(self.unittouu(self.getDocumentWidth()))
+        docwidth = self.getViewBoxWidth(svg)
 
         self.logwrite("user-units in 1 inch: %f\n" % self.unittouu("1in"))
         self.logwrite("user-units in 1 px: %f\n" % self.unittouu("1px"))
@@ -754,7 +769,7 @@ class CountersheetEffect(inkex.Effect):
             positions = [Rectangle(0.0,
                                    0.0,
                                    docwidth,
-                                   float(self.unittouu(self.getDocumentHeight())))]
+                                   self.getViewBoxHeight(svg))]
             if self.options.registrationmarkslen > 0:
                 margin = self.unittouu("%fpt" % self.options.registrationmarkslen)
                 positions[0].x += margin
