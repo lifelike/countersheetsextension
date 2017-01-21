@@ -65,7 +65,7 @@ See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextensi
 License
 --------
 
-Copyright (C) 2017 Pelle Nilsson
+Copyright (C) 2008-2017 Pelle Nilsson
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
