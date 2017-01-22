@@ -527,12 +527,17 @@ class CountersheetEffect(inkex.Effect):
                                    self.options.bitmapdir,
                                    "png")
 
-    def export_using_inkscape(self, ids, size_flags, export_flags,
-                              exportdir, extension):
+    def make_temporary_svg(self, exportdir):
+        "Returns name of the created file."
         tmpfilename = os.path.join(exportdir, ".__tmp__.svg")
         tmpfile = open(tmpfilename, 'w')
         self.document.write(tmpfile)
         tmpfile.close()
+        return tmpfilename
+
+    def export_using_inkscape(self, ids, size_flags, export_flags,
+                              exportdir, extension):
+        tmpfilename = self.make_temporary_svg(exportdir)
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
