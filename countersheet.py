@@ -271,7 +271,7 @@ class CountersheetEffect(inkex.Effect):
         self.deleteFlowParas(element)
         for line in lines:
             para = etree.Element(inkex.addNS('flowPara', 'svg'))
-            para.text = line
+            self.setFormattedText(para, line, 'flowSpan')
             element.append(para)
 
     def deleteFlowParas(self, parent):
@@ -279,11 +279,20 @@ class CountersheetEffect(inkex.Effect):
             if c.tag == inkex.addNS('flowPara','svg'):
                 parent.remove(c)
 
+    def setFormattedText(self, element, text, spantag):
+        self.logwrite('setFormattedText: %s %s %s\n'
+                      % (element.tag, text, spantag))
+        element.text = text
+        return True
+
     def setFirstTextChild(self, element, text):
         for c in element.getchildren():
-            if c.text:
-                c.text = text
-                return True
+            if (c.tag == inkex.addNS('flowPara', 'svg')
+                or c.tag == inkex.addNS('flowSpan', 'svg')):
+                return self.setFormattedText(c, text, 'flowSpan')
+            elif (c.tag == inkex.addNS('text', 'svg')
+                  or c.tag == inkex.addNS('tspan', 'svg')):
+                return self.setFormattedText(c, text, 'tspan')
             elif self.setFirstTextChild(c, text):
                 return True
         return False
