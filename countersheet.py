@@ -528,12 +528,19 @@ class CountersheetEffect(inkex.Effect):
                                    "png")
 
     def make_temporary_svg(self, exportdir):
-        "Returns name of the created file."
-        tmpfilename = os.path.join(exportdir, ".__tmp__.svg")
-        tmpfile = open(tmpfilename, 'w')
-        self.document.write(tmpfile)
-        tmpfile.close()
-        return tmpfilename
+        """ Renders SVG DOM as it currently looks like
+        in the extension with modifications made (or not)
+        since reading the original file. The caller is
+        responsible for removing the file
+        when done with it.
+        Use exportdir=None to use default system tmp dir.
+        Returns filename."""
+        from tempfile import mkstemp
+        tmpfile = mkstemp(".svg", "tmp", exportdir, True)
+        tmpfileobject = os.fdopen(tmpfile[0], 'w')
+        self.document.write(tmpfileobject)
+        tmpfileobject.close()
+        return tmpfile[1]
 
     def export_using_inkscape(self, ids, size_flags, export_flags,
                               exportdir, extension):
