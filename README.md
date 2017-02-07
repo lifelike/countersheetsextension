@@ -112,7 +112,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-Documentation is Copyright 2009-2016 Eric Hanuise and Pelle Nilsson,
+Documentation is Copyright 2009-2017 Eric Hanuise and Pelle Nilsson,
 available under the Creative Commons Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
 
