@@ -737,10 +737,11 @@ class CountersheetEffect(inkex.Effect):
 
         csv_file = open(datafile, "rb")
         try:
-            csv_dialect = csv.Sniffer().sniff(csv_file.readline())
-        except:
-            csv_file.seek(0)
             csv_dialect = csv.Sniffer.sniff(csv_file.read(2000))
+        except:
+            self.logwrite("csv sniffer failed, trying just first line.\n")
+            csv_file.seek(0)
+            csv_dialect = csv.Sniffer().sniff(csv_file.readline())
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
