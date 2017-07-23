@@ -736,7 +736,7 @@ class CountersheetEffect(inkex.Effect):
                      "folder. They are no longer used.");
 
         csv_file = open(datafile, "rb")
-        csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
+        csv_dialect = csv.Sniffer().sniff(csv_file.readline())
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
