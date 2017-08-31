@@ -530,7 +530,7 @@ class CountersheetEffect(inkex.Effect):
 
     def export_using_inkscape(self, ids, size_flags, export_flags,
                               exportdir, extension):
-        tmpfilename = os.path.join(exportdir, ".__tmp__.svg")
+        tmpfilename = os.path.join(os.path.abspath(exportdir), ".__tmp__.svg")
         tmpfile = open(tmpfilename, 'w')
         self.document.write(tmpfile)
         tmpfile.close()
@@ -550,7 +550,7 @@ class CountersheetEffect(inkex.Effect):
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
-        return os.path.join(directory,
+        return os.path.join(os.path.abspath(directory),
                             self.bitmapname + id) + "." + extension
 
     def exportSheetPDFs(self):
@@ -723,7 +723,7 @@ class CountersheetEffect(inkex.Effect):
             rects[r.get("id")] = r
 
         self.logwrite("queryAll for: %s\n" % sys.argv[-1])
-        self.geometry = self.queryAll(sys.argv[-1])
+        self.geometry = self.queryAll(os.path.abspath(sys.argv[-1]))
 
         self.logwrite('Using data file %s.\n'
                       % os.path.abspath(datafile))
