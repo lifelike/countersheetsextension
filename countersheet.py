@@ -208,6 +208,7 @@ class CountersheetEffect(inkex.Effect):
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
                                      type = 'int',
+                                     default = '0',
                                      dest = 'registrationmarkslen')
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
