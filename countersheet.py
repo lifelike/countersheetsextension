@@ -529,7 +529,10 @@ class CountersheetEffect(inkex.Effect):
                                    "png")
 
     def export_using_inkscape(self, ids, size_flags, export_flags,
-                              exportdir, extension):
+                              exportdir, extension,
+# this is an ugly workaround for
+# https://bugs.launchpad.net/inkscape/+bug/1714365
+                              noidexportworkaround=False):
         tmpfilename = os.path.join(os.path.abspath(exportdir), ".__tmp__.svg")
         tmpfile = open(tmpfilename, 'w')
         self.document.write(tmpfile)
@@ -538,8 +541,12 @@ class CountersheetEffect(inkex.Effect):
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
                 continue
-            cmd='inkscape -i %s -j %s "%s" %s "%s"' % (
-                id,
+            if noidexportworkaround:
+                idflag = ""
+            else:
+                idflag = "-i %s" % id
+            cmd='inkscape %s -j %s "%s" %s "%s"' % (
+                idflag,
                 export_flags,
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
@@ -553,14 +560,35 @@ class CountersheetEffect(inkex.Effect):
         return os.path.join(os.path.abspath(directory),
                             self.bitmapname + id) + "." + extension
 
+    def hidelayers(self, layer_ids):
+        self.set_style_on_elements(layer_ids, 'display', 'none')
+
+    def showlayers(self, layer_ids):
+        self.set_style_on_elements(layer_ids, 'display', 'inline')
+
+    def set_style_on_elements(self, element_ids, part, value):
+        for element_id in element_ids:
+            matching_elements = self.document.xpath("//*[@id='%s']" % element_id,
+                                                    namespaces=NSS)
+            if not matching_elements:
+                return
+            element = matching_elements[0]
+            oldstyle = element.get('style') or ""
+            element.set('style', stylereplace(oldstyle, part, value))
+
     def exportSheetPDFs(self):
         if (self.options.pdfdir
             and len(self.cslayers) > 0):
-            self.export_using_inkscape(self.cslayers,
-                                       "-d %d" % PDF_DPI,
-                                       "-A",
-                                       self.options.pdfdir,
-                                       "pdf")
+            for layer in self.cslayers:
+                self.hidelayers(self.cslayers)
+                self.showlayers([layer])
+                self.export_using_inkscape([layer],
+                                           "-d %d" % PDF_DPI,
+                                           "-A",
+                                           self.options.pdfdir,
+                                           "pdf",
+                                           True)
+        self.showlayers(self.cslayers)
 
     def exportSheetBitmaps(self):
         if (self.options.bitmapsheetsdpi > 0
