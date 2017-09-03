@@ -208,6 +208,7 @@ class CountersheetEffect(inkex.Effect):
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
                                      type = 'int',
+                                     default = '0',
                                      dest = 'registrationmarkslen')
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
@@ -282,7 +283,7 @@ class CountersheetEffect(inkex.Effect):
     def setFormattedText(self, element, text, spantag):
         self.logwrite('setFormattedText: %s %s %s\n'
                       % (element.tag, text, spantag))
-        element.text = text
+        element.text = text.decode('utf8')
         return True
 
     def setFirstTextChild(self, element, text):
@@ -545,7 +546,7 @@ class CountersheetEffect(inkex.Effect):
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
         from tempfile import mkstemp
-        tmpfile = mkstemp(".svg", "tmp", exportdir, True)
+        tmpfile = mkstemp(".svg", "tmp", os.path.abspath(exportdir), True)
         tmpfileobject = os.fdopen(tmpfile[0], 'w')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
@@ -570,7 +571,7 @@ class CountersheetEffect(inkex.Effect):
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
-        return os.path.join(directory,
+        return os.path.join(os.path.abspath(directory),
                             self.bitmapname + id) + "." + extension
 
     def exportSheetPDFs(self):
@@ -743,7 +744,7 @@ class CountersheetEffect(inkex.Effect):
             rects[r.get("id")] = r
 
         self.logwrite("queryAll for: %s\n" % sys.argv[-1])
-        self.geometry = self.queryAll(sys.argv[-1])
+        self.geometry = self.queryAll(os.path.abspath(sys.argv[-1]))
 
         self.logwrite('Using data file %s.\n'
                       % os.path.abspath(datafile))
@@ -757,7 +758,12 @@ class CountersheetEffect(inkex.Effect):
                      "folder. They are no longer used.");
 
         csv_file = open(datafile, "rb")
-        csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
+        try:
+            csv_dialect = csv.Sniffer.sniff(csv_file.read(2000))
+        except:
+            self.logwrite("csv sniffer failed, trying just first line.\n")
+            csv_file.seek(0)
+            csv_dialect = csv.Sniffer().sniff(csv_file.readline())
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
@@ -1275,7 +1281,7 @@ def string_replace_xml_text(element, pattern, value):
     """Find all text in XML element and its children
     and replace %name% with value."""
     if element.text:
-        element.text = element.text.replace(pattern, value)
+        element.text = element.text.replace(pattern, value.decode('utf8'))
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 

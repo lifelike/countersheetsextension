@@ -3,7 +3,10 @@ card,title,text
 3,A Title,Three cards like this one.
 ,Another,Yet another card.
 11,Eleven,11 more cards to make 18.
+,ÅÄÖ,"Card with å, ä, ö".
+,Italian,più
 
 rcard,rtitle,HERE,there
 ,"Repl XY",X,Y
 ,Replaced,word,ok
+,Repl ÅÄÖ,word,åäö
