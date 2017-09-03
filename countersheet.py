@@ -283,7 +283,7 @@ class CountersheetEffect(inkex.Effect):
     def setFirstTextChild(self, element, text):
         for c in element.getchildren():
             if c.text:
-                c.text = text
+                c.text = text.decode('utf8')
                 return True
             elif self.setFirstTextChild(c, text):
                 return True
@@ -1260,7 +1260,7 @@ def string_replace_xml_text(element, pattern, value):
     """Find all text in XML element and its children
     and replace %name% with value."""
     if element.text:
-        element.text = element.text.replace(pattern, value)
+        element.text = element.text.replace(pattern, value.decode('utf8'))
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 
