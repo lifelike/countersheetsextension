@@ -23,6 +23,9 @@ logdir = os.path.join('svgtests', 'log')
 if not os.path.exists(outputdir):
     os.mkdir(outputdir)
 
+chosen = [a for a in sys.argv[1:]
+          if not a.startswith("-")]
+
 tests = [
     ['nato1.csv', 'nato.svg'],
     ['nato2.csv', 'nato.svg'],
@@ -61,6 +64,14 @@ for f in glob.glob(os.path.join(inputdir, "*.png")):
 successes = 0
 for test in tests:
     [basedatafile, basesvginfile] = test
+    if chosen:
+        matches = False
+        for c in chosen:
+            if c in basedatafile or c in basesvginfile:
+                matches = True
+                break
+        if not matches:
+            continue
     svgoutbasename = basedatafile + '-' + basesvginfile
     svgoutfile = os.path.join(outputdir, svgoutbasename)
     datafile = os.path.join(inputdir, basedatafile)
