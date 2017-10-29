@@ -297,7 +297,7 @@ class CountersheetEffect(inkex.Effect):
             extralabel = ""
             extraid = ""
         llabel = 'Countersheet %s %d%s' % (what, nr, extralabel)
-        lid = 'cs_layer_%d%s' % (nr, extraid)
+        lid = 'cs_layer_%04d%s' % (nr, extraid)
 
         if self.find_layer(svg, llabel) is not None:
             sys.exit("Image already contains a layer '%s'. "
