@@ -564,9 +564,11 @@ class CountersheetEffect(inkex.Effect):
         self.set_style_on_elements(layer_ids, 'display', 'none')
 
     def showlayers(self, layer_ids):
-        self.set_style_on_elements(layer_ids, 'display', 'inline')
+        self.set_style_on_elements(layer_ids, 'display', None)
 
     def set_style_on_elements(self, element_ids, part, value):
+        self.logwrite("set_style_on_elements %r %s=%s\n"
+                      % (element_ids, part, value))
         for element_id in element_ids:
             matching_elements = self.document.xpath("//*[@id='%s']" % element_id,
                                                     namespaces=NSS)
@@ -574,7 +576,10 @@ class CountersheetEffect(inkex.Effect):
                 return
             element = matching_elements[0]
             oldstyle = element.get('style') or ""
-            element.set('style', stylereplace(oldstyle, part, value))
+            newstyle = stylereplace(oldstyle, part, value)
+            element.set('style', newstyle)
+            self.logwrite("set_style_on_elements %s: '%s' -> '%s'\n"
+                          % (element_id, oldstyle, newstyle))
 
     def exportSheetPDFs(self):
         if (self.options.pdfdir
@@ -1268,11 +1273,18 @@ def get_part(style, pname):
 
 def stylereplace(oldv, pname, v):
     out = ""
+    replaced = False
+    newstylepart = "%s:%s;" % (pname, v)
+    if not v:
+        newstylepart = ""
     for part in oldv.split(";"):
         if part.startswith(pname + ':'):
-            out += "%s:%s;" % (pname, v) 
+            out += newstylepart
+            replaced = True
         elif len(part):
             out += part + ";"
+    if not replaced:
+        out += newstylepart
     return out
 
 validreplacenamere = re.compile("^[-\w.:]+$", re.UNICODE)
