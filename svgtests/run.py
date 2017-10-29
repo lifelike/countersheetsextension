@@ -23,7 +23,11 @@ logdir = os.path.join('svgtests', 'log')
 if not os.path.exists(outputdir):
     os.mkdir(outputdir)
 
+chosen = [a for a in sys.argv[1:]
+          if not a.startswith("-")]
+
 tests = [
+    ['battlelabels.csv', 'battlelabels.svg'],
     ['nato1.csv', 'nato.svg'],
     ['nato2.csv', 'nato.svg'],
     ['use.csv', 'use.svg'],
@@ -51,6 +55,9 @@ tests = [
     ['autonumbers.csv', 'numbers.svg'],
     ['square.csv', 'square.svg'],
     ['square.csv', 'square092.svg'],
+    ['stars-3.csv', 'star.svg'],
+    ['stars-4.csv', 'star.svg'],
+    ['stars-5.csv', 'star.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
@@ -59,8 +66,19 @@ for f in glob.glob(os.path.join(inputdir, "*.png")):
     shutil.copy(f, pdfdir)
 
 successes = 0
+fails = 0
+skipped = 0
 for test in tests:
     [basedatafile, basesvginfile] = test
+    if chosen:
+        matches = False
+        for c in chosen:
+            if c in basedatafile or c in basesvginfile:
+                matches = True
+                break
+        if not matches:
+            skipped += 1
+            continue
     svgoutbasename = basedatafile + '-' + basesvginfile
     svgoutfile = os.path.join(outputdir, svgoutbasename)
     datafile = os.path.join(inputdir, basedatafile)
@@ -98,6 +116,7 @@ for test in tests:
         successes += 1
     else:
         print "FAIL: diff %s %s" % (svgoutfile, expectedfile)
+        fails += 1
 
-print ("%d/%d tests OK (%d FAILED)\n"
-       % (successes, len(tests), len(tests)-successes))
+print ("%d/%d tests OK (%d skipped, %d FAILED)\n"
+       % (successes, len(tests), skipped, fails))

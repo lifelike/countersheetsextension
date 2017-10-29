@@ -306,7 +306,7 @@ class CountersheetEffect(inkex.Effect):
             extralabel = ""
             extraid = ""
         llabel = 'Countersheet %s %d%s' % (what, nr, extralabel)
-        lid = 'cs_layer_%d%s' % (nr, extraid)
+        lid = 'cs_layer_%04d%s' % (nr, extraid)
 
         if self.find_layer(svg, llabel) is not None:
             sys.exit("Image already contains a layer '%s'. "
@@ -553,14 +553,24 @@ class CountersheetEffect(inkex.Effect):
         return tmpfile[1]
 
     def export_using_inkscape(self, ids, size_flags, export_flags,
-                              exportdir, extension):
+                              exportdir, extension,
+# this is an ugly workaround for
+# https://bugs.launchpad.net/inkscape/+bug/1714365
+                              noidexportworkaround=False):
         tmpfilename = self.make_temporary_svg(exportdir)
+        tmpfile = open(tmpfilename, 'w')
+        self.document.write(tmpfile)
+        tmpfile.close()
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
                 continue
-            cmd='inkscape -i %s -j %s "%s" %s "%s"' % (
-                id,
+            if noidexportworkaround:
+                idflag = ""
+            else:
+                idflag = "-i %s" % id
+            cmd='inkscape %s -j %s "%s" %s "%s"' % (
+                idflag,
                 export_flags,
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
@@ -574,14 +584,40 @@ class CountersheetEffect(inkex.Effect):
         return os.path.join(os.path.abspath(directory),
                             self.bitmapname + id) + "." + extension
 
+    def hidelayers(self, layer_ids):
+        self.set_style_on_elements(layer_ids, 'display', 'none')
+
+    def showlayers(self, layer_ids):
+        self.set_style_on_elements(layer_ids, 'display', None)
+
+    def set_style_on_elements(self, element_ids, part, value):
+        self.logwrite("set_style_on_elements %r %s=%s\n"
+                      % (element_ids, part, value))
+        for element_id in element_ids:
+            matching_elements = self.document.xpath("//*[@id='%s']" % element_id,
+                                                    namespaces=NSS)
+            if not matching_elements:
+                return
+            element = matching_elements[0]
+            oldstyle = element.get('style') or ""
+            newstyle = stylereplace(oldstyle, part, value)
+            element.set('style', newstyle)
+            self.logwrite("set_style_on_elements %s: '%s' -> '%s'\n"
+                          % (element_id, oldstyle, newstyle))
+
     def exportSheetPDFs(self):
         if (self.options.pdfdir
             and len(self.cslayers) > 0):
-            self.export_using_inkscape(self.cslayers,
-                                       "-d %d" % PDF_DPI,
-                                       "-A",
-                                       self.options.pdfdir,
-                                       "pdf")
+            for layer in self.cslayers:
+                self.hidelayers(self.cslayers)
+                self.showlayers([layer])
+                self.export_using_inkscape([layer],
+                                           "-d %d" % PDF_DPI,
+                                           "-A",
+                                           self.options.pdfdir,
+                                           "pdf",
+                                           True)
+        self.showlayers(self.cslayers)
 
     def exportSheetBitmaps(self):
         if (self.options.bitmapsheetsdpi > 0
@@ -624,6 +660,7 @@ class CountersheetEffect(inkex.Effect):
         max_x = 0
         max_y = 0
         for x in xregistrationmarks:
+            self.logwrite("registrationmark x: %f\n" % x)
             layer.append(
                 self.create_registrationline(position.x + x,
                                              position.y - linelen,
@@ -632,6 +669,7 @@ class CountersheetEffect(inkex.Effect):
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
+            self.logwrite("registrationmark y: %f\n" % y)
             layer.append(self.create_registrationline(position.x - linelen,
                                                       position.y + y,
                                                       position.x,
@@ -812,7 +850,7 @@ class CountersheetEffect(inkex.Effect):
         col = 0
         colx = 0
         rowy = 0
-        nextrowy = 1
+        nextrowy = 0
         box = 0
         nr = 0
         csn = 1
@@ -852,7 +890,9 @@ class CountersheetEffect(inkex.Effect):
                     colx = 0
                     row = row + 1
                     rowy = nextrowy
-                    nextrowy = rowy + 1
+                    nextrowy = rowy
+                    self.logwrite("new row %d (y=%f)\n"
+                                  % (row, rowy))
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
@@ -1261,11 +1301,18 @@ def get_part(style, pname):
 
 def stylereplace(oldv, pname, v):
     out = ""
+    replaced = False
+    newstylepart = "%s:%s;" % (pname, v)
+    if not v:
+        newstylepart = ""
     for part in oldv.split(";"):
         if part.startswith(pname + ':'):
-            out += "%s:%s;" % (pname, v) 
+            out += newstylepart
+            replaced = True
         elif len(part):
             out += part + ";"
+    if not replaced:
+        out += newstylepart
     return out
 
 validreplacenamere = re.compile("^[-\w.:]+$", re.UNICODE)
