@@ -636,6 +636,7 @@ class CountersheetEffect(inkex.Effect):
         max_x = 0
         max_y = 0
         for x in xregistrationmarks:
+            self.logwrite("registrationmark x: %f\n" % x)
             layer.append(
                 self.create_registrationline(position.x + x,
                                              position.y - linelen,
@@ -644,6 +645,7 @@ class CountersheetEffect(inkex.Effect):
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
+            self.logwrite("registrationmark y: %f\n" % y)
             layer.append(self.create_registrationline(position.x - linelen,
                                                       position.y + y,
                                                       position.x,
@@ -824,7 +826,7 @@ class CountersheetEffect(inkex.Effect):
         col = 0
         colx = 0
         rowy = 0
-        nextrowy = 1
+        nextrowy = 0
         box = 0
         nr = 0
         csn = 1
@@ -864,7 +866,9 @@ class CountersheetEffect(inkex.Effect):
                     colx = 0
                     row = row + 1
                     rowy = nextrowy
-                    nextrowy = rowy + 1
+                    nextrowy = rowy
+                    self.logwrite("new row %d (y=%f)\n"
+                                  % (row, rowy))
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
