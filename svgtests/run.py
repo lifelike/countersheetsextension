@@ -27,6 +27,7 @@ chosen = [a for a in sys.argv[1:]
           if not a.startswith("-")]
 
 tests = [
+    ['battlelabels.csv', 'battlelabels.svg'],
     ['nato1.csv', 'nato.svg'],
     ['nato2.csv', 'nato.svg'],
     ['use.csv', 'use.svg'],
@@ -54,6 +55,9 @@ tests = [
     ['autonumbers.csv', 'numbers.svg'],
     ['square.csv', 'square.svg'],
     ['square.csv', 'square092.svg'],
+    ['stars-3.csv', 'star.svg'],
+    ['stars-4.csv', 'star.svg'],
+    ['stars-5.csv', 'star.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
