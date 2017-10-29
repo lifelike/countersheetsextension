@@ -62,6 +62,8 @@ for f in glob.glob(os.path.join(inputdir, "*.png")):
     shutil.copy(f, pdfdir)
 
 successes = 0
+fails = 0
+skipped = 0
 for test in tests:
     [basedatafile, basesvginfile] = test
     if chosen:
@@ -71,6 +73,7 @@ for test in tests:
                 matches = True
                 break
         if not matches:
+            skipped += 1
             continue
     svgoutbasename = basedatafile + '-' + basesvginfile
     svgoutfile = os.path.join(outputdir, svgoutbasename)
@@ -109,6 +112,7 @@ for test in tests:
         successes += 1
     else:
         print "FAIL: diff %s %s" % (svgoutfile, expectedfile)
+        fails += 1
 
-print ("%d/%d tests OK (%d FAILED)\n"
-       % (successes, len(tests), len(tests)-successes))
+print ("%d/%d tests OK (%d skipped, %d FAILED)\n"
+       % (successes, len(tests), skipped, fails))
