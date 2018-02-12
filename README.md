@@ -25,6 +25,7 @@ Main Features
 * Set colors and other attributes of (parts of) counters.
 * Any counters can be mixed on the same sheet (even different sizes).
 * Registration marks for manual cutting of the sheets.
+* Simple text mark-up for bold and italics text styles.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
 * Export created sheets to PNG or PDF.
 * Export individual counters to PNG images.
@@ -39,7 +40,7 @@ looks for extensions. On my Mac and Linux computers this is in
 .config/inkscape/extensions.  In Windows it will be something like
 C:\Program Files\Inkscape\share\extensions.
 
-After you (re)start Inscape you should find "Create Countersheet"
+After you (re)start Inkscape you should find "Create Countersheet"
 in the "Boardgames" submenu of the "Extensions" menu.
 
 See more complete instructions [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Install).
@@ -60,12 +61,12 @@ the Create Countersheet extension and provide the name of
 the data file (the other options in the dialog window you can
 ignore for now).
 
-See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Tutorials) for more.
+See the [wiki](https://github.com/lifelike/countersheetsextension/wiki/) for more.
 
 License
 --------
 
-Copyright (C) 2008-2017 Pelle Nilsson
+Copyright (C) 2008-2018 Pelle Nilsson
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

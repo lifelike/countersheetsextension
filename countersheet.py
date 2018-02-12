@@ -218,7 +218,10 @@ class CountersheetEffect(inkex.Effect):
         if not self.log and self.options.logfile:
             self.log = open(self.options.logfile, 'w')
         if self.log:
-            self.log.write(msg)
+            try:
+                self.log.write(msg)
+            except UnicodeEncodeError:
+                self.log.write(msg.encode('utf8'))
 
     def replaceattrs(self, elements, attrs):
         for n in elements:
@@ -272,7 +275,7 @@ class CountersheetEffect(inkex.Effect):
         self.deleteFlowParas(element)
         for line in lines:
             para = etree.Element(inkex.addNS('flowPara', 'svg'))
-            self.setFormattedText(para, line, 'flowSpan')
+            self.setFormattedText(para, line.decode('utf8'), 'flowSpan')
             element.append(para)
 
     def deleteFlowParas(self, parent):
@@ -283,17 +286,81 @@ class CountersheetEffect(inkex.Effect):
     def setFormattedText(self, element, text, spantag):
         self.logwrite('setFormattedText: %s %s %s\n'
                       % (element.tag, text, spantag))
-        element.text = text.decode('utf8')
+
+        # TODO check if option to do formatting is set at all
+
+        first_bold = text.find("*")
+        first_italics = text.find("/")
+        second_bold = text.find("*", first_bold + 1)
+        second_italics = text.find("/", first_italics + 1)
+
+        self.logwrite("first_bold: %d, first_italics: %d, "
+                      "second_bold: %d, second_italics: %d\n"
+                      % (first_bold, first_italics,
+                         second_bold, second_italics))
+
+        skip = False
+
+        if (first_italics > first_bold
+            and second_bold > first_italics
+            and second_italics > second_bold
+            or first_bold > first_italics
+            and second_italics > first_bold
+            and second_bold > first_italics):
+            self.logwrite("Bad nesting bold/italics (skip format): %s\n"
+                          % text)
+            skip = True
+
+        if first_bold >= 0 and second_bold < 0:
+            self.logwrite("Single bold-mark (*) (skip format): %s\n" % text)
+            skip = True
+
+        if first_italics >= 0 and second_italics < 0:
+            self.logwrite("Single italics-mark (/) (skip format): %s\n" % text)
+            skip = True
+
+        if (not skip
+            and first_bold >= 0
+            and second_bold > first_bold
+            and (first_italics < 0 or first_bold < first_italics)):
+            self.formatTextPart(element, text, spantag,
+                                  first_bold, second_bold,
+                                  "font-weight", "bold")
+        elif (not skip
+              and first_italics >=0
+              and second_italics > first_italics
+              and (first_bold < 0 or first_italics < first_bold)):
+            self.formatTextPart(element, text, spantag,
+                                  first_italics, second_italics,
+                                  "font-style", "italic")
+        else:
+            element.text = text
         return True
+
+    def formatTextPart(self, element, text, spantag,
+                       begin_index, end_index,
+                       style, style_value):
+        stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
+        stylespan.set('style', '%s:%s' % (style, style_value))
+        self.setFormattedText(stylespan,
+                              text[begin_index+1:end_index],
+                              spantag)
+        restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        self.setFormattedText(restspan,
+                              text[end_index+1:],
+                              spantag)
+        element.text = text[:begin_index]
+        element.append(stylespan)
+        element.append(restspan)
 
     def setFirstTextChild(self, element, text):
         for c in element.getchildren():
             if (c.tag == inkex.addNS('flowPara', 'svg')
                 or c.tag == inkex.addNS('flowSpan', 'svg')):
-                return self.setFormattedText(c, text, 'flowSpan')
+                return self.setFormattedText(c, text.decode('utf8'), 'flowSpan')
             elif (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
-                return self.setFormattedText(c, text, 'tspan')
+                return self.setFormattedText(c, text.decode('utf8'), 'tspan')
             elif self.setFirstTextChild(c, text):
                 return True
         return False

@@ -5,6 +5,12 @@ card,title,text
 11,Eleven,11 more cards to make 18.
 ,ÅÄÖ,"Card with å, ä, ö".
 ,Italian,più
+,*Bold*,Make a *bold word* on *this* card.
+,/Italics/,/Italics/ is tested on /this/ card.
+,Both,Some *bold* and some /italics/.
+,Nested, Some *bold and /italics/* text.
+,No End,Not *bold, nor /italics.
+,Overlap,Mix /italics *bold in / wrong * order.
 
 rcard,rtitle,HERE,there
 ,"Repl XY",X,Y
