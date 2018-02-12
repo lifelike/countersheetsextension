@@ -210,6 +210,8 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'int',
                                      default = '0',
                                      dest = 'registrationmarkslen')
+        self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
+                                     action = 'store', default = "true")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -287,7 +289,9 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite('setFormattedText: %s %s %s\n'
                       % (element.tag, text, spantag))
 
-        # TODO check if option to do formatting is set at all
+        if not self.textmarkup:
+            element.text = text
+            return True
 
         first_bold = text.find("*")
         first_italics = text.find("/")
@@ -818,6 +822,8 @@ class CountersheetEffect(inkex.Effect):
         self.exportids = []
         self.cslayers = []
         self.bitmapname = self.options.bitmapname
+
+        self.textmarkup = self.options.textmarkup == "true"
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
