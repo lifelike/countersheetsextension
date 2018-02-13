@@ -338,8 +338,34 @@ class CountersheetEffect(inkex.Effect):
                                   first_italics, second_italics,
                                   "font-style", "italic")
         else:
-            element.text = text
+            m = re.search(r"[{][^{}]+[}]", text)
+            if m:
+                self.logwrite("Inline image: %s\n" % m.group(0))
+                self.insertImagePlaceholder(element,
+                                            text,
+                                            spantag,
+                                            m.start(),
+                                            m.end() - 1)
+            else:
+                element.text = text
         return True
+
+    def insertImagePlaceholder(self, element, text, spantag,
+                               begin_index, end_index):
+        span = etree.Element(inkex.addNS(spantag, 'svg'))
+        span.text = u"\u2b1b"
+        restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        self.setFormattedText(restspan,
+                              text[end_index+1:],
+                              spantag)
+        element.text = text[:begin_index]
+        element.append(span)
+        element.append(restspan)
+        # FIXME save an object in a dict to find this later
+        # FIXME add code somewhere to query inkscape for placeholders
+        # FIXME overlay placeholders with icons images in counter top group
+        # FIXME make placeholders invisible
+        # FIXME support for image size eg {image.png 150%}
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
@@ -353,7 +379,7 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(restspan,
                               text[end_index+1:],
                               spantag)
-        element.text = text[:begin_index]
+        element.text = text[:begin_index] # FIXME replace images!
         element.append(stylespan)
         element.append(restspan)
 
