@@ -11,7 +11,7 @@ card,title,text
 ,Nested, Some *bold and /italics/* text.
 ,No End,Not *bold, nor /italics.
 ,Overlap,Mix /italics *bold in / wrong * order.
-,Image 1,Inline icon {icon1.png} here.
+,Image 1,Inlne icon {icon1.png} here.
 ,Image 2,Inline icon {icon2.png} here.
 ,2 Images,Inline {icon1.png} and {icon2.png}.
 ,Bold Img,So *bold* {icon1.png} *icon*.

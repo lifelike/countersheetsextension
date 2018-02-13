@@ -10,34 +10,33 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="cards.svg"
-   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   inkscape:version="0.91 r13725"
    version="1.1"
    id="svg2"
-   viewBox="0 0 744.09448 1052.3622"
-   height="297mm"
-   width="210mm">
+   viewBox="0 0 765 990"
+   height="11in"
+   width="8.5in">
   <defs
      id="defs4" />
   <sodipodi:namedview
-     units="mm"
+     units="in"
      inkscape:window-maximized="1"
-     inkscape:window-y="1"
+     inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:window-height="1035"
-     inkscape:window-width="1855"
+     inkscape:window-height="719"
+     inkscape:window-width="1366"
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="401.38612"
-     inkscape:cx="190.18904"
-     inkscape:zoom="0.5190175"
+     inkscape:cy="227.8496"
+     inkscape:cx="59.135033"
+     inkscape:zoom="0.25950875"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
-     id="base"
-     inkscape:snap-global="false" />
+     id="base" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -46,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,63 +53,44 @@
      inkscape:label="templates"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(485.01141,937.80937)">
+     transform="translate(0,-62.362205)">
     <g
-       id="g2198"
-       transform="translate(-541.88924,-458.79956)">
+       id="g4178"
+       transform="translate(-73.23159,120.83212)">
       <rect
          inkscape:label="#rect4136"
-         y="80.582443"
-         x="-567.75494"
+         y="-40.24968"
+         x="-494.52338"
          height="315"
          width="225"
          id="card"
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#dedede;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.91176471;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
-      <rect
-         y="86.330048"
-         x="-562.00732"
-         height="37.163498"
-         width="213.66135"
-         id="rect2185"
-         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#eeebdd;fill-opacity:1;fill-rule:nonzero;stroke:#806600;stroke-width:1.77165365;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99215686;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
       <text
          inkscape:label="#text4138"
+         sodipodi:linespacing="125%"
          id="title"
-         y="114.55283"
-         x="-454.49139"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         y="16.71113"
+         x="-466.04297"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           y="114.55283"
-           x="-454.49139"
+           y="16.71113"
+           x="-466.04297"
            id="tspan4140"
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle">TITLE</tspan></text>
-      <rect
-         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fbfbf8;fill-opacity:1;fill-rule:nonzero;stroke:#806600;stroke-width:1.77165365;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99215686;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-         id="rect2187"
-         width="213.66135"
-         height="260.68143"
-         x="-562.00732"
-         y="128.47914" />
+           sodipodi:role="line">TITLE</tspan></text>
       <flowRoot
-         transform="translate(-73.23159,97.841706)"
          inkscape:label="#flowRoot4142"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.75px;line-height:0.01%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          id="text"
          xml:space="preserve"><flowRegion
-           id="flowRegion4144"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.75px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"><rect
+           id="flowRegion4144"><rect
              y="47.780663"
              x="-478.98862"
-             height="226.82362"
-             width="190.99149"
-             id="rect4146"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.75px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
-           id="flowPara4148"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.75px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">Some text on the card here.</flowPara></flowRoot>    </g>
+             height="199.36284"
+             width="194.18457"
+             id="rect4146" /></flowRegion><flowPara
+           id="flowPara4148">Some text on the card here.</flowPara></flowRoot>    </g>
     <g
-       id="g4156"
-       transform="translate(-541.88924,-458.79956)">
+       id="g4156">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#dedede;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.91176471;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
          id="rcard"
@@ -121,44 +101,29 @@
          inkscape:label="#rect4136" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="-537.44379"
          y="501.87042"
          id="rtitle"
+         sodipodi:linespacing="125%"
          inkscape:label="#text4138"><tspan
            sodipodi:role="line"
            id="tspan4155"
            x="-537.44379"
-           y="501.87042"
-           style="font-size:40px;line-height:1.25;font-family:sans-serif">REPLACE</tspan></text>
+           y="501.87042">REPLACE</tspan></text>
       <flowRoot
          transform="translate(-71.4008,485.15928)"
          xml:space="preserve"
          id="rtext"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          inkscape:label="#flowRoot4142"><flowRegion
-           id="flowRegion4159"
-           style="font-family:sans-serif"><rect
+           id="flowRegion4159"><rect
              id="rect4161"
              width="194.18457"
              height="199.36284"
              x="-478.98862"
              y="47.780663"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
-           id="flowPara4163"
-           style="font-size:12.5px;line-height:1.25;font-family:sans-serif">Some text on the card here. Some parts are replaced from CSV. For instance %HERE%. Same %HERE%. And %there%.</flowPara></flowRoot>    </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="countersheet_layout"
-     style="display:none">
-    <rect
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#eeebdd;fill-opacity:1;fill-rule:nonzero;stroke:#fff5cd;stroke-width:1.77165365;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99215686;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       id="rect4194"
-       width="675"
-       height="945"
-       x="37.932247"
-       y="46.254494" />
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
+           id="flowPara4163">Some text on the card here. Some parts are replaced from CSV. For instance %HERE%. Same %HERE%. And %there%.</flowPara></flowRoot>    </g>
   </g>
 </svg>

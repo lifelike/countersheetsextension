@@ -338,26 +338,21 @@ class CountersheetEffect(inkex.Effect):
                                   first_italics, second_italics,
                                   "font-style", "italic")
         else:
-            self.formatTextImages(element, text, spantag)
+            m = re.search(r"[{][^{}]+[}]", text)
+            if m:
+                self.logwrite("Inline image: %s\n" % m.group(0))
+                self.insertImagePlaceholder(element,
+                                            text,
+                                            spantag,
+                                            m.start(),
+                                            m.end() - 1)
+            else:
+                element.text = text
         return True
-
-    def formatTextImages(self, element, text, spantag):
-        m = re.search(r"[{][^{}]+[}]", text)
-        if m:
-            self.logwrite("Inline image: %s\n" % m.group(0))
-            self.insertImagePlaceholder(element,
-                                        text,
-                                        spantag,
-                                        m.start(),
-                                        m.end() - 1)
-        else:
-            element.text = text
 
     def insertImagePlaceholder(self, element, text, spantag,
                                begin_index, end_index):
         span = etree.Element(inkex.addNS(spantag, 'svg'))
-        spanid = "cs_inline_%d" % len(self.placeholders)
-        span.set('id', spanid)
         span.text = u"\u2b1b"
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
         self.setFormattedText(restspan,
@@ -366,12 +361,7 @@ class CountersheetEffect(inkex.Effect):
         element.text = text[:begin_index]
         element.append(span)
         element.append(restspan)
-
-        self.placeholders[spanid] = {
-            "parent" : element,
-            "span" : span,
-            "filename" : text[begin_index+1:end_index]
-        }
+        # FIXME save an object in a dict to find this later
         # FIXME add code somewhere to query inkscape for placeholders
         # FIXME overlay placeholders with icons images in counter top group
         # FIXME make placeholders invisible
@@ -389,9 +379,7 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(restspan,
                               text[end_index+1:],
                               spantag)
-        startspan = etree.Element(inkex.addNS(spantag, 'svg'))
-        self.formatTextImages(startspan, text[:begin_index], spantag)
-        element.append(startspan)
+        element.text = text[:begin_index] # FIXME replace images!
         element.append(stylespan)
         element.append(restspan)
 
@@ -646,7 +634,7 @@ class CountersheetEffect(inkex.Effect):
                                    self.options.bitmapdir,
                                    "png")
 
-    def make_temporary_svg(self, exportdir=None):
+    def make_temporary_svg(self, exportdir):
         """ Renders SVG DOM as it currently looks like
         in the extension with modifications made (or not)
         since reading the original file. The caller is
@@ -655,10 +643,7 @@ class CountersheetEffect(inkex.Effect):
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
         from tempfile import mkstemp
-        absexportdir = None
-        if exportdir:
-            absexportdir = os.path.abspath(exportdir)
-        tmpfile = mkstemp(".svg", "tmp", absexportdir, True)
+        tmpfile = mkstemp(".svg", "tmp", os.path.abspath(exportdir), True)
         tmpfileobject = os.fdopen(tmpfile[0], 'w')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
@@ -864,10 +849,6 @@ class CountersheetEffect(inkex.Effect):
         self.cslayers = []
         self.bitmapname = self.options.bitmapname
 
-        # Elements to be queried and overlaid with new image elements after
-        # layout is done
-        self.placeholders = {}
-
         self.textmarkup = self.options.textmarkup == "true"
 
         # Get access to main SVG document element and get its dimensions.
@@ -1055,27 +1036,6 @@ class CountersheetEffect(inkex.Effect):
 
         if len(layer.getchildren()):
             svg.append(layer)
-
-        if len(self.placeholders) > 0:
-            tmpfile = self.make_temporary_svg()
-            self.logwrite("Placeholders replace temporary file: %s\n" % tmpfile)
-            geometry = self.queryAll(tmpfile)
-            for spanid, info in self.placeholders.iteritems():
-                if not spanid in geometry:
-                    sys.exit("Could not query location for %s. "
-                             "This is bad. Please report this as a bug "
-                             "in the countersheetsgenerator."
-                             % spanid)
-                positon = geometry[spanid]
-                image = etree.Element(inkex.addNS('image', 'svg'))
-                image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
-                image.set(inkex.addNS("href", "xlink"), info["filename"])
-                image.set('x', position.x)
-                image.set('y', position.y)
-                image.set('width', position.width)
-                image.set('height', position.height)
-
-            #FIXME delete tmpfile
 
         exportedbitmaps = self.exportIDBitmaps()
         self.post(counters)
