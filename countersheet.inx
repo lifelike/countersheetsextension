@@ -21,7 +21,9 @@
   <param name="pdfdir" type="string"
         _gui-text="PDF Output Directory (optional)"></param>
   <param name="textmarkup" type="boolean"
-        _gui-text="Enable Text Markup (*bold*, /italics/)">true</param>
+        _gui-text="Text Markup (*bold*, /italics/)">true</param>
+  <param name="bleed" type="boolean"
+        _gui-text="Bleed">false</param>
   <param name="log" type="string" _gui-text="Log File (optional)"></param>
   <effect>
     <object-type>all</object-type>

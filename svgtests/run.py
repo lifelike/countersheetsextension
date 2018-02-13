@@ -94,6 +94,7 @@ for test in tests:
                    '-f', '90',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
+                   '-B',
                    '-N', svgoutbasename + '--',
                    svginfile
                    ]

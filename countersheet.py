@@ -57,6 +57,10 @@ class Counter:
         self.attrs = {}
         self.excludeids = []
         self.includeids = []
+        self.bleed_up = False
+        self.bleed_right = False
+        self.bleed_down = False
+        self.bleed_left = False
 
     def set(self, setting):
         setting.applyto(self)
@@ -212,6 +216,8 @@ class CountersheetEffect(inkex.Effect):
                                      dest = 'registrationmarkslen')
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
+        self.OptionParser.add_option('-B', '--bleed', dest='bleed',
+                                     action = 'store', default = "false")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -411,7 +417,7 @@ class CountersheetEffect(inkex.Effect):
             raise ValueError( "Unable to find layer for element [" + sourceElementId + "]" )
         if self.is_layer( parent ): return parent
         return self.get_layer( parent, sourceElementId )
-        
+
     def generatecounter(self, c, rects, layer, colx, rowy):
         res = [0, 0]
         oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
@@ -422,6 +428,7 @@ class CountersheetEffect(inkex.Effect):
             for oldc in oldcs:
                 oldc.set('id', '')
         clonegroup = etree.Element(inkex.addNS('g', 'svg'))
+        c.element = clonegroup
         if c.id != None and len(c.id):
             clonegroup.set('id', c.id)
             self.exportids.append(c.id)
@@ -824,6 +831,7 @@ class CountersheetEffect(inkex.Effect):
         self.bitmapname = self.options.bitmapname
 
         self.textmarkup = self.options.textmarkup == "true"
+        self.bleed = self.options.bleed == "true"
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
@@ -932,6 +940,10 @@ class CountersheetEffect(inkex.Effect):
         xregistrationmarks = set([0])
         yregistrationmarks = set([0])
 
+        is_first_col = True
+        is_first_row = True
+        current_row_counters = []
+
         for i,c in enumerate(counters):
             self.before_counter(c)
             c.backxs = []
@@ -946,8 +958,16 @@ class CountersheetEffect(inkex.Effect):
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
                                                    positions[box].y+rowy)
+                current_row_counters.append(c)
                 self.logwrite("generated counter size: %fx%f\n"
                               % (width, height))
+                if is_first_col:
+                    self.logwrite("  bleed left\n")
+                    c.bleed_left = True
+                    is_first_col = False
+                if is_first_row:
+                    self.logwrite("  bleed up\n")
+                    c.bleed_up = True
                 if c.hasback:
                     c.backxs.append(positions[box].x + colx + width)
                     c.backys.append(positions[box].y + rowy)
@@ -966,6 +986,10 @@ class CountersheetEffect(inkex.Effect):
                     nextrowy = rowy
                     self.logwrite("new row %d (y=%f)\n"
                                   % (row, rowy))
+                    c.bleed_right = True
+                    self.logwrite("  bleed right!\n")
+                    is_first_col = True
+                    is_first_row = False
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
@@ -975,6 +999,10 @@ class CountersheetEffect(inkex.Effect):
                         self.addregistrationmarks(
                             xregistrationmarks, yregistrationmarks,
                             positions[box], layer)
+                        for rowc in current_row_counters:
+                            rowc.bleed_down = True
+                            self.logwrite("  bleed down\n")
+                        is_first_row = True
                         xregistrationmarks = set([0])
                         yregistrationmarks = set([0])
                         bstack = []
@@ -993,6 +1021,7 @@ class CountersheetEffect(inkex.Effect):
                             svg.append(layer)
                             layer = self.addLayer(svg, what, csn)
                             box = 0
+                    current_row_counters = []
 
         if ((len(xregistrationmarks) > 1
              or len(yregistrationmarks) > 1)
