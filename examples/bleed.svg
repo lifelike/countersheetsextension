@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="bleed.svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm"
+   inkscape:version="0.92.1 r15371">
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:window-height="720"
+     inkscape:window-width="1366"
+     inkscape:snap-global="false"
+     showgrid="false"
+     inkscape:current-layer="layer2"
+     inkscape:document-units="mm"
+     inkscape:cy="591.11797"
+     inkscape:cx="238.41792"
+     inkscape:zoom="0.49497475"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient7189"
+       inkscape:collect="always">
+      <stop
+         id="stop7185"
+         offset="0"
+         style="stop-color:#fdf22c;stop-opacity:1" />
+      <stop
+         id="stop7187"
+         offset="1"
+         style="stop-color:#fb1f1d;stop-opacity:0.99607843" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4491-3"
+       inkscape:collect="always">
+      <stop
+         id="stop4487"
+         offset="0"
+         style="stop-color:#165b75;stop-opacity:1" />
+      <stop
+         id="stop4489"
+         offset="1"
+         style="stop-color:#bfdaf2;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient
+       r="7.9375"
+       fy="38.302883"
+       fx="-43.570148"
+       cy="38.302883"
+       cx="-43.570148"
+       gradientTransform="matrix(4.5354403,0.01782236,-0.01992529,5.070598,99.302096,-81.997032)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4503-2"
+       xlink:href="#linearGradient4491-3"
+       inkscape:collect="always" />
+    <clipPath
+       id="bleed_15x15_True_True_True_True">
+      <rect
+         id="rect4042"
+         height="47.6250341303"
+         width="47.6250341303"
+         y="-15.8750113768"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="bleed_15x15_True_False_True_True">
+      <rect
+         id="rect4045"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4050">
+      <rect
+         id="rect4048"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4054">
+      <rect
+         id="rect4052"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4058">
+      <rect
+         id="rect4056"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4062">
+      <rect
+         id="rect4060"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4066">
+      <rect
+         id="rect4064"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4070">
+      <rect
+         id="rect4068"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="bleed_15x15_False_True_True_True">
+      <rect
+         id="rect4072"
+         height="31.7500227535"
+         width="47.6250341303"
+         y="0"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="bleed_15x15_False_False_True_True">
+      <rect
+         id="rect4075"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4080">
+      <rect
+         id="rect4078"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4084">
+      <rect
+         id="rect4082"
+         height="47.6250341303"
+         width="47.6250341303"
+         y="-15.8750113768"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="clipPath4088">
+      <rect
+         id="rect4086"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4092">
+      <rect
+         id="rect4090"
+         height="47.6250341303"
+         width="31.7500227535"
+         y="-15.8750113768"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4096">
+      <rect
+         id="rect4094"
+         height="31.7500227535"
+         width="47.6250341303"
+         y="0"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="clipPath4100">
+      <rect
+         id="rect4098"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4104">
+      <rect
+         id="rect4102"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4108">
+      <rect
+         id="rect4106"
+         height="31.7500227535"
+         width="47.6250341303"
+         y="0"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="clipPath4112">
+      <rect
+         id="rect4110"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4116">
+      <rect
+         id="rect4114"
+         height="31.7500227535"
+         width="31.7500227535"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath4120">
+      <rect
+         id="rect4118"
+         height="47.6250341303"
+         width="47.6250341303"
+         y="-15.8750113768"
+         x="-15.8750113768" />
+    </clipPath>
+    <clipPath
+       id="clipPath4124">
+      <rect
+         id="rect4122"
+         height="47.6250341303"
+         width="47.6250341303"
+         y="-15.8750113768"
+         x="-15.8750113768" />
+    </clipPath>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4491-3"
+       id="radialGradient7177"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.2000019,0.0047155,-0.0052719,1.3415957,26.273675,-21.695047)"
+       cx="-43.570148"
+       cy="38.302883"
+       fx="-43.570148"
+       fy="38.302883"
+       r="7.9375" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7189"
+       id="linearGradient7183"
+       x1="-34.86404"
+       y1="19.880512"
+       x2="-17.215427"
+       y2="37.928875"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="display:inline"
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <g
+       id="g7211">
+      <rect
+         id="rect10"
+         width="19.349504"
+         height="19.349504"
+         x="-35.619991"
+         y="19.277187"
+         style="opacity:1;vector-effect:none;fill:url(#linearGradient7183);fill-opacity:1;stroke-width:0.26458329;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         style="fill:url(#radialGradient7177);fill-opacity:1.0;stroke-width:0.26458329"
+         y="21.014431"
+         x="-33.882748"
+         height="15.875011"
+         width="15.875011"
+         id="tile"
+         inkscape:label="#rect4499" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ff7f2a;fill-opacity:1;stroke:#a92824;stroke-width:0.26458332;stroke-opacity:1"
+         x="-25.945248"
+         y="32.809586"
+         id="letter"
+         inkscape:label="#text4497"><tspan
+           sodipodi:role="line"
+           id="tspan4495"
+           x="-25.945248"
+           y="32.809586"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ff7f2a;stroke:#a92824;stroke-width:0.26458332;stroke-opacity:1">A</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="149.1364"
+       y="265.06128"
+       id="text7193"><tspan
+         sodipodi:role="line"
+         id="tspan7191"
+         x="149.1364"
+         y="265.06128"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">NOTE:</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="269.47101"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7195">It makes no sense to have</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="273.88071"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7197">bleed in a different color</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="278.29044"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7199">like that. It is only for testing</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="282.70016"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7201">and to make it very obvious</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="287.10989"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7203">where the bleed does (not) show</tspan><tspan
+         sodipodi:role="line"
+         x="149.1364"
+         y="291.51959"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan7205">up in the generated sheet.</tspan></text>
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="countersheet_layout"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <rect
+       y="8.8605471"
+       x="7.4606528"
+       height="52.985497"
+       width="138.49141"
+       id="rect4793"
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.21879584;stroke-opacity:1" />
+    <rect
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.13483772;stroke-opacity:1"
+       id="rect19"
+       width="52.51458"
+       height="53.069454"
+       x="7.418674"
+       y="71.89418" />
+    <rect
+       y="142.19775"
+       x="7.418674"
+       height="53.069454"
+       width="52.51458"
+       id="rect21"
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.13483772;stroke-opacity:1" />
+    <rect
+       y="206.30666"
+       x="18.073677"
+       height="23.741358"
+       width="25.859179"
+       id="rect25"
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.06328623;stroke-opacity:1" />
+    <rect
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.06328623;stroke-opacity:1"
+       id="rect27"
+       width="25.859179"
+       height="23.741358"
+       x="38.920712"
+       y="251.74249" />
+    <rect
+       y="251.75616"
+       x="84.370201"
+       height="23.714014"
+       width="53.093327"
+       id="rect12109"
+       style="fill:#bfdaf2;fill-opacity:1;stroke:#a92824;stroke-width:0.09062992;stroke-opacity:1" />
+  </g>
+</svg>

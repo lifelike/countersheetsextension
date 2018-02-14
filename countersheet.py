@@ -57,10 +57,11 @@ class Counter:
         self.attrs = {}
         self.excludeids = []
         self.includeids = []
-        self.bleed_up = False
-        self.bleed_right = False
-        self.bleed_down = False
-        self.bleed_left = False
+        self.bleed_up = []
+        self.bleed_left = []
+        self.elements = [] # generated top-level groups
+        self.width = 0 # actual width when generated
+        self.height = 0 # actual height when generated
 
     def set(self, setting):
         setting.applyto(self)
@@ -117,6 +118,87 @@ class CounterSettingHolder:
         if self.copytoback:
             back = counter.doublesided()
             self.setting.applyto(back)
+
+
+class BleedMaker:
+    def __init__(self, svg):
+        founddefs = svg.xpath('//svg:defs', namespaces=NSS)
+        if len(founddefs) > 0:
+            self.defs = founddefs[0]
+        else:
+            self.defs = etree.Element(inkex.addNS("defs", "svg"))
+            svg.append(self.defs)
+
+    def getbleed(self, counter,
+                 bleed_up, bleed_left, bleed_down, bleed_right):
+        """
+        Create a clippath rectangle in svg defs and return its name.
+        Or just return the name if it already exists.
+        Note that with the current implementation there is always
+        bleed drawn below and to the right of every counter.
+        That is almost always the correct thing to do. Possibly
+        always for all practical purposes. Except on counter
+        backs where left and right are exchanged, so they will
+        always have bleed_left, but not always bleed_right.
+        Leaving this generic enough to handle clip-paths extended
+        in all directions since it is not a huge additional
+        effort anyway to handle 3 instead of 4 directions.
+        """
+        name = "bleed_%dx%d_%r_%r_%r_%r" % (counter.width,
+                                            counter.height,
+                                            bleed_up,
+                                            bleed_left,
+                                            bleed_down,
+                                            bleed_right)
+        existing = self.defs.xpath("svg:clipPath[@id='%s']"% name,
+                                   namespaces=NSS)
+        if len(existing) == 0:
+            clipPath = etree.Element(inkex.addNS("clipPath", "svg"))
+            clipPath.set('id', name)
+            rect = etree.Element(inkex.addNS("rect", "svg"))
+
+            x1 = 0
+            y1 = 0
+            x2 = counter.width
+            y2 = counter.height
+
+            if bleed_up:
+                y1 -= counter.height
+            if bleed_left:
+                x1 -= counter.width
+            if bleed_down:
+                y2 += counter.height
+            if bleed_right:
+                x2 += counter.width
+
+            rect.set('x', str(min(x1, x2)))
+            rect.set('y', str(min(y1, y2)))
+            rect.set('width', str(abs(x1 - x2)))
+            rect.set('height', str(abs(y1 - y2)))
+
+            clipPath.append(rect)
+            self.defs.append(clipPath)
+        return name
+
+    def add_bleed_to(self, counters):
+        for counter in counters:
+            for i,element in enumerate(counter.elements):
+                element.set('clip-path',
+                            "url(#%s)"
+                            % self.getbleed(counter,
+                                            counter.bleed_up[i],
+                                            counter.bleed_left[i],
+                                            True,
+                                            True))
+            if counter.hasback:
+                for i,element in enumerate(counter.back.elements):
+                    element.set('clip-path',
+                                "url(#%s)"
+                                % self.getbleed(counter.back,
+                                                counter.bleed_up[i],
+                                                True,
+                                                True,
+                                                counter.bleed_left[i]))
 
 class NoSetting:
     def applyto(self, counter):
@@ -419,7 +501,6 @@ class CountersheetEffect(inkex.Effect):
         return self.get_layer( parent, sourceElementId )
 
     def generatecounter(self, c, rects, layer, colx, rowy):
-        res = [0, 0]
         oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
                                     namespaces=NSS)
         if len(oldcs):
@@ -428,7 +509,7 @@ class CountersheetEffect(inkex.Effect):
             for oldc in oldcs:
                 oldc.set('id', '')
         clonegroup = etree.Element(inkex.addNS('g', 'svg'))
-        c.element = clonegroup
+        c.elements.append(clonegroup)
         if c.id != None and len(c.id):
             clonegroup.set('id', c.id)
             self.exportids.append(c.id)
@@ -449,13 +530,16 @@ class CountersheetEffect(inkex.Effect):
             rect = rects[rectname]
             group = rect.getparent()
             source_layer = self.get_layer( rect )
-            groupid = group.get('id')
-            x = self.geometry[groupid].x
-            y = self.geometry[groupid].y
-            width = self.geometry[groupid].w
-            height = self.geometry[groupid].h
-            res[0] = max(res[0], width)
-            res[1] = max(res[1], height)
+            if self.bleed:
+                gid = rectname
+            else:
+                gid = group.get('id')
+            x = self.geometry[gid].x
+            y = self.geometry[gid].y
+            width = self.geometry[gid].w
+            height = self.geometry[gid].h
+            c.width = max(c.width, width)
+            c.height = max(c.height, height)
             if self.is_layer( group ):
                 self.logwrite("rect not in group '%s'.\n" % rectname)
                 sys.exit("Rectangle '%s' not in a group. Can not be template."
@@ -524,7 +608,7 @@ class CountersheetEffect(inkex.Effect):
             clonegroup.append(clone)
         self.translate_element(clonegroup, colx, rowy)
         layer.append(clonegroup)
-        return res
+        return [c.width, c.height]
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
@@ -572,14 +656,14 @@ class CountersheetEffect(inkex.Effect):
             return res
         return False
 
-    def addbacks(self, layer, bstack, docwidth, rects):
+    def addbacks(self, layer, bstack, backxs, backys, docwidth, rects):
         self.logwrite("addbacks %d\n" % len(bstack))
-        for c in bstack:
-            for x,y in zip(c.backxs, c.backys):
-                self.generatecounter(c.back, rects,
-                                     layer,
-                                     docwidth - x,
-                                     y)
+        for c,x,y in zip(bstack, backxs, backys):
+            self.logwrite("   adding back\n")
+            self.generatecounter(c.back, rects,
+                                 layer,
+                                 docwidth - x,
+                                 y)
 
     # Looked a bit at code in Inkscape text_merge.py for this idea.
     # That file is Copyright (C) 2013 Nicolas Dufour (jazzynico).
@@ -833,8 +917,13 @@ class CountersheetEffect(inkex.Effect):
         self.textmarkup = self.options.textmarkup == "true"
         self.bleed = self.options.bleed == "true"
 
+        self.logwrite("bleed enabled: %r\n" % self.bleed)
+
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
+
+        if self.bleed:
+            self.bleedmaker = BleedMaker(svg)
 
         self.calculateScale(svg)
 
@@ -935,19 +1024,19 @@ class CountersheetEffect(inkex.Effect):
         box = 0
         nr = 0
         csn = 1
-        bstack = []
 
         xregistrationmarks = set([0])
         yregistrationmarks = set([0])
 
         is_first_col = True
         is_first_row = True
-        current_row_counters = []
+
+        bstack = []
+        backxs = []
+        backys = []
 
         for i,c in enumerate(counters):
             self.before_counter(c)
-            c.backxs = []
-            c.backys = []
             for n in range(c.nr):
                 nr = nr + 1
                 self.logwrite("laying out counter %d (nr %d, c.nr %d) (hasback: %s)\n"
@@ -955,23 +1044,19 @@ class CountersheetEffect(inkex.Effect):
                 c.addsubst("autonumber", str(nr))
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
+                self.logwrite("   adding front\n")
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
                                                    positions[box].y+rowy)
-                current_row_counters.append(c)
                 self.logwrite("generated counter size: %fx%f\n"
                               % (width, height))
-                if is_first_col:
-                    self.logwrite("  bleed left\n")
-                    c.bleed_left = True
-                    is_first_col = False
-                if is_first_row:
-                    self.logwrite("  bleed up\n")
-                    c.bleed_up = True
+                c.bleed_left.append(is_first_col)
+                is_first_col = False
+                c.bleed_up.append(is_first_row)
                 if c.hasback:
-                    c.backxs.append(positions[box].x + colx + width)
-                    c.backys.append(positions[box].y + rowy)
                     bstack.append(c)
+                    backxs.append(positions[box].x + colx + width)
+                    backys.append(positions[box].y + rowy)
                 col = col + 1
                 colx = colx + width
                 xregistrationmarks.add(colx)
@@ -986,42 +1071,40 @@ class CountersheetEffect(inkex.Effect):
                     nextrowy = rowy
                     self.logwrite("new row %d (y=%f)\n"
                                   % (row, rowy))
-                    c.bleed_right = True
                     self.logwrite("  bleed right!\n")
                     is_first_col = True
                     is_first_row = False
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
-                        if hasback:
-                            self.addbacks(backlayer, bstack, docwidth,
-                                          rects)
                         self.addregistrationmarks(
                             xregistrationmarks, yregistrationmarks,
                             positions[box], layer)
-                        for rowc in current_row_counters:
-                            rowc.bleed_down = True
-                            self.logwrite("  bleed down\n")
-                        is_first_row = True
                         xregistrationmarks = set([0])
                         yregistrationmarks = set([0])
-                        bstack = []
                         box = box + 1
                         self.logwrite(" now at box %d of %d\n" % (box, len(positions)))
                         self.logwrite(" i: %d    len(counters): %d\n" % (i, len(counters)))
                         row = 0
                         rowy = 0
                         nextrowy = 0
+                        is_first_row = True
                         if box == len(positions) and i < len(counters):
                             csn = csn + 1
                             if hasback:
+                                self.addbacks(backlayer, bstack,
+                                              backxs, backys,
+                                              docwidth,
+                                              rects)
+                                bstack = []
+                                backxs = []
+                                backys = []
                                 svg.append(backlayer)
                                 backlayer = self.addLayer(svg, what,
                                                           csn, "back")
                             svg.append(layer)
                             layer = self.addLayer(svg, what, csn)
                             box = 0
-                    current_row_counters = []
 
         if ((len(xregistrationmarks) > 1
              or len(yregistrationmarks) > 1)
@@ -1031,16 +1114,14 @@ class CountersheetEffect(inkex.Effect):
                 xregistrationmarks, yregistrationmarks,
                 positions[box], layer)
 
-        if len(current_row_counters) > 0:
-            current_row_counters[-1].bleed_right = True
-            self.logwrite("  bleed right!\n")
-
-        for rowc in current_row_counters:
-            rowc.bleed_down = True
-            self.logwrite("  bleed down\n")
-
         if hasback:
-            self.addbacks(backlayer, bstack, docwidth, rects)
+            self.addbacks(backlayer, bstack,
+                          backxs, backys,
+                          docwidth, rects)
+
+        if self.bleed:
+            self.logwrite(" add_bleed_to %d\n" % len(counters))
+            self.bleedmaker.add_bleed_to(counters)
 
         if hasback and len(backlayer.getchildren()):
             svg.append(backlayer)

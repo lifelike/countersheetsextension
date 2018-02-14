@@ -58,6 +58,7 @@ tests = [
     ['stars-3.csv', 'star.svg'],
     ['stars-4.csv', 'star.svg'],
     ['stars-5.csv', 'star.svg'],
+    ['bleed.csv', 'bleed.svg', '-B', 'true'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
@@ -69,7 +70,9 @@ successes = 0
 fails = 0
 skipped = 0
 for test in tests:
-    [basedatafile, basesvginfile] = test
+    basedatafile = test[0]
+    basesvginfile = test[1]
+    extraargs = test[2:]
     if chosen:
         matches = False
         for c in chosen:
@@ -94,10 +97,7 @@ for test in tests:
                    '-f', '90',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
-                   '-B',
-                   '-N', svgoutbasename + '--',
-                   svginfile
-                   ]
+                   '-N', svgoutbasename] + extraargs + ['--', svginfile]
 
     if ['-v' in sys.argv]:
         print >> sys.stderr, ' '.join(commandline)
