@@ -1031,6 +1031,14 @@ class CountersheetEffect(inkex.Effect):
                 xregistrationmarks, yregistrationmarks,
                 positions[box], layer)
 
+        if len(current_row_counters) > 0:
+            current_row_counters[-1].bleed_right = True
+            self.logwrite("  bleed right!\n")
+
+        for rowc in current_row_counters:
+            rowc.bleed_down = True
+            self.logwrite("  bleed down\n")
+
         if hasback:
             self.addbacks(backlayer, bstack, docwidth, rects)
 
