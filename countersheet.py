@@ -364,7 +364,7 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("setting multiline text: %s\n" % lines)
         self.deleteFlowParas(element)
         for line in lines:
-            para = etree.Element(inkex.addNS('flowPara', 'svg'))
+            para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, line.decode('utf8'), 'flowSpan')
             element.append(para)
 
