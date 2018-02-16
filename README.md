@@ -25,6 +25,7 @@ Main Features
 * Set colors and other attributes of (parts of) counters.
 * Any counters can be mixed on the same sheet (even different sizes).
 * Registration marks for manual cutting of the sheets.
+* Bleed around counters
 * Simple text mark-up for bold and italics text styles.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
 * Export created sheets to PNG or PDF.
