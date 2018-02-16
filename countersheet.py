@@ -906,7 +906,6 @@ class CountersheetEffect(inkex.Effect):
 
         # Get script "--what" option value.
         what = self.options.what
-        datafile = self.options.datafile
 
         doc = self.document
 
@@ -927,20 +926,7 @@ class CountersheetEffect(inkex.Effect):
 
         self.calculateScale(svg)
 
-        search_paths = get_search_paths(datafile)
-        for path in search_paths:
-            if os.path.isfile(path):
-                datafile = path
-                break
-        else:
-            sys.exit('Unable to find data file. Looked for:\n'
-                     '%s\n'
-                     'The easiest way to fix this is to use the absolute '
-                     'path of the data file when running the effect (eg '
-                     'C:\\where\\my\\files\\are\\%s), or put '
-                     'the file in any of the locations listed above.'
-                     % ('\n'.join(search_paths),
-                        os.path.basename(datafile)))
+        datafile = find_file(self.options.datafile)
 
         # a small, "pixel-size", length, to use for making small
         # adjustments that works in Inkscape 0.91 and later, similar
@@ -975,7 +961,8 @@ class CountersheetEffect(inkex.Effect):
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
-        parser = CSVCounterDefinitionParser(self.logwrite, rects)
+        parser = CSVCounterDefinitionParser(self.logwrite, rects,
+                                            os.path.dirname(datafile))
         parser.parse(reader)
         counters = parser.counters
         hasback = parser.hasback
@@ -1141,11 +1128,12 @@ class CountersheetEffect(inkex.Effect):
         pass
 
 class CSVCounterDefinitionParser:
-    def __init__(self, logwrite, rects):
+    def __init__(self, logwrite, rects, datadir):
         self.logwrite = logwrite
         self.rects = rects
         self.counters = []
         self.hasback = False
+        self.datadir = datadir
 
     def parse(self, reader):
         factory = None
@@ -1157,7 +1145,7 @@ class CSVCounterDefinitionParser:
             return self.parse_counter_row(row, factory)
         elif self.is_newheaders(row):
             self.logwrite('Found new headers: %s\n' % ';'.join(row))
-            return CSVCounterFactory(self.rects, row)
+            return CSVCounterFactory(self.rects, row, self.datadir)
         else:
             self.logwrite('Empty row... reset headers.\n')
             return False
@@ -1183,7 +1171,7 @@ class CSVCounterDefinitionParser:
                 try:
                     nr = int(row[0])
                 except ValueError:
-                    return CSVCounterFactory(self.rects, row)
+                    return CSVCounterFactory(self.rects, row, self.datadir)
         self.logwrite('new counter: %s\n' % ';'.join(row))
         cfront = factory.create_counter(nr, row)
         self.hasback = self.hasback or factory.hasback
@@ -1195,13 +1183,14 @@ class CSVCounterDefinitionParser:
         return factory
 
 class CounterFactory (object):
-    def __init__(self, rects):
+    def __init__(self, rects, datadir):
         self.rects = rects
         self.hasback = False
+        self.datadir = datadir
 
 class CSVCounterFactory (CounterFactory):
-    def __init__(self, rects, row):
-        super(CSVCounterFactory, self).__init__(rects)
+    def __init__(self, rects, row, datadir):
+        super(CSVCounterFactory, self).__init__(rects, datadir)
         self.parse_headers(row)
 
     def parse_headers(self, row):
@@ -1256,6 +1245,8 @@ class CSVCounterFactory (CounterFactory):
             setting = CounterSettingHolder()
             if i < len(row):
                 value = row[i]
+                if value.startswith('<<') and len(value) > 2:
+                    value = self.read_value_from_file(value[2:])
             else:
                 value = None
             ho.set_setting(setting, value)
@@ -1268,6 +1259,13 @@ class CSVCounterFactory (CounterFactory):
             if c:
                 setting.applyto(c)
         return cfront
+
+    def read_value_from_file(self, filename):
+        real_filename = find_file(filename, [self.datadir])
+        f = open(real_filename, 'r')
+        res = "\\n".join(f.readlines())
+        f.close()
+        return res
 
     def isbackheader(self, h):
         return h == 'BACK'
@@ -1523,14 +1521,30 @@ def string_replace_xml_text(element, pattern, value):
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 
-def get_search_paths(filename):
+def find_file(filename, extra_paths=None):
+    search_paths = get_search_paths(filename, extra_paths)
+    for path in search_paths:
+        if os.path.isfile(path):
+            return path
+    else:
+        sys.exit('Unable to find file. Looked for:\n'
+                 '%s\n'
+                 'The easiest way to fix this is to use the absolute '
+                 'path of the data file when running the effect (eg '
+                 'C:\\where\\my\\files\\are\\%s), or put '
+                 'the file in any of the locations listed above.'
+                 % ('\n'.join(search_paths),
+                    os.path.basename(filename)))
+
+def get_search_paths(filename, extra_paths=None):
     home = os.path.expanduser('~')
-    return [filename,
-            os.path.join(home, ".countersheetsextension", filename),
-            os.path.join(home, filename),
-            os.path.join(home, 'Documents', filename),
-            os.path.join(home, 'Documents', 'countersheets', filename),
-            ]
+    return ([os.path.join(ep, filename) for ep in (extra_paths or [])]
+            + [filename,
+               os.path.join(home, ".countersheetsextension", filename),
+               os.path.join(home, filename),
+               os.path.join(home, 'Documents', filename),
+               os.path.join(home, 'Documents', 'countersheets', filename),
+            ])
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
