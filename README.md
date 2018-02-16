@@ -64,6 +64,13 @@ ignore for now).
 
 See the [wiki](https://github.com/lifelike/countersheetsextension/wiki/) for more.
 
+Changelogs
+----------
+[Changelogs](https://github.com/lifelike/countersheetsextension/wiki/Changelogs)
+for recent versions of the countersheetsextension can be found
+[on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Changelogs).
+
+
 License
 --------
 
