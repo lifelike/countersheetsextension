@@ -69,6 +69,10 @@ text tool and dragging a rectangle in the drawing)
 Newlines are not inserted if the text is a regular text element (created
 by selecting the text tool and just clicking somewhere).
 
+Very simple wiki-like markup for text is supported. Text can
+be marked as *bold* or /italics/, like that. Badly formatted
+text results in that entire text being left un-formatted.
+
 Note : When looking for parts of counters (ie the ids), standard globs
 are used for matching. * matches one or more of any character,
 ? matches any single character. For instance for something to
@@ -165,6 +169,12 @@ is copied from the same attribute in the rectangle that has the id
 following the '<' in the cell (ie '<foo' will copy the value from the
 rectangle with id 'foo').  If the cell doest not start with '<' then the
 contents of the cell will be used as is.
+
+For text columns: Cells beginning with '<<' mean that the value is
+read from the file named after the '<<' (ie '<<bar.txt' will use
+the contents of the file bar.txt). The file contents will be
+used exactly as if they had been typed into the cell itself,
+except that new-lines in the file will be treated as new-lines.
 
 [empty record]
 --------------
