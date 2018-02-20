@@ -293,8 +293,8 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'string', dest = 'pdfdir')
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
-                                     type = 'int',
-                                     default = '0',
+                                     type = 'string',
+                                     default = '10mm',
                                      dest = 'registrationmarkslen')
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
@@ -822,10 +822,9 @@ class CountersheetEffect(inkex.Effect):
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer):
-        linelen = self.unittouu("%fpt" % self.options.registrationmarkslen)
-        self.logwrite("addregistrationmarks linelen=%f\n" % linelen)
-        if linelen < 1:
+        if self.registrationmarkslen < 1:
             return
+        linelen = self.registrationmarkslen
         max_x = 0
         max_y = 0
         for x in xregistrationmarks:
@@ -931,6 +930,19 @@ class CountersheetEffect(inkex.Effect):
         if self.bleed:
             self.bleedmaker = BleedMaker(svg)
 
+        try:
+            self.registrationmarkslen = self.unittouu(
+                self.options.registrationmarkslen)
+        except:
+            sys.exit("Failed to parse registration marks length %s. "
+                     "Must be a non-negative number optionally followed by "
+                     "a unit supported by SVG (eg mm, in, pt)."
+                          % self.options.registrationmarkslen)
+        if self.registrationmarkslen < 0:
+            sys.exit("Negative length of registration marks makes no sense.")
+        self.logwrite("registration marks length %f\n"
+                      % self.registrationmarkslen)
+
         self.calculateScale(svg)
 
         datafile = find_file(self.options.datafile)
@@ -1002,8 +1014,8 @@ class CountersheetEffect(inkex.Effect):
                                    0.0,
                                    docwidth,
                                    self.getViewBoxHeight(svg))]
-            if self.options.registrationmarkslen > 0:
-                margin = self.unittouu("%fpt" % self.options.registrationmarkslen)
+            if self.registrationmarkslen > 0:
+                margin = self.registrationmarkslen
                 positions[0].x += margin
                 positions[0].y += margin
                 positions[0].w -= margin * 2

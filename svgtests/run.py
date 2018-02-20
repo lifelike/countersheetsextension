@@ -94,7 +94,7 @@ for test in tests:
     commandline = [command,
                    '-d', datafile,
                    '-l', logfile,
-                   '-r', '10',
+                   '-r', '10pt',
                    '-f', '90',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
