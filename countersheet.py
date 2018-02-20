@@ -473,7 +473,6 @@ class CountersheetEffect(inkex.Effect):
                      "Or set a different Name when running the extension. "
                      "Or just rename the existing layer." % llabel)
 
-        self.cslayers.append(lid)
         layer = etree.Element(inkex.addNS('g', 'svg'))
         layer.set(inkex.addNS('label', 'inkscape'), llabel)
         layer.set('id', lid)
@@ -720,9 +719,11 @@ class CountersheetEffect(inkex.Effect):
 # https://bugs.launchpad.net/inkscape/+bug/1714365
                               noidexportworkaround=False):
         tmpfilename = self.make_temporary_svg(exportdir)
+        self.logwrite("export to tmpfilename: %s\n" % tmpfilename)
         tmpfile = open(tmpfilename, 'w')
         self.document.write(tmpfile)
         tmpfile.close()
+        self.logwrite(" ids to export: %r\n" % ids)
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
@@ -760,17 +761,23 @@ class CountersheetEffect(inkex.Effect):
                                                     namespaces=NSS)
             if not matching_elements:
                 return
-            element = matching_elements[0]
-            oldstyle = element.get('style') or ""
-            newstyle = stylereplace(oldstyle, part, value)
-            element.set('style', newstyle)
-            self.logwrite("set_style_on_elements %s: '%s' -> '%s'\n"
-                          % (element_id, oldstyle, newstyle))
+            self.set_style(matching_elements[0],
+                           part, value)
+
+    def set_style(self, element, part, value):
+        oldstyle = element.get('style') or ""
+        newstyle = stylereplace(oldstyle, part, value)
+        element.set('style', newstyle)
+        self.logwrite("set_style %s: '%s' -> '%s'\n"
+                      % (element.get('id'), oldstyle, newstyle))
 
     def exportSheetPDFs(self):
+        self.logwrite("exportSheetPDFs %s %d\n" % (self.options.pdfdir,
+                                                   len(self.cslayers)))
         if (self.options.pdfdir
             and len(self.cslayers) > 0):
             for layer in self.cslayers:
+                self.logwrite("  export PDF layer\n")
                 self.hidelayers(self.cslayers)
                 self.showlayers([layer])
                 self.export_using_inkscape([layer],
@@ -967,6 +974,9 @@ class CountersheetEffect(inkex.Effect):
         counters = parser.counters
         hasback = parser.hasback
 
+        frontlayers = []
+        backlayers = []
+
         # Create a new layer.
         layer = self.addLayer(svg, what, 1)
 
@@ -1087,9 +1097,13 @@ class CountersheetEffect(inkex.Effect):
                                 backxs = []
                                 backys = []
                                 svg.append(backlayer)
+                                backlayers.append((backlayer, csn-1))
+                                self.cslayers.append(backlayer.get('id'))
                                 backlayer = self.addLayer(svg, what,
                                                           csn, "back")
                             svg.append(layer)
+                            frontlayers.append((layer, csn-1))
+                            self.cslayers.append(layer.get('id'))
                             layer = self.addLayer(svg, what, csn)
                             box = 0
 
@@ -1112,14 +1126,44 @@ class CountersheetEffect(inkex.Effect):
 
         if hasback and len(backlayer.getchildren()):
             svg.append(backlayer)
+            backlayers.append((backlayer, csn))
+            self.cslayers.append(backlayer.get('id'))
 
         if len(layer.getchildren()):
             svg.append(layer)
+            frontlayers.append((layer, csn))
+            self.cslayers.append(layer.get('id'))
+
+        nrsheets = max(len(frontlayers), len(backlayers))
+
+        self.logwrite("nrsheets: %d\n" % nrsheets)
+        self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
+        self.add_layer_backgrounds(frontlayers,
+                                   self.find_layer(svg, "cs_background_front"),
+                                   nrsheets)
+        self.add_layer_backgrounds(backlayers,
+                                   self.find_layer(svg, "cs_background_back"),
+                                   nrsheets)
 
         exportedbitmaps = self.exportIDBitmaps()
         self.post(counters)
         self.exportSheetBitmaps()
         self.exportSheetPDFs()
+
+    def add_layer_backgrounds(self, layers, sheet_template, nrsheets):
+        if sheet_template is None:
+            return
+        for target,nr in layers:
+            self.logwrite("  add layer background %d\n" % nr)
+            background = deepcopy(sheet_template)
+            string_replace_xml_text(background, "%SHEET%",
+                                    unicode(nr))
+            string_replace_xml_text(background, "%SHEETS%",
+                                    unicode(nrsheets))
+            del background.attrib[inkex.addNS('groupmode', 'inkscape')]
+            del background.attrib[inkex.addNS('label', 'inkscape')]
+            self.set_style(background, 'display', None)
+            target.insert(0, background)
 
     def before_counter(self, counter):
         pass

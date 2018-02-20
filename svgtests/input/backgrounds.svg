@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1576"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="backgrounds.svg">
+  <defs
+     id="defs1570" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="189.06884"
+     inkscape:cy="585.78529"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g1622"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="720"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1573">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="cs_background_front"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:none">
+    <rect
+       id="rect1578"
+       width="30.468725"
+       height="32.072342"
+       x="70.02462"
+       y="158.86211"
+       style="stroke-width:0.26458332" />
+    <rect
+       id="rect1580"
+       width="37.417732"
+       height="30.468725"
+       x="106.37328"
+       y="206.4361"
+       style="stroke-width:0.26458332" />
+    <rect
+       id="rect1582"
+       width="40.090431"
+       height="16.570711"
+       x="66.282845"
+       y="236.90482"
+       style="stroke-width:0.26458332" />
+    <rect
+       id="rect1584"
+       width="45.435822"
+       height="18.708866"
+       x="93.009796"
+       y="271.1153"
+       style="stroke-width:0.26458332" />
+    <rect
+       id="rect1586"
+       width="43.297665"
+       height="20.312483"
+       x="5.8799295"
+       y="208.57423"
+       style="stroke-width:0.26458332" />
+    <rect
+       id="rect1588"
+       width="25.657875"
+       height="13.363476"
+       x="162.49986"
+       y="149.77495"
+       style="stroke-width:0.26458332" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="9.6217031"
+       y="123.58253"
+       id="text1592"><tspan
+         sodipodi:role="line"
+         id="tspan1590"
+         x="9.6217031"
+         y="123.58253"
+         style="stroke-width:0.26458332">BACKGROUND</tspan><tspan
+         sodipodi:role="line"
+         x="9.6217031"
+         y="136.81169"
+         style="stroke-width:0.26458332"
+         id="tspan1594">SHEET %SHEET% OF %SHEETS%.</tspan><tspan
+         sodipodi:role="line"
+         x="9.6217031"
+         y="150.04086"
+         style="stroke-width:0.26458332"
+         id="tspan1598" /></text>
+  </g>
+  <g
+     id="g1622"
+     inkscape:groupmode="layer"
+     inkscape:label="cs_background_back"
+     style="display:none">
+    <rect
+       style="stroke-width:0.26458332"
+       y="161.38284"
+       x="49.177593"
+       height="32.072342"
+       width="30.468725"
+       id="rect1600" />
+    <rect
+       style="stroke-width:0.26458332"
+       y="177.95357"
+       x="125.08214"
+       height="30.468725"
+       width="37.417732"
+       id="rect1602" />
+    <rect
+       style="stroke-width:0.26458332"
+       y="221.78577"
+       x="66.282845"
+       height="16.570711"
+       width="40.090431"
+       id="rect1604" />
+    <rect
+       style="stroke-width:0.26458332"
+       y="255.99625"
+       x="93.009796"
+       height="18.708866"
+       width="45.435822"
+       id="rect1606" />
+    <rect
+       style="stroke-width:0.26458332"
+       y="193.45518"
+       x="5.8799295"
+       height="20.312483"
+       width="43.297665"
+       id="rect1608" />
+    <rect
+       style="stroke-width:0.26458332"
+       y="134.6559"
+       x="162.49986"
+       height="13.363476"
+       width="25.657875"
+       id="rect1610" />
+    <text
+       id="text1620"
+       y="108.46349"
+       x="9.6217031"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="stroke-width:0.26458332"
+         y="108.46349"
+         x="9.6217031"
+         id="tspan1612"
+         sodipodi:role="line">BACKGROUND BACK</tspan><tspan
+         id="tspan1614"
+         style="stroke-width:0.26458332"
+         y="121.69266"
+         x="9.6217031"
+         sodipodi:role="line">SHEET %SHEET% OF %SHEETS%.</tspan><tspan
+         id="tspan1618"
+         style="stroke-width:0.26458332"
+         y="134.92183"
+         x="9.6217031"
+         sodipodi:role="line" /></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="templates"
+     style="display:inline">
+    <g
+       style="display:inline"
+       id="g2292">
+      <rect
+         inkscape:label="#rect1740"
+         style="fill:#d7d7ff;fill-opacity:0.91203703;stroke-width:0.26458332"
+         y="41.490334"
+         x="-102.09695"
+         height="24.054256"
+         width="24.054256"
+         id="counter" />
+      <text
+         inkscape:label="#text2287"
+         transform="rotate(-41.741095)"
+         id="text"
+         y="-18.699568"
+         x="-110.66023"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="-18.699568"
+           x="-110.66023"
+           id="tspan2285"
+           sodipodi:role="line">counter</tspan></text>
+    </g>
+  </g>
+</svg>

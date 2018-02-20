@@ -59,6 +59,7 @@ tests = [
     ['stars-4.csv', 'star.svg'],
     ['stars-5.csv', 'star.svg'],
     ['bleed.csv', 'bleed.svg', '-B', 'true'],
+    ['backgrounds.csv', 'backgrounds.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
