@@ -296,6 +296,10 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'string',
                                      default = '10mm',
                                      dest = 'registrationmarkslen')
+        self.OptionParser.add_option('-R', '--fullregistrationmarks',
+                                     action = 'store',
+                                     dest = 'fullregistrationmarks',
+                                     default = "false")
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
         self.OptionParser.add_option('-B', '--bleed', dest='bleed',
@@ -822,6 +826,8 @@ class CountersheetEffect(inkex.Effect):
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer):
+        # TODO handle full registration marks somehow here
+        # possibly break things down into more functions?
         if self.registrationmarkslen < 1:
             return
         linelen = self.registrationmarkslen
@@ -845,16 +851,22 @@ class CountersheetEffect(inkex.Effect):
             max_y = max(max_y, y)
 
         for x in xregistrationmarks:
+            start_y = position.y + max_y
+            if self.fullregistrationmarks:
+                start_y = position.y
             layer.append(
                 self.create_registrationline(
                 position.x + x,
-                position.y + max_y,
+                start_y,
                 position.x + x,
                 position.y + max_y + linelen))
 
         for y in yregistrationmarks:
+            start_x = position.x + max_x
+            if self.fullregistrationmarks:
+                start_x = position.x
             layer.append(self.create_registrationline(
-                position.x + max_x,
+                start_x,
                 position.y + y,
                 position.x + max_x + linelen,
                 position.y + y))
@@ -923,6 +935,11 @@ class CountersheetEffect(inkex.Effect):
         self.bleed = self.options.bleed == "true"
 
         self.logwrite("bleed enabled: %r\n" % self.bleed)
+
+        self.fullregistrationmarks = (self.options.fullregistrationmarks
+                                      == "true")
+        self.logwrite("full registration marks: %r\n"
+                      % self.fullregistrationmarks)
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]

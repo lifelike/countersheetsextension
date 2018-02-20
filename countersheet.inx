@@ -11,6 +11,8 @@
         max="10000">56</param>
   <param name="registrationmarkslen" type="string"
         _gui-text="Registration Marks Length (optional)">10pt</param>
+  <param name="fullregistrationmarks" type="boolean"
+         _gui-text="Full Registration Marks">false</param>
   <param name="bitmapsheetsdpi"
         type="int"
         _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
