@@ -96,6 +96,8 @@ for test in tests:
                    '-l', logfile,
                    '-r', '10pt',
                    '-f', '90',
+                   '-w', '0',
+                   '-y', '0',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
                    '-N', svgoutbasename] + extraargs + ['--', svginfile]
