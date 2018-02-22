@@ -14,7 +14,7 @@ def stdout_logwrite(msg):
 class CSVCounterDefinitionParserTest(unittest.TestCase):
     def setUp(self):
         self.parser = countersheet.CSVCounterDefinitionParser(dummy_logwrite,
-                                                              {})
+                                                              {}, ".")
     def test_empty(self):
         counters = self.parse_to_counters([[]])
         self.assertEqual([], counters)

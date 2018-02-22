@@ -24,7 +24,7 @@ class CSVCounterFactoryTest(unittest.TestCase):
         self.assertEqual('a', factory.headers[1].id)
 
     def create_factory(self, row):
-        return countersheet.CSVCounterFactory({}, row)
+        return countersheet.CSVCounterFactory({}, row, ".")
 
 if __name__ == '__main__':
     unittest.main()
