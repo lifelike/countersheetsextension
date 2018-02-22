@@ -62,6 +62,7 @@ class Counter:
         self.elements = [] # generated top-level groups
         self.width = 0 # actual width when generated
         self.height = 0 # actual height when generated
+        self.bleed_added = {}
 
     def set(self, setting):
         setting.applyto(self)
@@ -128,8 +129,10 @@ class BleedMaker:
         else:
             self.defs = etree.Element(inkex.addNS("defs", "svg"))
             svg.append(self.defs)
+        self.bleed_added = {}
+        self.unbleed = {}
 
-    def getbleed(self, counter,
+    def getbleed(self, width, height,
                  bleed_up, bleed_left, bleed_down, bleed_right):
         """
         Create a clippath rectangle in svg defs and return its name.
@@ -144,8 +147,8 @@ class BleedMaker:
         in all directions since it is not a huge additional
         effort anyway to handle 3 instead of 4 directions.
         """
-        name = "bleed_%dx%d_%r_%r_%r_%r" % (counter.width,
-                                            counter.height,
+        name = "bleed_%dx%d_%r_%r_%r_%r" % (width,
+                                            height,
                                             bleed_up,
                                             bleed_left,
                                             bleed_down,
@@ -159,17 +162,17 @@ class BleedMaker:
 
             x1 = 0
             y1 = 0
-            x2 = counter.width
-            y2 = counter.height
+            x2 = width
+            y2 = height
 
             if bleed_up:
-                y1 -= counter.height
+                y1 -= height
             if bleed_left:
-                x1 -= counter.width
+                x1 -= width
             if bleed_down:
-                y2 += counter.height
+                y2 += height
             if bleed_right:
-                x2 += counter.width
+                x2 += width
 
             rect.set('x', str(min(x1, x2)))
             rect.set('y', str(min(y1, y2)))
@@ -182,23 +185,46 @@ class BleedMaker:
 
     def add_bleed_to(self, counters):
         for counter in counters:
+            front_unbleed = self.getbleed(counter.width,
+                                          counter.height,
+                                          False, False, False, False)
             for i,element in enumerate(counter.elements):
-                element.set('clip-path',
-                            "url(#%s)"
-                            % self.getbleed(counter,
-                                            counter.bleed_up[i],
-                                            counter.bleed_left[i],
-                                            True,
-                                            True))
+                bleedclip = self.getbleed(counter.width,
+                                          counter.height,
+                                          counter.bleed_up[i],
+                                          counter.bleed_left[i],
+                                          True,
+                                          True)
+                self.setclip(element, bleedclip)
+                self.bleed_added[element] = bleedclip
+                self.unbleed[bleedclip] = front_unbleed
             if counter.hasback:
+                back_unbleed = self.getbleed(counter.back.width,
+                                             counter.back.height,
+                                             False, False, False, False)
                 for i,element in enumerate(counter.back.elements):
-                    element.set('clip-path',
-                                "url(#%s)"
-                                % self.getbleed(counter.back,
-                                                counter.bleed_up[i],
-                                                True,
-                                                True,
-                                                counter.bleed_left[i]))
+                    back_bleedclip = self.getbleed(counter.back.width,
+                                                   counter.back.height,
+                                                   counter.bleed_up[i],
+                                                   True,
+                                                   True,
+                                                   counter.bleed_left[i])
+                    self.setclip(element, back_bleedclip)
+                    self.bleed_added[element] = back_bleedclip
+                    self.unbleed[back_bleedclip] = back_unbleed
+
+    def setclip(self, element, clip):
+        element.set('clip-path',
+                    "url(#%s)"
+                    % clip)
+
+    def hideall(self):
+        for element,clip in self.bleed_added.iteritems():
+            self.setclip(element, self.unbleed[clip])
+
+    def showall(self):
+        for element,clip in self.bleed_added.iteritems():
+            self.setclip(element, clip)
 
 class NoSetting:
     def applyto(self, counter):
@@ -806,9 +832,13 @@ class CountersheetEffect(inkex.Effect):
             and len(self.options.bitmapdir) > 0
             and self.options.bitmapwidth > 0
             and self.options.bitmapheight > 0):
+            if self.bleed:
+                self.bleedmaker.hideall()
             self.exportBitmaps(self.exportids,
                                self.options.bitmapwidth,
                                self.options.bitmapheight)
+            if self.bleed:
+                self.bleedmaker.showall()
             return True
         return False
 
