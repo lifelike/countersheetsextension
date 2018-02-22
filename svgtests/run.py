@@ -95,6 +95,7 @@ for test in tests:
                    '-d', datafile,
                    '-l', logfile,
                    '-r', '10pt',
+                   '-O', '7pt',
                    '-f', '90',
                    '-w', '0',
                    '-y', '0',

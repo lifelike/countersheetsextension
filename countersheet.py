@@ -320,12 +320,17 @@ class CountersheetEffect(inkex.Effect):
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
                                      type = 'string',
-                                     default = '10mm',
+                                     default = '15mm',
                                      dest = 'registrationmarkslen')
         self.OptionParser.add_option('-R', '--fullregistrationmarks',
                                      action = 'store',
                                      dest = 'fullregistrationmarks',
                                      default = "false")
+        self.OptionParser.add_option('-O', '--outlinedist',
+                                     action = 'store',
+                                     type = 'string',
+                                     dest = 'outlinedist',
+                                     default = "")
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
         self.OptionParser.add_option('-B', '--bleed', dest='bleed',
@@ -843,6 +848,8 @@ class CountersheetEffect(inkex.Effect):
         return False
 
     def create_registrationline(self, x1, y1, x2, y2):
+        if self.registrationmarkslen <= 0:
+            return
         self.logwrite("create_registrationline %f,%f %f,%f\n"
                       % (x1, y1, x2, y2))
         line = etree.Element('line')
@@ -850,16 +857,12 @@ class CountersheetEffect(inkex.Effect):
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-	line.set("style", "stroke:#838383")
-	line.set("stroke-width", str(PS)) 
+	line.set("style", "stroke:#aaa")
+	line.set("stroke-width", str(PS * 0.5))
         return line
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
-                             position, layer):
-        # TODO handle full registration marks somehow here
-        # possibly break things down into more functions?
-        if self.registrationmarkslen < 1:
-            return
+                             position, layer, backlayer, docwidth):
         linelen = self.registrationmarkslen
         max_x = 0
         max_y = 0
@@ -867,16 +870,16 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite("registrationmark x: %f\n" % x)
             layer.append(
                 self.create_registrationline(position.x + x,
-                                             position.y - linelen,
+                                             position.y,
                                              position.x + x,
-                                             position.y))
+                                             position.y - linelen))
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
             self.logwrite("registrationmark y: %f\n" % y)
-            layer.append(self.create_registrationline(position.x - linelen,
+            layer.append(self.create_registrationline(position.x,
                                                       position.y + y,
-                                                      position.x,
+                                                      position.x - linelen,
                                                       position.y + y))
             max_y = max(max_y, y)
 
@@ -900,6 +903,29 @@ class CountersheetEffect(inkex.Effect):
                 position.y + y,
                 position.x + max_x + linelen,
                 position.y + y))
+
+        if self.outlinemarks:
+            x1 = position.x - self.outlinedist
+            y1 = position.y - self.outlinedist
+            x2 = position.x + max_x + self.outlinedist
+            y2 = position.y + max_y + self.outlinedist
+            self.add_outlinemarks(layer, x1, y1, x2, y2)
+            if backlayer is not None:
+                self.add_outlinemarks(backlayer,
+                                      docwidth - x1, y1,
+                                      docwidth - x2, y2)
+
+    def add_outlinemarks(self, layer, x1, y1, x2, y2):
+        self.logwrite("Outline rectangle around %f,%f %f,%f\n"
+                      % (x1, y1, x2, y2))
+        layer.append(self.create_registrationline(
+            x1, y1, x2, y1))
+        layer.append(self.create_registrationline(
+            x1, y1, x1, y2))
+        layer.append(self.create_registrationline(
+            x1, y2, x2, y2))
+        layer.append(self.create_registrationline(
+            x2, y1, x2, y2))
 
     def calculateScale(self, svg):
         """Calculates scale of the document (user-units size) and
@@ -990,6 +1016,18 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("registration marks length %f\n"
                       % self.registrationmarkslen)
 
+        self.outlinemarks = (len(self.options.outlinedist) > 0)
+        if self.outlinemarks:
+            try:
+                self.outlinedist = self.unittouu(
+                    self.options.outlinedist)
+            except:
+                sys.exit("Failed to parse outline distance %s. "
+                         "Must be a number optionally followed by "
+                         "a unit supported by SVG (eg mm, in, pt)."
+                         % self.options.outlinedist)
+                self.logwrite("outline marks distance: %f\n" % self.outlinedist)
+
         self.calculateScale(svg)
 
         datafile = find_file(self.options.datafile)
@@ -1039,7 +1077,7 @@ class CountersheetEffect(inkex.Effect):
         # Create a new layer.
         layer = self.addLayer(svg, what, 1)
 
-        backlayer = False
+        backlayer = None
 
         if hasback:
             backlayer = self.addLayer(svg, what, 1, "back")
@@ -1135,7 +1173,7 @@ class CountersheetEffect(inkex.Effect):
                         or c.endbox):
                         self.addregistrationmarks(
                             xregistrationmarks, yregistrationmarks,
-                            positions[box], layer)
+                            positions[box], layer, backlayer, docwidth)
                         xregistrationmarks = set([0])
                         yregistrationmarks = set([0])
                         box = box + 1
@@ -1172,7 +1210,7 @@ class CountersheetEffect(inkex.Effect):
             yregistrationmarks.add(nextrowy)
             self.addregistrationmarks(
                 xregistrationmarks, yregistrationmarks,
-                positions[box], layer)
+                positions[box], layer, backlayer, docwidth)
 
         if hasback:
             self.addbacks(backlayer, bstack,

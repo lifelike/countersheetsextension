@@ -10,9 +10,11 @@
   <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
         max="10000">56</param>
   <param name="registrationmarkslen" type="string"
-        _gui-text="Registration Marks Length (optional)">10pt</param>
+        _gui-text="Registration Marks Length (optional)">15mm</param>
   <param name="fullregistrationmarks" type="boolean"
          _gui-text="Full Registration Marks">false</param>
+  <param name="outlinedist" type="string"
+         _gui-text="Outline (Outset Distance)">10mm</param>
   <param name="bitmapsheetsdpi"
         type="int"
         _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
