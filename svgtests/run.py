@@ -11,6 +11,12 @@ import sys
 def add_countersheets_paths():
     sys.path.insert(0, os.getcwd())
 
+def namefrom(args):
+    if len(args):
+        return "_".join([a.replace("-", "") for a in args]) + ".svg"
+    else:
+        return ""
+
 add_countersheets_paths()
 
 inputdir = os.path.join('svgtests', 'input')
@@ -83,7 +89,7 @@ for test in tests:
         if not matches:
             skipped += 1
             continue
-    svgoutbasename = basedatafile + '-' + basesvginfile
+    svgoutbasename = basedatafile + '-' + basesvginfile + namefrom(extraargs)
     svgoutfile = os.path.join(outputdir, svgoutbasename)
     datafile = os.path.join(inputdir, basedatafile)
     svginfile = os.path.join(inputdir, basesvginfile)
