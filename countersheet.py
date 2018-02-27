@@ -43,6 +43,8 @@ BOX_MARGIN = 2.0
 # some non-vector content in exported PDF.
 PDF_DPI = 300
 
+DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
+
 class Counter:
     def __init__(self, nr):
         self.nr = nr
@@ -858,9 +860,18 @@ class CountersheetEffect(inkex.Effect):
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-	line.set("style", "stroke:#aaa")
+	line.set("style", self.find_registration_line_style())
 	line.set("stroke-width", str(PS * 0.5))
         return line
+
+    def find_registration_line_style(self):
+        regstyle_elements = self.document.xpath("//*[@id='cs_regstyle']",
+                                               namespaces=NSS)
+        if len(regstyle_elements) > 0:
+            regstyle = regstyle_elements[0].get("style")
+            if regstyle is not None and len(regstyle) > 0:
+                return regstyle
+        return DEFAULT_REGISTRATION_MARK_STYLE
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer, backlayer, docwidth):
