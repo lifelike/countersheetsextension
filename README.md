@@ -115,6 +115,6 @@ http://creativecommons.org/licenses/by/3.0/
 Included examples in the documentation (the SVG and CSV files) are copyright
 Pelle Nilsson and made avilable under the Creative Commons Zero License
 (https://creativecommons.org/publicdomain/zero/1.0/) for any use (including
-commercial). All images used in the examples are by
+commercial). Some images used in the examples are by
 KenneyNL (https://kenney.itch.io/) made available under the Creative Commons
 Zero License.
