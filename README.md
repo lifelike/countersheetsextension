@@ -25,7 +25,7 @@ Main Features
 * Set colors and other attributes of (parts of) counters.
 * Any counters can be mixed on the same sheet (even different sizes).
 * Registration marks for manual cutting of the sheets.
-* Bleed around counters
+* Bleed around counters.
 * Simple text mark-up for bold and italics text styles.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
 * Export created sheets to PNG or PDF.
@@ -34,7 +34,7 @@ Main Features
 Installation
 ------------
 
-You need Inkscape 0.92 installed.
+You need Inkscape 0.92 or later installed.
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
@@ -46,12 +46,7 @@ in the "Boardgames" submenu of the "Extensions" menu.
 
 See more complete instructions [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Install).
 
-There is an old tutorial also on youtube by Erulisseuiin:
-http://www.youtube.com/watch?v=sZ__PwMZp_8
-While it is for an older version of the Inkscape Board Game Extensions,
-it might still be easier to follow than my short instructions above.
-
-I recommend Google or the Inkscape Guild on BoardGameGeek for help.
+Try Google or the Inkscape Guild on BoardGameGeek for help.
 
 Getting Started
 ---------------
