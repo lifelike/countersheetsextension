@@ -673,7 +673,9 @@ class CountersheetEffect(inkex.Effect):
                 return g
 
     def readLayout(self, svg):
-        g = self.find_layer(svg, "countersheet_layout")
+        g = self.find_layer(svg, "cs_layout")
+        if g is None:
+            g = self.find_layer(svg, "countersheet_layout")
         if g is not None:
             res = []
             self.logwrite("Found layout layer!\n")
