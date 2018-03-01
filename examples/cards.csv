@@ -11,12 +11,15 @@ card,title,text
 ,Nested, Some *bold and /italics/* text.
 ,No End,Not *bold, nor /italics.
 ,Overlap,Mix /italics *bold in / wrong * order.
-,Image 1,Inline icon {icon1.png} here.
-,Image 2,Inline icon {icon2.png} here.
-,2 Images,Inline {icon1.png} and {icon2.png}.
-,Bold Img,So *bold* {icon1.png} *icon*.
 
 rcard,rtitle,HERE,there
 ,"Repl XY",X,Y
 ,Replaced,word,ok
 ,Repl ÅÄÖ,word,åäö
+
+icard,ititle,iline1,iline2
+,Image 1,Inline icon {g4260.png} here.
+,Image 2,Inline icon {g4274.png} here.
+,2 Images,Inline {g4290.png} and {icon2.png}.
+,Bold Img,So *bold* {g4316.png} *icon*.
+

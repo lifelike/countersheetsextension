@@ -355,6 +355,16 @@ class CountersheetEffect(inkex.Effect):
 
     def insertImagePlaceholder(self, element, text, spantag,
                                begin_index, end_index):
+        filename = text[begin_index+1:end_index]
+        if spantag != "tspan":
+            sys.exit("Failed to insert inlined image %s "
+                     "in a %s element. Unfortunately only "
+                     "one-line text elements can have inlined "
+                     "images for boring technical reasons. "
+                     "Perhaps in a future version of Inkscape "
+                     "it will be possible to add support for "
+                     "inlined images in (flowing) multi-line "
+                     "text elements." % (filename, spantag))
         span = etree.Element(inkex.addNS(spantag, 'svg'))
         spanid = "cs_inline_%d" % len(self.placeholders)
         span.set('id', spanid)
@@ -370,12 +380,9 @@ class CountersheetEffect(inkex.Effect):
         self.placeholders[spanid] = {
             "parent" : element,
             "span" : span,
-            "filename" : text[begin_index+1:end_index]
+            "filename" : filename
         }
-        # FIXME add code somewhere to query inkscape for placeholders
-        # FIXME overlay placeholders with icons images in counter top group
         # FIXME make placeholders invisible
-        # FIXME support for image size eg {image.png 150%}
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
@@ -1074,6 +1081,7 @@ class CountersheetEffect(inkex.Effect):
                 image.set('y', position.y)
                 image.set('width', position.width)
                 image.set('height', position.height)
+                info["parent"].append(image)
 
             #FIXME delete tmpfile
 
