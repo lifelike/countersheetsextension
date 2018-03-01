@@ -9,8 +9,12 @@
         max="10000">56</param>
   <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
         max="10000">56</param>
-  <param name="registrationmarkslen" type="int"
-        _gui-text="Registration Marks Length (pt)" min="0" max="96">0</param>
+  <param name="registrationmarkslen" type="string"
+        _gui-text="Registration Marks Length (optional)">15mm</param>
+  <param name="fullregistrationmarks" type="boolean"
+         _gui-text="Full Registration Marks">false</param>
+  <param name="outlinedist" type="string"
+         _gui-text="Outline (Outset Distance)">10mm</param>
   <param name="bitmapsheetsdpi"
         type="int"
         _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
@@ -21,7 +25,9 @@
   <param name="pdfdir" type="string"
         _gui-text="PDF Output Directory (optional)"></param>
   <param name="textmarkup" type="boolean"
-        _gui-text="Enable Text Markup (*bold*, /italics/, {image})">true</param>
+        _gui-text="Text Markup (*bold*, /italics/)">true</param>
+  <param name="bleed" type="boolean"
+        _gui-text="Bleed">false</param>
   <param name="log" type="string" _gui-text="Log File (optional)"></param>
   <effect>
     <object-type>all</object-type>

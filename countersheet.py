@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 
-
-# Copyright 2017 Pelle Nilsson
+# Copyright 2008-2018 Pelle Nilsson and contributors
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -44,6 +43,8 @@ BOX_MARGIN = 2.0
 # some non-vector content in exported PDF.
 PDF_DPI = 300
 
+DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
+
 class Counter:
     def __init__(self, nr):
         self.nr = nr
@@ -57,6 +58,12 @@ class Counter:
         self.attrs = {}
         self.excludeids = []
         self.includeids = []
+        self.bleed_up = []
+        self.bleed_left = []
+        self.elements = [] # generated top-level groups
+        self.width = 0 # actual width when generated
+        self.height = 0 # actual height when generated
+        self.bleed_added = {}
 
     def set(self, setting):
         setting.applyto(self)
@@ -113,6 +120,112 @@ class CounterSettingHolder:
         if self.copytoback:
             back = counter.doublesided()
             self.setting.applyto(back)
+
+
+class BleedMaker:
+    def __init__(self, svg):
+        founddefs = svg.xpath('//svg:defs', namespaces=NSS)
+        if len(founddefs) > 0:
+            self.defs = founddefs[0]
+        else:
+            self.defs = etree.Element(inkex.addNS("defs", "svg"))
+            svg.append(self.defs)
+        self.bleed_added = {}
+        self.unbleed = {}
+
+    def getbleed(self, width, height,
+                 bleed_up, bleed_left, bleed_down, bleed_right):
+        """
+        Create a clippath rectangle in svg defs and return its name.
+        Or just return the name if it already exists.
+        Note that with the current implementation there is always
+        bleed drawn below and to the right of every counter.
+        That is almost always the correct thing to do. Possibly
+        always for all practical purposes. Except on counter
+        backs where left and right are exchanged, so they will
+        always have bleed_left, but not always bleed_right.
+        Leaving this generic enough to handle clip-paths extended
+        in all directions since it is not a huge additional
+        effort anyway to handle 3 instead of 4 directions.
+        """
+        name = "bleed_%dx%d_%r_%r_%r_%r" % (width,
+                                            height,
+                                            bleed_up,
+                                            bleed_left,
+                                            bleed_down,
+                                            bleed_right)
+        existing = self.defs.xpath("svg:clipPath[@id='%s']"% name,
+                                   namespaces=NSS)
+        if len(existing) == 0:
+            clipPath = etree.Element(inkex.addNS("clipPath", "svg"))
+            clipPath.set('id', name)
+            rect = etree.Element(inkex.addNS("rect", "svg"))
+
+            x1 = 0
+            y1 = 0
+            x2 = width
+            y2 = height
+
+            if bleed_up:
+                y1 -= height
+            if bleed_left:
+                x1 -= width
+            if bleed_down:
+                y2 += height
+            if bleed_right:
+                x2 += width
+
+            rect.set('x', str(min(x1, x2)))
+            rect.set('y', str(min(y1, y2)))
+            rect.set('width', str(abs(x1 - x2)))
+            rect.set('height', str(abs(y1 - y2)))
+
+            clipPath.append(rect)
+            self.defs.append(clipPath)
+        return name
+
+    def add_bleed_to(self, counters):
+        for counter in counters:
+            front_unbleed = self.getbleed(counter.width,
+                                          counter.height,
+                                          False, False, False, False)
+            for i,element in enumerate(counter.elements):
+                bleedclip = self.getbleed(counter.width,
+                                          counter.height,
+                                          counter.bleed_up[i],
+                                          counter.bleed_left[i],
+                                          True,
+                                          True)
+                self.setclip(element, bleedclip)
+                self.bleed_added[element] = bleedclip
+                self.unbleed[bleedclip] = front_unbleed
+            if counter.hasback:
+                back_unbleed = self.getbleed(counter.back.width,
+                                             counter.back.height,
+                                             False, False, False, False)
+                for i,element in enumerate(counter.back.elements):
+                    back_bleedclip = self.getbleed(counter.back.width,
+                                                   counter.back.height,
+                                                   counter.bleed_up[i],
+                                                   True,
+                                                   True,
+                                                   counter.bleed_left[i])
+                    self.setclip(element, back_bleedclip)
+                    self.bleed_added[element] = back_bleedclip
+                    self.unbleed[back_bleedclip] = back_unbleed
+
+    def setclip(self, element, clip):
+        element.set('clip-path',
+                    "url(#%s)"
+                    % clip)
+
+    def hideall(self):
+        for element,clip in self.bleed_added.iteritems():
+            self.setclip(element, self.unbleed[clip])
+
+    def showall(self):
+        for element,clip in self.bleed_added.iteritems():
+            self.setclip(element, clip)
 
 class NoSetting:
     def applyto(self, counter):
@@ -207,11 +320,22 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'string', dest = 'pdfdir')
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
-                                     type = 'int',
-                                     default = '0',
+                                     type = 'string',
+                                     default = '15mm',
                                      dest = 'registrationmarkslen')
+        self.OptionParser.add_option('-R', '--fullregistrationmarks',
+                                     action = 'store',
+                                     dest = 'fullregistrationmarks',
+                                     default = "false")
+        self.OptionParser.add_option('-O', '--outlinedist',
+                                     action = 'store',
+                                     type = 'string',
+                                     dest = 'outlinedist',
+                                     default = "")
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
+        self.OptionParser.add_option('-B', '--bleed', dest='bleed',
+                                     action = 'store', default = "false")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -276,7 +400,7 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("setting multiline text: %s\n" % lines)
         self.deleteFlowParas(element)
         for line in lines:
-            para = etree.Element(inkex.addNS('flowPara', 'svg'))
+            para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, line.decode('utf8'), 'flowSpan')
             element.append(para)
 
@@ -396,9 +520,7 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(restspan,
                               text[end_index+1:],
                               spantag)
-        startspan = etree.Element(inkex.addNS(spantag, 'svg'))
-        self.formatTextImages(startspan, text[:begin_index], spantag)
-        element.append(startspan)
+        element.text = text[:begin_index]
         element.append(stylespan)
         element.append(restspan)
 
@@ -430,7 +552,6 @@ class CountersheetEffect(inkex.Effect):
                      "Or set a different Name when running the extension. "
                      "Or just rename the existing layer." % llabel)
 
-        self.cslayers.append(lid)
         layer = etree.Element(inkex.addNS('g', 'svg'))
         layer.set(inkex.addNS('label', 'inkscape'), llabel)
         layer.set('id', lid)
@@ -456,9 +577,8 @@ class CountersheetEffect(inkex.Effect):
             raise ValueError( "Unable to find layer for element [" + sourceElementId + "]" )
         if self.is_layer( parent ): return parent
         return self.get_layer( parent, sourceElementId )
-        
+
     def generatecounter(self, c, rects, layer, colx, rowy):
-        res = [0, 0]
         oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
                                     namespaces=NSS)
         if len(oldcs):
@@ -467,6 +587,7 @@ class CountersheetEffect(inkex.Effect):
             for oldc in oldcs:
                 oldc.set('id', '')
         clonegroup = etree.Element(inkex.addNS('g', 'svg'))
+        c.elements.append(clonegroup)
         if c.id != None and len(c.id):
             clonegroup.set('id', c.id)
             self.exportids.append(c.id)
@@ -487,13 +608,16 @@ class CountersheetEffect(inkex.Effect):
             rect = rects[rectname]
             group = rect.getparent()
             source_layer = self.get_layer( rect )
-            groupid = group.get('id')
-            x = self.geometry[groupid].x
-            y = self.geometry[groupid].y
-            width = self.geometry[groupid].w
-            height = self.geometry[groupid].h
-            res[0] = max(res[0], width)
-            res[1] = max(res[1], height)
+            if self.bleed:
+                gid = rectname
+            else:
+                gid = group.get('id')
+            x = self.geometry[gid].x
+            y = self.geometry[gid].y
+            width = self.geometry[gid].w
+            height = self.geometry[gid].h
+            c.width = max(c.width, width)
+            c.height = max(c.height, height)
             if self.is_layer( group ):
                 self.logwrite("rect not in group '%s'.\n" % rectname)
                 sys.exit("Rectangle '%s' not in a group. Can not be template."
@@ -562,7 +686,7 @@ class CountersheetEffect(inkex.Effect):
             clonegroup.append(clone)
         self.translate_element(clonegroup, colx, rowy)
         layer.append(clonegroup)
-        return res
+        return [c.width, c.height]
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
@@ -593,7 +717,9 @@ class CountersheetEffect(inkex.Effect):
                 return g
 
     def readLayout(self, svg):
-        g = self.find_layer(svg, "countersheet_layout")
+        g = self.find_layer(svg, "cs_layout")
+        if g is None:
+            g = self.find_layer(svg, "countersheet_layout")
         if g is not None:
             res = []
             self.logwrite("Found layout layer!\n")
@@ -610,14 +736,14 @@ class CountersheetEffect(inkex.Effect):
             return res
         return False
 
-    def addbacks(self, layer, bstack, docwidth, rects):
+    def addbacks(self, layer, bstack, backxs, backys, docwidth, rects):
         self.logwrite("addbacks %d\n" % len(bstack))
-        for c in bstack:
-            for x,y in zip(c.backxs, c.backys):
-                self.generatecounter(c.back, rects,
-                                     layer,
-                                     docwidth - x,
-                                     y)
+        for c,x,y in zip(bstack, backxs, backys):
+            self.logwrite("   adding back\n")
+            self.generatecounter(c.back, rects,
+                                 layer,
+                                 docwidth - x,
+                                 y)
 
     # Looked a bit at code in Inkscape text_merge.py for this idea.
     # That file is Copyright (C) 2013 Nicolas Dufour (jazzynico).
@@ -653,7 +779,7 @@ class CountersheetEffect(inkex.Effect):
                                    self.options.bitmapdir,
                                    "png")
 
-    def make_temporary_svg(self, exportdir=None):
+    def make_temporary_svg(self, exportdir):
         """ Renders SVG DOM as it currently looks like
         in the extension with modifications made (or not)
         since reading the original file. The caller is
@@ -662,10 +788,7 @@ class CountersheetEffect(inkex.Effect):
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
         from tempfile import mkstemp
-        absexportdir = None
-        if exportdir:
-            absexportdir = os.path.abspath(exportdir)
-        tmpfile = mkstemp(".svg", "tmp", absexportdir, True)
+        tmpfile = mkstemp(".svg", "tmp", os.path.abspath(exportdir), True)
         tmpfileobject = os.fdopen(tmpfile[0], 'w')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
@@ -677,9 +800,11 @@ class CountersheetEffect(inkex.Effect):
 # https://bugs.launchpad.net/inkscape/+bug/1714365
                               noidexportworkaround=False):
         tmpfilename = self.make_temporary_svg(exportdir)
+        self.logwrite("export to tmpfilename: %s\n" % tmpfilename)
         tmpfile = open(tmpfilename, 'w')
         self.document.write(tmpfile)
         tmpfile.close()
+        self.logwrite(" ids to export: %r\n" % ids)
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
                                        namespaces=NSS)) == 0:
@@ -717,17 +842,23 @@ class CountersheetEffect(inkex.Effect):
                                                     namespaces=NSS)
             if not matching_elements:
                 return
-            element = matching_elements[0]
-            oldstyle = element.get('style') or ""
-            newstyle = stylereplace(oldstyle, part, value)
-            element.set('style', newstyle)
-            self.logwrite("set_style_on_elements %s: '%s' -> '%s'\n"
-                          % (element_id, oldstyle, newstyle))
+            self.set_style(matching_elements[0],
+                           part, value)
+
+    def set_style(self, element, part, value):
+        oldstyle = element.get('style') or ""
+        newstyle = stylereplace(oldstyle, part, value)
+        element.set('style', newstyle)
+        self.logwrite("set_style %s: '%s' -> '%s'\n"
+                      % (element.get('id'), oldstyle, newstyle))
 
     def exportSheetPDFs(self):
+        self.logwrite("exportSheetPDFs %s %d\n" % (self.options.pdfdir,
+                                                   len(self.cslayers)))
         if (self.options.pdfdir
             and len(self.cslayers) > 0):
             for layer in self.cslayers:
+                self.logwrite("  export PDF layer\n")
                 self.hidelayers(self.cslayers)
                 self.showlayers([layer])
                 self.export_using_inkscape([layer],
@@ -752,13 +883,19 @@ class CountersheetEffect(inkex.Effect):
             and len(self.options.bitmapdir) > 0
             and self.options.bitmapwidth > 0
             and self.options.bitmapheight > 0):
+            if self.bleed:
+                self.bleedmaker.hideall()
             self.exportBitmaps(self.exportids,
                                self.options.bitmapwidth,
                                self.options.bitmapheight)
+            if self.bleed:
+                self.bleedmaker.showall()
             return True
         return False
 
     def create_registrationline(self, x1, y1, x2, y2):
+        if self.registrationmarkslen <= 0:
+            return
         self.logwrite("create_registrationline %f,%f %f,%f\n"
                       % (x1, y1, x2, y2))
         line = etree.Element('line')
@@ -766,49 +903,84 @@ class CountersheetEffect(inkex.Effect):
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-	line.set("style", "stroke:#838383")
-	line.set("stroke-width", str(PS)) 
+	line.set("style", self.find_registration_line_style())
+	line.set("stroke-width", str(PS * 0.5))
         return line
 
+    def find_registration_line_style(self):
+        regstyle_elements = self.document.xpath("//*[@id='cs_regstyle']",
+                                               namespaces=NSS)
+        if len(regstyle_elements) > 0:
+            regstyle = regstyle_elements[0].get("style")
+            if regstyle is not None and len(regstyle) > 0:
+                return regstyle
+        return DEFAULT_REGISTRATION_MARK_STYLE
+
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
-                             position, layer):
-        linelen = self.unittouu("%fpt" % self.options.registrationmarkslen)
-        self.logwrite("addregistrationmarks linelen=%f\n" % linelen)
-        if linelen < 1:
-            return
+                             position, layer, backlayer, docwidth):
+        linelen = self.registrationmarkslen
         max_x = 0
         max_y = 0
         for x in xregistrationmarks:
             self.logwrite("registrationmark x: %f\n" % x)
             layer.append(
                 self.create_registrationline(position.x + x,
-                                             position.y - linelen,
+                                             position.y,
                                              position.x + x,
-                                             position.y))
+                                             position.y - linelen))
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
             self.logwrite("registrationmark y: %f\n" % y)
-            layer.append(self.create_registrationline(position.x - linelen,
+            layer.append(self.create_registrationline(position.x,
                                                       position.y + y,
-                                                      position.x,
+                                                      position.x - linelen,
                                                       position.y + y))
             max_y = max(max_y, y)
 
         for x in xregistrationmarks:
+            start_y = position.y + max_y
+            if self.fullregistrationmarks:
+                start_y = position.y
             layer.append(
                 self.create_registrationline(
                 position.x + x,
-                position.y + max_y,
+                start_y,
                 position.x + x,
                 position.y + max_y + linelen))
 
         for y in yregistrationmarks:
+            start_x = position.x + max_x
+            if self.fullregistrationmarks:
+                start_x = position.x
             layer.append(self.create_registrationline(
-                position.x + max_x,
+                start_x,
                 position.y + y,
                 position.x + max_x + linelen,
                 position.y + y))
+
+        if self.outlinemarks:
+            x1 = position.x - self.outlinedist
+            y1 = position.y - self.outlinedist
+            x2 = position.x + max_x + self.outlinedist
+            y2 = position.y + max_y + self.outlinedist
+            self.add_outlinemarks(layer, x1, y1, x2, y2)
+            if backlayer is not None:
+                self.add_outlinemarks(backlayer,
+                                      docwidth - x1, y1,
+                                      docwidth - x2, y2)
+
+    def add_outlinemarks(self, layer, x1, y1, x2, y2):
+        self.logwrite("Outline rectangle around %f,%f %f,%f\n"
+                      % (x1, y1, x2, y2))
+        layer.append(self.create_registrationline(
+            x1, y1, x2, y1))
+        layer.append(self.create_registrationline(
+            x1, y1, x1, y2))
+        layer.append(self.create_registrationline(
+            x1, y2, x2, y2))
+        layer.append(self.create_registrationline(
+            x2, y1, x2, y2))
 
     def calculateScale(self, svg):
         """Calculates scale of the document (user-units size) and
@@ -863,7 +1035,6 @@ class CountersheetEffect(inkex.Effect):
 
         # Get script "--what" option value.
         what = self.options.what
-        datafile = self.options.datafile
 
         doc = self.document
 
@@ -871,31 +1042,50 @@ class CountersheetEffect(inkex.Effect):
         self.cslayers = []
         self.bitmapname = self.options.bitmapname
 
-        # Elements to be queried and overlaid with new image elements after
-        # layout is done
-        self.placeholders = {}
-
         self.textmarkup = self.options.textmarkup == "true"
+        self.bleed = self.options.bleed == "true"
+
+        self.logwrite("bleed enabled: %r\n" % self.bleed)
+
+        self.fullregistrationmarks = (self.options.fullregistrationmarks
+                                      == "true")
+        self.logwrite("full registration marks: %r\n"
+                      % self.fullregistrationmarks)
 
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
 
+        if self.bleed:
+            self.bleedmaker = BleedMaker(svg)
+
+        try:
+            self.registrationmarkslen = self.unittouu(
+                self.options.registrationmarkslen)
+        except:
+            sys.exit("Failed to parse registration marks length %s. "
+                     "Must be a non-negative number optionally followed by "
+                     "a unit supported by SVG (eg mm, in, pt)."
+                          % self.options.registrationmarkslen)
+        if self.registrationmarkslen < 0:
+            sys.exit("Negative length of registration marks makes no sense.")
+        self.logwrite("registration marks length %f\n"
+                      % self.registrationmarkslen)
+
+        self.outlinemarks = (len(self.options.outlinedist) > 0)
+        if self.outlinemarks:
+            try:
+                self.outlinedist = self.unittouu(
+                    self.options.outlinedist)
+            except:
+                sys.exit("Failed to parse outline distance %s. "
+                         "Must be a number optionally followed by "
+                         "a unit supported by SVG (eg mm, in, pt)."
+                         % self.options.outlinedist)
+                self.logwrite("outline marks distance: %f\n" % self.outlinedist)
+
         self.calculateScale(svg)
 
-        search_paths = get_search_paths(datafile)
-        for path in search_paths:
-            if os.path.isfile(path):
-                datafile = path
-                break
-        else:
-            sys.exit('Unable to find data file. Looked for:\n'
-                     '%s\n'
-                     'The easiest way to fix this is to use the absolute '
-                     'path of the data file when running the effect (eg '
-                     'C:\\where\\my\\files\\are\\%s), or put '
-                     'the file in any of the locations listed above.'
-                     % ('\n'.join(search_paths),
-                        os.path.basename(datafile)))
+        datafile = find_file(self.options.datafile)
 
         # a small, "pixel-size", length, to use for making small
         # adjustments that works in Inkscape 0.91 and later, similar
@@ -930,15 +1120,19 @@ class CountersheetEffect(inkex.Effect):
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
-        parser = CSVCounterDefinitionParser(self.logwrite, rects)
+        parser = CSVCounterDefinitionParser(self.logwrite, rects,
+                                            os.path.dirname(datafile))
         parser.parse(reader)
         counters = parser.counters
         hasback = parser.hasback
 
+        frontlayers = []
+        backlayers = []
+
         # Create a new layer.
         layer = self.addLayer(svg, what, 1)
 
-        backlayer = False
+        backlayer = None
 
         if hasback:
             backlayer = self.addLayer(svg, what, 1, "back")
@@ -960,8 +1154,8 @@ class CountersheetEffect(inkex.Effect):
                                    0.0,
                                    docwidth,
                                    self.getViewBoxHeight(svg))]
-            if self.options.registrationmarkslen > 0:
-                margin = self.unittouu("%fpt" % self.options.registrationmarkslen)
+            if self.registrationmarkslen > 0:
+                margin = self.registrationmarkslen
                 positions[0].x += margin
                 positions[0].y += margin
                 positions[0].w -= margin * 2
@@ -979,15 +1173,19 @@ class CountersheetEffect(inkex.Effect):
         box = 0
         nr = 0
         csn = 1
-        bstack = []
 
         xregistrationmarks = set([0])
         yregistrationmarks = set([0])
 
+        is_first_col = True
+        is_first_row = True
+
+        bstack = []
+        backxs = []
+        backys = []
+
         for i,c in enumerate(counters):
             self.before_counter(c)
-            c.backxs = []
-            c.backys = []
             for n in range(c.nr):
                 nr = nr + 1
                 self.logwrite("laying out counter %d (nr %d, c.nr %d) (hasback: %s)\n"
@@ -995,15 +1193,19 @@ class CountersheetEffect(inkex.Effect):
                 c.addsubst("autonumber", str(nr))
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
+                self.logwrite("   adding front\n")
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
                                                    positions[box].y+rowy)
                 self.logwrite("generated counter size: %fx%f\n"
                               % (width, height))
+                c.bleed_left.append(is_first_col)
+                is_first_col = False
+                c.bleed_up.append(is_first_row)
                 if c.hasback:
-                    c.backxs.append(positions[box].x + colx + width)
-                    c.backys.append(positions[box].y + rowy)
                     bstack.append(c)
+                    backxs.append(positions[box].x + colx + width)
+                    backys.append(positions[box].y + rowy)
                 col = col + 1
                 colx = colx + width
                 xregistrationmarks.add(colx)
@@ -1018,31 +1220,42 @@ class CountersheetEffect(inkex.Effect):
                     nextrowy = rowy
                     self.logwrite("new row %d (y=%f)\n"
                                   % (row, rowy))
+                    self.logwrite("  bleed right!\n")
+                    is_first_col = True
+                    is_first_row = False
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
-                        if hasback:
-                            self.addbacks(backlayer, bstack, docwidth,
-                                          rects)
                         self.addregistrationmarks(
                             xregistrationmarks, yregistrationmarks,
-                            positions[box], layer)
+                            positions[box], layer, backlayer, docwidth)
                         xregistrationmarks = set([0])
                         yregistrationmarks = set([0])
-                        bstack = []
                         box = box + 1
                         self.logwrite(" now at box %d of %d\n" % (box, len(positions)))
                         self.logwrite(" i: %d    len(counters): %d\n" % (i, len(counters)))
                         row = 0
                         rowy = 0
                         nextrowy = 0
+                        is_first_row = True
                         if box == len(positions) and i < len(counters):
                             csn = csn + 1
                             if hasback:
+                                self.addbacks(backlayer, bstack,
+                                              backxs, backys,
+                                              docwidth,
+                                              rects)
+                                bstack = []
+                                backxs = []
+                                backys = []
                                 svg.append(backlayer)
+                                backlayers.append((backlayer, csn-1))
+                                self.cslayers.append(backlayer.get('id'))
                                 backlayer = self.addLayer(svg, what,
                                                           csn, "back")
                             svg.append(layer)
+                            frontlayers.append((layer, csn-1))
+                            self.cslayers.append(layer.get('id'))
                             layer = self.addLayer(svg, what, csn)
                             box = 0
 
@@ -1052,16 +1265,28 @@ class CountersheetEffect(inkex.Effect):
             yregistrationmarks.add(nextrowy)
             self.addregistrationmarks(
                 xregistrationmarks, yregistrationmarks,
-                positions[box], layer)
+                positions[box], layer, backlayer, docwidth)
 
         if hasback:
-            self.addbacks(backlayer, bstack, docwidth, rects)
+            self.addbacks(backlayer, bstack,
+                          backxs, backys,
+                          docwidth, rects)
+
+        if self.bleed:
+            self.logwrite(" add_bleed_to %d\n" % len(counters))
+            self.bleedmaker.add_bleed_to(counters)
 
         if hasback and len(backlayer.getchildren()):
             svg.append(backlayer)
+            backlayers.append((backlayer, csn))
+            self.cslayers.append(backlayer.get('id'))
 
         if len(layer.getchildren()):
             svg.append(layer)
+            frontlayers.append((layer, csn))
+            self.cslayers.append(layer.get('id'))
+
+        nrsheets = max(len(frontlayers), len(backlayers))
 
         if len(self.placeholders) > 0:
             tmpfile = self.make_temporary_svg()
@@ -1085,10 +1310,34 @@ class CountersheetEffect(inkex.Effect):
 
             #FIXME delete tmpfile
 
+        self.logwrite("nrsheets: %d\n" % nrsheets)
+        self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
+        self.add_layer_backgrounds(frontlayers,
+                                   self.find_layer(svg, "cs_background_front"),
+                                   nrsheets)
+        self.add_layer_backgrounds(backlayers,
+                                   self.find_layer(svg, "cs_background_back"),
+                                   nrsheets)
+
         exportedbitmaps = self.exportIDBitmaps()
         self.post(counters)
         self.exportSheetBitmaps()
         self.exportSheetPDFs()
+
+    def add_layer_backgrounds(self, layers, sheet_template, nrsheets):
+        if sheet_template is None:
+            return
+        for target,nr in layers:
+            self.logwrite("  add layer background %d\n" % nr)
+            background = deepcopy(sheet_template)
+            string_replace_xml_text(background, "%SHEET%",
+                                    unicode(nr))
+            string_replace_xml_text(background, "%SHEETS%",
+                                    unicode(nrsheets))
+            del background.attrib[inkex.addNS('groupmode', 'inkscape')]
+            del background.attrib[inkex.addNS('label', 'inkscape')]
+            self.set_style(background, 'display', None)
+            target.insert(0, background)
 
     def before_counter(self, counter):
         pass
@@ -1097,11 +1346,12 @@ class CountersheetEffect(inkex.Effect):
         pass
 
 class CSVCounterDefinitionParser:
-    def __init__(self, logwrite, rects):
+    def __init__(self, logwrite, rects, datadir):
         self.logwrite = logwrite
         self.rects = rects
         self.counters = []
         self.hasback = False
+        self.datadir = datadir
 
     def parse(self, reader):
         factory = None
@@ -1113,7 +1363,7 @@ class CSVCounterDefinitionParser:
             return self.parse_counter_row(row, factory)
         elif self.is_newheaders(row):
             self.logwrite('Found new headers: %s\n' % ';'.join(row))
-            return CSVCounterFactory(self.rects, row)
+            return CSVCounterFactory(self.rects, row, self.datadir)
         else:
             self.logwrite('Empty row... reset headers.\n')
             return False
@@ -1139,7 +1389,7 @@ class CSVCounterDefinitionParser:
                 try:
                     nr = int(row[0])
                 except ValueError:
-                    return CSVCounterFactory(self.rects, row)
+                    return CSVCounterFactory(self.rects, row, self.datadir)
         self.logwrite('new counter: %s\n' % ';'.join(row))
         cfront = factory.create_counter(nr, row)
         self.hasback = self.hasback or factory.hasback
@@ -1151,13 +1401,14 @@ class CSVCounterDefinitionParser:
         return factory
 
 class CounterFactory (object):
-    def __init__(self, rects):
+    def __init__(self, rects, datadir):
         self.rects = rects
         self.hasback = False
+        self.datadir = datadir
 
 class CSVCounterFactory (CounterFactory):
-    def __init__(self, rects, row):
-        super(CSVCounterFactory, self).__init__(rects)
+    def __init__(self, rects, row, datadir):
+        super(CSVCounterFactory, self).__init__(rects, datadir)
         self.parse_headers(row)
 
     def parse_headers(self, row):
@@ -1212,6 +1463,8 @@ class CSVCounterFactory (CounterFactory):
             setting = CounterSettingHolder()
             if i < len(row):
                 value = row[i]
+                if value.startswith('<<') and len(value) > 2:
+                    value = self.read_value_from_file(value[2:])
             else:
                 value = None
             ho.set_setting(setting, value)
@@ -1224,6 +1477,13 @@ class CSVCounterFactory (CounterFactory):
             if c:
                 setting.applyto(c)
         return cfront
+
+    def read_value_from_file(self, filename):
+        real_filename = find_file(filename, [self.datadir])
+        f = open(real_filename, 'r')
+        res = "\\n".join(f.readlines())
+        f.close()
+        return res
 
     def isbackheader(self, h):
         return h == 'BACK'
@@ -1479,14 +1739,30 @@ def string_replace_xml_text(element, pattern, value):
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 
-def get_search_paths(filename):
+def find_file(filename, extra_paths=None):
+    search_paths = get_search_paths(filename, extra_paths)
+    for path in search_paths:
+        if os.path.isfile(path):
+            return path
+    else:
+        sys.exit('Unable to find file. Looked for:\n'
+                 '%s\n'
+                 'The easiest way to fix this is to use the absolute '
+                 'path of the data file when running the effect (eg '
+                 'C:\\where\\my\\files\\are\\%s), or put '
+                 'the file in any of the locations listed above.'
+                 % ('\n'.join(search_paths),
+                    os.path.basename(filename)))
+
+def get_search_paths(filename, extra_paths=None):
     home = os.path.expanduser('~')
-    return [filename,
-            os.path.join(home, ".countersheetsextension", filename),
-            os.path.join(home, filename),
-            os.path.join(home, 'Documents', filename),
-            os.path.join(home, 'Documents', 'countersheets', filename),
-            ]
+    return ([os.path.join(ep, filename) for ep in (extra_paths or [])]
+            + [filename,
+               os.path.join(home, ".countersheetsextension", filename),
+               os.path.join(home, filename),
+               os.path.join(home, 'Documents', filename),
+               os.path.join(home, 'Documents', 'countersheets', filename),
+            ])
 
 if __name__ == '__main__':
     effect = CountersheetEffect()

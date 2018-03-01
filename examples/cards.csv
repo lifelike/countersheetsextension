@@ -11,6 +11,9 @@ card,title,text
 ,Nested, Some *bold and /italics/* text.
 ,No End,Not *bold, nor /italics.
 ,Overlap,Mix /italics *bold in / wrong * order.
+,Long,<<longtext.txt
+,Included,<<markedtext.txt
+,Newlines,Line 1\nLine 2\nLine 3
 
 rcard,rtitle,HERE,there
 ,"Repl XY",X,Y

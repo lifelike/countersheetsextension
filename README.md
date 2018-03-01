@@ -25,6 +25,7 @@ Main Features
 * Set colors and other attributes of (parts of) counters.
 * Any counters can be mixed on the same sheet (even different sizes).
 * Registration marks for manual cutting of the sheets.
+* Bleed around counters.
 * Simple text mark-up for bold and italics text styles.
 * Decide exactly where on a sheet to put blocks of counters, for die cutting.
 * Export created sheets to PNG or PDF.
@@ -33,7 +34,7 @@ Main Features
 Installation
 ------------
 
-You need Inkscape 0.92 installed.
+You need Inkscape 0.92 or later installed.
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
@@ -45,12 +46,7 @@ in the "Boardgames" submenu of the "Extensions" menu.
 
 See more complete instructions [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Install).
 
-There is an old tutorial also on youtube by Erulisseuiin:
-http://www.youtube.com/watch?v=sZ__PwMZp_8
-While it is for an older version of the Inkscape Board Game Extensions,
-it might still be easier to follow than my short instructions above.
-
-I recommend Google or the Inkscape Guild on BoardGameGeek for help.
+Try Google or the Inkscape Guild on BoardGameGeek for help.
 
 Getting Started
 ---------------
@@ -62,6 +58,13 @@ the data file (the other options in the dialog window you can
 ignore for now).
 
 See the [wiki](https://github.com/lifelike/countersheetsextension/wiki/) for more.
+
+Changelogs
+----------
+[Changelogs](https://github.com/lifelike/countersheetsextension/wiki/Changelogs)
+for recent versions of the countersheetsextension can be found
+[on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Changelogs).
+
 
 License
 --------
@@ -108,7 +111,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-Documentation is Copyright 2009-2017 Eric Hanuise and Pelle Nilsson,
+Documentation is Copyright 2009-2018 Eric Hanuise and Pelle Nilsson,
 available under the Creative Commons Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
 
@@ -116,6 +119,6 @@ http://creativecommons.org/licenses/by/3.0/
 Included examples in the documentation (the SVG and CSV files) are copyright
 Pelle Nilsson and made avilable under the Creative Commons Zero License
 (https://creativecommons.org/publicdomain/zero/1.0/) for any use (including
-commercial). All images used in the examples are by
+commercial). Some images used in the examples are by
 KenneyNL (https://kenney.itch.io/) made available under the Creative Commons
 Zero License.

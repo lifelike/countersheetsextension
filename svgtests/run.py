@@ -11,6 +11,12 @@ import sys
 def add_countersheets_paths():
     sys.path.insert(0, os.getcwd())
 
+def namefrom(args):
+    if len(args):
+        return "_".join([a.replace("-", "") for a in args]) + ".svg"
+    else:
+        return ""
+
 add_countersheets_paths()
 
 inputdir = os.path.join('svgtests', 'input')
@@ -42,7 +48,6 @@ tests = [
     ['counters.csv', 'counters.svg'],
     ['counters-2sides.csv', 'counters.svg'],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],
-    ['bold.csv', 'bold.svg'],
     ['yndice-en.csv', 'yndice.svg'],
     ['jndice-sv.csv', 'yndice.svg'],
     ['dicefold.csv', 'dicefold.svg'],
@@ -58,6 +63,8 @@ tests = [
     ['stars-3.csv', 'star.svg'],
     ['stars-4.csv', 'star.svg'],
     ['stars-5.csv', 'star.svg'],
+    ['bleed.csv', 'bleed.svg', '-B', 'true'],
+    ['backgrounds.csv', 'backgrounds.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):
@@ -69,7 +76,9 @@ successes = 0
 fails = 0
 skipped = 0
 for test in tests:
-    [basedatafile, basesvginfile] = test
+    basedatafile = test[0]
+    basesvginfile = test[1]
+    extraargs = test[2:]
     if chosen:
         matches = False
         for c in chosen:
@@ -79,7 +88,7 @@ for test in tests:
         if not matches:
             skipped += 1
             continue
-    svgoutbasename = basedatafile + '-' + basesvginfile
+    svgoutbasename = basedatafile + '-' + basesvginfile + namefrom(extraargs)
     svgoutfile = os.path.join(outputdir, svgoutbasename)
     datafile = os.path.join(inputdir, basedatafile)
     svginfile = os.path.join(inputdir, basesvginfile)
@@ -90,13 +99,14 @@ for test in tests:
     commandline = [command,
                    '-d', datafile,
                    '-l', logfile,
-                   '-r', '10',
+                   '-r', '10pt',
+                   '-O', '7pt',
                    '-f', '90',
+                   '-w', '0',
+                   '-y', '0',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
-                   '-N', svgoutbasename + '--',
-                   svginfile
-                   ]
+                   '-N', svgoutbasename] + extraargs + ['--', svginfile]
 
     if ['-v' in sys.argv]:
         print >> sys.stderr, ' '.join(commandline)
