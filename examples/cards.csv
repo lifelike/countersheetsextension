@@ -20,9 +20,10 @@ rcard,rtitle,HERE,there
 ,Replaced,word,ok
 ,Repl ÅÄÖ,word,åäö
 
-icard,ititle,iline1,iline2
-,Image 1,Inline icon {g4260.png} here.
-,Image 2,Inline icon {g4274.png} here.
-,2 Images,Inline {g4290.png} and {icon2.png}.
-,Bold Img,So *bold* {g4316.png} *icon*.
+icard,ititle,iline1,iline2,iline3
+,Image 1,Inline icon {g4260.png},here,x
+,Image 2,Inline icon {g4274.png} here.,x
+,Image 3,,Inline icon {g4332.png}.,x
+,2 Images,Inline {g4290.png} and {icon2.png}.,x
+,Bold Img,So *bold* {g4316.png} *icon*.,x
 

@@ -339,6 +339,7 @@ class CountersheetEffect(inkex.Effect):
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
+        self.placeholders = {}
 
     def logwrite(self, msg):
         if not self.log and self.options.logfile:
@@ -493,9 +494,11 @@ class CountersheetEffect(inkex.Effect):
         spanid = "cs_inline_%d" % len(self.placeholders)
         span.set('id', spanid)
         span.text = u"\u2b1b"
+        span.set('style', 'font-size: 200%;fill-opacity:0;')
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        resttext = text[end_index+1:]
         self.setFormattedText(restspan,
-                              text[end_index+1:],
+                              resttext,
                               spantag)
         element.text = text[:begin_index]
         element.append(span)
@@ -504,9 +507,9 @@ class CountersheetEffect(inkex.Effect):
         self.placeholders[spanid] = {
             "parent" : element,
             "span" : span,
-            "filename" : filename
+            "filename" : filename,
         }
-        # FIXME make placeholders invisible
+
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
@@ -531,6 +534,7 @@ class CountersheetEffect(inkex.Effect):
                 return self.setFormattedText(c, text.decode('utf8'), 'flowSpan')
             elif (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
+                self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
                 return self.setFormattedText(c, text.decode('utf8'), 'tspan')
             elif self.setFirstTextChild(c, text):
                 return True
@@ -690,6 +694,8 @@ class CountersheetEffect(inkex.Effect):
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
+            if glob is None or subst is None:
+                continue
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
                     t.text = subst
@@ -779,7 +785,7 @@ class CountersheetEffect(inkex.Effect):
                                    self.options.bitmapdir,
                                    "png")
 
-    def make_temporary_svg(self, exportdir):
+    def make_temporary_svg(self, exportdir=None):
         """ Renders SVG DOM as it currently looks like
         in the extension with modifications made (or not)
         since reading the original file. The caller is
@@ -788,7 +794,9 @@ class CountersheetEffect(inkex.Effect):
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
         from tempfile import mkstemp
-        tmpfile = mkstemp(".svg", "tmp", os.path.abspath(exportdir), True)
+        if exportdir is not None:
+            exportdir = os.path.abspath(exportdir)
+        tmpfile = mkstemp(".svg", "tmp", exportdir, True)
         tmpfileobject = os.fdopen(tmpfile[0], 'w')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
@@ -1298,15 +1306,24 @@ class CountersheetEffect(inkex.Effect):
                              "This is bad. Please report this as a bug "
                              "in the countersheetsgenerator."
                              % spanid)
-                positon = geometry[spanid]
+                position = geometry[spanid]
                 image = etree.Element(inkex.addNS('image', 'svg'))
                 image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
                 image.set(inkex.addNS("href", "xlink"), info["filename"])
-                image.set('x', position.x)
-                image.set('y', position.y)
-                image.set('width', position.width)
-                image.set('height', position.height)
-                info["parent"].append(image)
+                image.set('x', str(position.x))
+                image.set('y', str(position.y))
+                image.set('width', str(position.w))
+                image.set('height', str(position.h))
+                parent = info["parent"]
+                while not self.is_layer(parent.getparent()):
+                    parent = parent.getparent()
+                transform = parent.get('transform')
+                translate = self.translatere.match(transform)
+                if translate:
+                    dx = float(translate.group(1))
+                    dy = float(translate.group(2))
+                    self.translate_element(image, -dx, -dy)
+                parent.append(image)
 
             #FIXME delete tmpfile
 
@@ -1734,6 +1751,8 @@ def is_valid_name_to_replace(s):
 def string_replace_xml_text(element, pattern, value):
     """Find all text in XML element and its children
     and replace %name% with value."""
+    if value is None:
+        return
     if element.text:
         element.text = element.text.replace(pattern, value.decode('utf8'))
     for c in element.getchildren():
