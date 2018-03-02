@@ -44,11 +44,6 @@ in the "Boardgames" submenu of the "Extensions" menu.
 
 See more complete instructions [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Install).
 
-There is an old tutorial also on youtube by Erulisseuiin:
-http://www.youtube.com/watch?v=sZ__PwMZp_8
-While it is for an older version of the Inkscape Board Game Extensions,
-it might still be easier to follow than my short instructions above.
-
 I recommend Google or the Inkscape Guild on BoardGameGeek for help.
 
 Getting Started
@@ -60,7 +55,7 @@ the Create Countersheet extension and provide the name of
 the data file (the other options in the dialog window you can
 ignore for now).
 
-See the [tutorials on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Tutorials) for more.
+See the [documentation on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Home) for more.
 
 License
 --------
