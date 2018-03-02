@@ -21,9 +21,9 @@ rcard,rtitle,HERE,there
 ,Repl ÅÄÖ,word,åäö
 
 icard,ititle,iline1,iline2,iline3
-,Image 1,Inline icon {g4260.png},here,x
-,Image 2,Inline icon {g4274.png} here.,x
-,Image 3,,Inline icon {g4332.png}.,x
-,2 Images,Inline {g4290.png} and {icon2.png}.,x
-,Bold Img,So *bold* {g4316.png} *icon*.,x
+,Image 1,Inline icon {g4260.png},here,,
+,Image 2,Inline icon {g4274.png} here.,,
+,Image 3,,Inline icon {g4332.png}.,
+,2 Images,Inline {g4290.png} and {g4452.png}.,,
+,Bold Img,So *bold* {g4316.png} *icon*.,/Italics/ {g4316.png} /icon/,{g4316.png} alone
 

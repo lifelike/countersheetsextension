@@ -33,6 +33,7 @@ CSNS = ""
 
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
+DEFAULT_INLINE_IMAGE_YSHIFT = 0.2
 
 # A bit of a hack because of rounding errors sometimes
 # making boxes not fill up properly.
@@ -495,6 +496,16 @@ class CountersheetEffect(inkex.Effect):
         span.set('id', spanid)
         span.text = u"\u2b1b"
         span.set('style', 'font-size: 200%;fill-opacity:0;')
+
+        self.logwrite("inline image placeholder: %s %s\n"
+                      % (spanid, filename))
+
+        self.placeholders[spanid] = {
+            "parent" : element,
+            "span" : span,
+            "filename" : filename,
+        }
+
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
         resttext = text[end_index+1:]
         self.setFormattedText(restspan,
@@ -503,13 +514,6 @@ class CountersheetEffect(inkex.Effect):
         element.text = text[:begin_index]
         element.append(span)
         element.append(restspan)
-
-        self.placeholders[spanid] = {
-            "parent" : element,
-            "span" : span,
-            "filename" : filename,
-        }
-
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
@@ -523,7 +527,7 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(restspan,
                               text[end_index+1:],
                               spantag)
-        element.text = text[:begin_index]
+        self.formatTextImages(element, text[:begin_index], spantag)
         element.append(stylespan)
         element.append(restspan)
 
@@ -1311,7 +1315,8 @@ class CountersheetEffect(inkex.Effect):
                 image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
                 image.set(inkex.addNS("href", "xlink"), info["filename"])
                 image.set('x', str(position.x))
-                image.set('y', str(position.y))
+                image.set('y', str(position.y
+                                   + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
                 image.set('width', str(position.w))
                 image.set('height', str(position.h))
                 parent = info["parent"]
