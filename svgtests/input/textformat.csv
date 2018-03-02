@@ -1,0 +1,17 @@
+text,example
+,{g4452.png}
+,*bold text*
+,*bold text* normal text
+,*bold text* normal text /italics text/
+,{g4452.png}*bold text*{g4452.png}normal text{g4452.png}/italics text/{g4452.png}
+,/*italics bold text*/
+,*/bold italics text/*
+,*bold text /bold italics text/*
+,// empty // italics //
+,** empty ** bold **
+,*bold text with image: {g4452.png}*
+,/italics text with image: {g4452.png}/
+
+
+
+

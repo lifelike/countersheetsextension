@@ -436,7 +436,7 @@ class CountersheetEffect(inkex.Effect):
             and second_italics > second_bold
             or first_bold > first_italics
             and second_italics > first_bold
-            and second_bold > first_italics):
+            and second_bold > second_italics):
             self.logwrite("Bad nesting bold/italics (skip format): %s\n"
                           % text)
             skip = True
@@ -495,7 +495,9 @@ class CountersheetEffect(inkex.Effect):
         spanid = "cs_inline_%d" % len(self.placeholders)
         span.set('id', spanid)
         span.text = u"\u2b1b"
-        span.set('style', 'font-size: 200%;fill-opacity:0;')
+        span.set('style', 'font-size: 200%;fill-opacity:0;'
+                 'font-style:normal;font-weight:normal;'
+                 'font-variant:normal;font-family:sans-serif;')
 
         self.logwrite("inline image placeholder: %s %s\n"
                       % (spanid, filename))
