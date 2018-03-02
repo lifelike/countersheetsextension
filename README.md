@@ -65,7 +65,6 @@ Changelogs
 for recent versions of the countersheetsextension can be found
 [on the wiki](https://github.com/lifelike/countersheetsextension/wiki/Changelogs).
 
-
 License
 --------
 
