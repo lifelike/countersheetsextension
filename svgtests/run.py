@@ -66,6 +66,7 @@ tests = [
     ['bleed.csv', 'bleed.svg', '-B', 'true'],
     ['backgrounds.csv', 'backgrounds.svg'],
     ['textformat.csv', 'textformat.svg'],
+    ['dynamic.csv', 'texttokens.svg'],
 ]
 
 for f in glob.glob(os.path.join(inputdir, "*.png")):

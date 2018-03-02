@@ -140,31 +140,30 @@ class Repeat:
         self.nr = nr
         self.keep_going = True
 
-class RepeatExact(Repeat):
     def can_add_another(self):
         return self.nr > 0 or self.keep_going
 
+class RepeatExact(Repeat):
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         self.nr -= 1
-        if self.nr == 0:
-            self.keep_going = False
+        self.keep_going = False
 
 class RepeatMinFillRow(Repeat):
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         self.nr -= 1
-        if last_on_row and self.nr == 0:
+        if last_on_row and self.nr <= 0:
             self.keep_going = False
 
 class RepeatMinFillBox(Repeat):
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         self.nr -= 1
-        if last_in_box and self.nr == 0:
+        if last_in_box and self.nr <= 0:
             self.keep_going = False
 
 class RepeatMinFillSheet(Repeat):
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         self.nr -= 1
-        if last_on_sheet and self.nr == 0:
+        if last_on_sheet and self.nr <= 0:
             self.keep_going = False
 
 class BleedMaker:
@@ -1451,8 +1450,15 @@ class CSVCounterDefinitionParser:
     def is_newheaders(self, row):
         return len(row) > 0 and len("".join(row)) > 0
 
+    def must_parse_int(self, nrstr, endindex):
+        try:
+            return int(nrstr[:endindex].strip())
+        except:
+            sys.exit("Failed to parse repeat cell '%s'"
+                     % nrstr)
+
     def parse_counter_row(self, row, factory):
-        nr = 1
+        repeat = RepeatExact(1)
         if len(row[0]) > 0:
             if row[0] == 'ENDBOX':
                 if len(self.counters) > 0:
@@ -1463,12 +1469,25 @@ class CSVCounterDefinitionParser:
                     self.counters[-1].endrow = True
                 return factory
             else:
-                try:
-                    nr = int(row[0])
-                except ValueError:
-                    return CSVCounterFactory(self.rects, row, self.datadir)
+                nrstr = row[0]
+                if nrstr.endswith('+++'):
+                    nr = self.must_parse_int(nrstr, -3)
+                    repeat = RepeatMinFillSheet(nr)
+                elif nrstr.endswith('++'):
+                    nr = self.must_parse_int(nrstr, -2)
+                    repeat = RepeatMinFillBox(nr)
+                elif nrstr.endswith('+'):
+                    nr = self.must_parse_int(nrstr, -1)
+                    repeat = RepeatMinFillRow(nr)
+                else:
+                    try:
+                        nr = int(nrstr)
+                        repeat = RepeatExact(nr)
+                    except ValueError:
+                        return CSVCounterFactory(self.rects, row,
+                                                 self.datadir)
         self.logwrite('new counter: %s\n' % ';'.join(row))
-        cfront = factory.create_counter(RepeatExact(nr), row)
+        cfront = factory.create_counter(repeat, row)
         self.hasback = self.hasback or factory.hasback
         self.logwrite('self.hasback: %s  factory.hasback: %s\n'
                       % (str(self.hasback), str(factory.hasback)))
