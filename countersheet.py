@@ -33,6 +33,7 @@ CSNS = ""
 
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
+DEFAULT_INLINE_IMAGE_YSHIFT = 0.2
 
 # A bit of a hack because of rounding errors sometimes
 # making boxes not fill up properly.
@@ -339,6 +340,7 @@ class CountersheetEffect(inkex.Effect):
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
+        self.placeholders = {}
 
     def logwrite(self, msg):
         if not self.log and self.options.logfile:
@@ -434,7 +436,7 @@ class CountersheetEffect(inkex.Effect):
             and second_italics > second_bold
             or first_bold > first_italics
             and second_italics > first_bold
-            and second_bold > first_italics):
+            and second_bold > second_italics):
             self.logwrite("Bad nesting bold/italics (skip format): %s\n"
                           % text)
             skip = True
@@ -462,8 +464,58 @@ class CountersheetEffect(inkex.Effect):
                                   first_italics, second_italics,
                                   "font-style", "italic")
         else:
-            element.text = text
+            self.formatTextImages(element, text, spantag)
         return True
+
+    def formatTextImages(self, element, text, spantag):
+        m = re.search(r"[{][^{}]+[}]", text)
+        if m:
+            self.logwrite("Inline image: %s\n" % m.group(0))
+            self.insertImagePlaceholder(element,
+                                        text,
+                                        spantag,
+                                        m.start(),
+                                        m.end() - 1)
+        else:
+            element.text = text
+
+    def insertImagePlaceholder(self, element, text, spantag,
+                               begin_index, end_index):
+        filename = text[begin_index+1:end_index]
+        if spantag != "tspan":
+            sys.exit("Failed to insert inlined image %s "
+                     "in a %s element. Unfortunately only "
+                     "one-line text elements can have inlined "
+                     "images for boring technical reasons. "
+                     "Perhaps in a future version of Inkscape "
+                     "it will be possible to add support for "
+                     "inlined images in (flowing) multi-line "
+                     "text elements." % (filename, spantag))
+        span = etree.Element(inkex.addNS(spantag, 'svg'))
+        spanid = "cs_inline_%d" % len(self.placeholders)
+        span.set('id', spanid)
+        span.text = u"\u2b1b"
+        span.set('style', 'font-size: 200%;fill-opacity:0;'
+                 'font-style:normal;font-weight:normal;'
+                 'font-variant:normal;font-family:sans-serif;')
+
+        self.logwrite("inline image placeholder: %s %s\n"
+                      % (spanid, filename))
+
+        self.placeholders[spanid] = {
+            "parent" : element,
+            "span" : span,
+            "filename" : filename,
+        }
+
+        restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        resttext = text[end_index+1:]
+        self.setFormattedText(restspan,
+                              resttext,
+                              spantag)
+        element.text = text[:begin_index]
+        element.append(span)
+        element.append(restspan)
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
@@ -477,7 +529,7 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(restspan,
                               text[end_index+1:],
                               spantag)
-        element.text = text[:begin_index]
+        self.formatTextImages(element, text[:begin_index], spantag)
         element.append(stylespan)
         element.append(restspan)
 
@@ -488,6 +540,7 @@ class CountersheetEffect(inkex.Effect):
                 return self.setFormattedText(c, text.decode('utf8'), 'flowSpan')
             elif (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
+                self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
                 return self.setFormattedText(c, text.decode('utf8'), 'tspan')
             elif self.setFirstTextChild(c, text):
                 return True
@@ -647,6 +700,8 @@ class CountersheetEffect(inkex.Effect):
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
+            if glob is None or subst is None:
+                continue
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
                     t.text = subst
@@ -736,7 +791,7 @@ class CountersheetEffect(inkex.Effect):
                                    self.options.bitmapdir,
                                    "png")
 
-    def make_temporary_svg(self, exportdir):
+    def make_temporary_svg(self, exportdir=None):
         """ Renders SVG DOM as it currently looks like
         in the extension with modifications made (or not)
         since reading the original file. The caller is
@@ -745,7 +800,9 @@ class CountersheetEffect(inkex.Effect):
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
         from tempfile import mkstemp
-        tmpfile = mkstemp(".svg", "tmp", os.path.abspath(exportdir), True)
+        if exportdir is not None:
+            exportdir = os.path.abspath(exportdir)
+        tmpfile = mkstemp(".svg", "tmp", exportdir, True)
         tmpfileobject = os.fdopen(tmpfile[0], 'w')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
@@ -1245,6 +1302,38 @@ class CountersheetEffect(inkex.Effect):
 
         nrsheets = max(len(frontlayers), len(backlayers))
 
+        if len(self.placeholders) > 0:
+            tmpfile = self.make_temporary_svg()
+            self.logwrite("Placeholders replace temporary file: %s\n" % tmpfile)
+            geometry = self.queryAll(tmpfile)
+            for spanid, info in self.placeholders.iteritems():
+                if not spanid in geometry:
+                    sys.exit("Could not query location for %s. "
+                             "This is bad. Please report this as a bug "
+                             "in the countersheetsgenerator."
+                             % spanid)
+                position = geometry[spanid]
+                image = etree.Element(inkex.addNS('image', 'svg'))
+                image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
+                image.set(inkex.addNS("href", "xlink"), info["filename"])
+                image.set('x', str(position.x))
+                image.set('y', str(position.y
+                                   + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
+                image.set('width', str(position.w))
+                image.set('height', str(position.h))
+                parent = info["parent"]
+                while not self.is_layer(parent.getparent()):
+                    parent = parent.getparent()
+                transform = parent.get('transform')
+                translate = self.translatere.match(transform)
+                if translate:
+                    dx = float(translate.group(1))
+                    dy = float(translate.group(2))
+                    self.translate_element(image, -dx, -dy)
+                parent.append(image)
+
+            #FIXME delete tmpfile
+
         self.logwrite("nrsheets: %d\n" % nrsheets)
         self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
         self.add_layer_backgrounds(frontlayers,
@@ -1669,6 +1758,8 @@ def is_valid_name_to_replace(s):
 def string_replace_xml_text(element, pattern, value):
     """Find all text in XML element and its children
     and replace %name% with value."""
+    if value is None:
+        return
     if element.text:
         element.text = element.text.replace(pattern, value.decode('utf8'))
     for c in element.getchildren():

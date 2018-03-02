@@ -19,3 +19,11 @@ rcard,rtitle,HERE,there
 ,"Repl XY",X,Y
 ,Replaced,word,ok
 ,Repl ÅÄÖ,word,åäö
+
+icard,ititle,iline1,iline2,iline3
+,Image 1,Inline icon {g4260.png},here,,
+,Image 2,Inline icon {g4274.png} here.,,
+,Image 3,,Inline icon {g4332.png}.,
+,2 Images,Inline {g4290.png} and {g4452.png}.,,
+,Bold Img,So *bold* {g4316.png} *icon*.,/Italics/ {g4316.png} /icon/,{g4316.png} alone
+
