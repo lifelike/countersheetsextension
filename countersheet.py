@@ -47,8 +47,8 @@ PDF_DPI = 300
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
 
 class Counter:
-    def __init__(self, nr):
-        self.nr = nr
+    def __init__(self, repeat):
+        self.repeat = repeat
         self.parts = []
         self.subst = {}
         self.back = None
@@ -65,6 +65,12 @@ class Counter:
         self.width = 0 # actual width when generated
         self.height = 0 # actual height when generated
         self.bleed_added = {}
+
+    def can_add_another(self):
+        return self.repeat.can_add_another()
+
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        self.repeat.added_one(last_on_row, last_in_box, last_on_sheet)
 
     def set(self, setting):
         setting.applyto(self)
@@ -88,7 +94,7 @@ class Counter:
 
     def doublesided(self):
         if not self.back:
-            self.back = Counter(self.nr)
+            self.back = Counter(DummyRepeat())
         return self.back
 
     def is_included(self, eid):
@@ -122,6 +128,44 @@ class CounterSettingHolder:
             back = counter.doublesided()
             self.setting.applyto(back)
 
+class DummyRepeat:
+    def can_add_another(self):
+        return False
+
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        pass
+
+class Repeat:
+    def __init__(self, nr):
+        self.nr = nr
+        self.keep_going = True
+
+class RepeatExact(Repeat):
+    def can_add_another(self):
+        return self.nr > 0 or self.keep_going
+
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        self.nr -= 1
+        if self.nr == 0:
+            self.keep_going = False
+
+class RepeatMinFillRow(Repeat):
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        self.nr -= 1
+        if last_on_row and self.nr == 0:
+            self.keep_going = False
+
+class RepeatMinFillBox(Repeat):
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        self.nr -= 1
+        if last_in_box and self.nr == 0:
+            self.keep_going = False
+
+class RepeatMinFillSheet(Repeat):
+    def added_one(self, last_on_row, last_in_box, last_on_sheet):
+        self.nr -= 1
+        if last_on_sheet and self.nr == 0:
+            self.keep_going = False
 
 class BleedMaker:
     def __init__(self, svg):
@@ -1200,10 +1244,15 @@ class CountersheetEffect(inkex.Effect):
 
         for i,c in enumerate(counters):
             self.before_counter(c)
-            for n in range(c.nr):
+            while(c.can_add_another()):
+                last_on_row = False
+                last_in_box = False
+                last_on_sheet = False
                 nr = nr + 1
-                self.logwrite("laying out counter %d (nr %d, c.nr %d) (hasback: %s)\n"
-                              % (i, nr, c.nr, c.hasback))
+                self.logwrite("laying out counter %d (nr %d/%r, c.nr %d)"
+                              " (hasback: %s)\n"
+                              % (i, nr, c.repeat.nr, c.repeat.keep_going,
+                                 c.hasback))
                 c.addsubst("autonumber", str(nr))
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
@@ -1227,6 +1276,7 @@ class CountersheetEffect(inkex.Effect):
                     nextrowy = rowy + height
                 if (colx + width > positions[box].w + BOX_MARGIN
                     or c.endbox or c.endrow):
+                    last_on_row = True
                     col = 0
                     colx = 0
                     row = row + 1
@@ -1240,6 +1290,7 @@ class CountersheetEffect(inkex.Effect):
                     yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
+                        last_in_box = True
                         self.addregistrationmarks(
                             xregistrationmarks, yregistrationmarks,
                             positions[box], layer, backlayer, docwidth)
@@ -1253,6 +1304,7 @@ class CountersheetEffect(inkex.Effect):
                         nextrowy = 0
                         is_first_row = True
                         if box == len(positions) and i < len(counters):
+                            last_on_sheet = True
                             csn = csn + 1
                             if hasback:
                                 self.addbacks(backlayer, bstack,
@@ -1272,6 +1324,7 @@ class CountersheetEffect(inkex.Effect):
                             self.cslayers.append(layer.get('id'))
                             layer = self.addLayer(svg, what, csn)
                             box = 0
+                c.added_one(last_on_row, last_in_box, last_on_sheet)
 
         if ((len(xregistrationmarks) > 1
              or len(yregistrationmarks) > 1)
@@ -1415,7 +1468,7 @@ class CSVCounterDefinitionParser:
                 except ValueError:
                     return CSVCounterFactory(self.rects, row, self.datadir)
         self.logwrite('new counter: %s\n' % ';'.join(row))
-        cfront = factory.create_counter(nr, row)
+        cfront = factory.create_counter(RepeatExact(nr), row)
         self.hasback = self.hasback or factory.hasback
         self.logwrite('self.hasback: %s  factory.hasback: %s\n'
                       % (str(self.hasback), str(factory.hasback)))
@@ -1479,8 +1532,8 @@ class CSVCounterFactory (CounterFactory):
         else:
             return CounterSubstLayout(h)
 
-    def create_counter(self, nr, row):
-        cfront = Counter(nr)
+    def create_counter(self, repeat, row):
+        cfront = Counter(repeat)
         c = cfront
         for i,ho in enumerate(self.headers):
             h = ho.raw

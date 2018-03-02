@@ -7,11 +7,11 @@ import countersheet
 
 class SingleCounterTest(unittest.TestCase):
     def setUp(self):
-        self.counter = countersheet.Counter(1)
+        self.counter = countersheet.Counter(countersheet.Repeat(1))
         self.setting = countersheet.CounterSettingHolder()
 
     def test_plain(self):
-        self.assertEqual(1, self.counter.nr)
+        self.assertEqual(1, self.counter.repeat.nr)
         self.assertFalse(self.counter.hasback)
         self.assertFalse(self.counter.endbox)
         self.assertFalse(self.counter.back)
@@ -47,8 +47,6 @@ class SingleCounterTest(unittest.TestCase):
     def test_doublesided_plain(self):
         self.counter.doublesided()
         self.assertTrue(self.counter.back)
-        self.assertEqual(1, self.counter.nr)
-        self.assertEqual(1, self.counter.back.nr)
         self.assertFalse(self.counter.endbox)
         self.assertFalse(self.counter.back.endbox)
 
