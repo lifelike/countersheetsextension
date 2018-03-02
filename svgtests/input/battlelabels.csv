@@ -1,9 +1,9 @@
 label,label[style:fill],label[style:stroke],*-f[style:fill],*-fl[style:stroke],nw-f,n-f,ne-f,w-f,e-f,sw-f,s-f,se-f,diag-*?,ort-*?
 8,#d3a65c,#d3a65c,black,black,I,,,,,,,3,n,y
-2,#d3a65c,#d3a65c,black,black,,,,G,B,,1,,y,n
+2,#d3a65c,#d3a65c,black,black,,,,G,B,,1,,Y,n
 2,#d3a65c,#d3a65c,black,black,,,,S,B,,2,,y,n
 2,#d3a65c,#d3a65c,black,black,,C,,,,,4,,y,n
-1,#d3a65c,#d3a65c,black,black,A,,,,,,,1,y,y
+1,#d3a65c,#d3a65c,black,black,A,,,,,,,1,x,y
 1,#d3a65c,#d3a65c,black,black,G,,,,,,,1,y,y
 8,black,black,white,white,I,,,,,,,3,n,y
 2,black,black,white,white,,,,G,B,,1,,y,n

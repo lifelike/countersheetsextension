@@ -22,7 +22,7 @@ ENDBOX
 ,T,t
 
 tile>,ID,BACK,ID
-10,x10,BACK,x10b
+10,x10,x,x10b
 
 tile,letter
 ,U,u

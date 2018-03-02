@@ -1493,7 +1493,9 @@ class CSVCounterFactory (CounterFactory):
                 value = None
             ho.set_setting(setting, value)
             if setting.back:
-                if i >= len(row) or row[i] != 'BACK':
+                if (i >= len(row)
+                    or (row[i] != 'BACK'
+                        and not is_yes_value(row[i]))):
                     break
                 c.hasback = True
                 c = c.doublesided()
@@ -1581,13 +1583,18 @@ class CounterSubstLayout:
     def set_setting(self, setting, value):
         setting.set(CounterSubst(self.id, value))
 
+YES_VALUES = set(['y', 'yes', 'x'])
+
+def is_yes_value(s):
+    return s.strip().lower() in YES_VALUES
+
 class CounterOptionLayout:
     def __init__(self, id):
         self.id = id
         self.raw = id
 
     def set_setting(self, setting, value):
-        if value != 'y' and value != 'Y':
+        if not is_yes_value(value):
             setting.set(CounterExcludeID(self.id))
 
 class CounterMultiOptionLayout:
