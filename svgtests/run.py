@@ -48,6 +48,7 @@ tests = [
     ['layout10+10+10.csv', 'layout.svg'],
     ['cards.csv', 'cards.svg'],
     ['counters.csv', 'counters.svg'],
+    ['counters.csv', 'counters-swatches.svg'],
     ['counters-2sides.csv', 'counters.svg'],
     ['counters-2sides.csv', 'counters.svg', '-o', 'true'],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],

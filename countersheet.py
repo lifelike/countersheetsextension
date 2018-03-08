@@ -167,13 +167,8 @@ class RepeatMinFillSheet(Repeat):
             self.keep_going = False
 
 class BleedMaker:
-    def __init__(self, svg):
-        founddefs = svg.xpath('//svg:defs', namespaces=NSS)
-        if len(founddefs) > 0:
-            self.defs = founddefs[0]
-        else:
-            self.defs = etree.Element(inkex.addNS("defs", "svg"))
-            svg.append(self.defs)
+    def __init__(self, svg, defs):
+        self.defs = defs
         self.bleed_added = {}
         self.unbleed = {}
 
@@ -1117,6 +1112,13 @@ class CountersheetEffect(inkex.Effect):
         # Get access to main SVG document element and get its dimensions.
         svg = self.document.xpath('//svg:svg', namespaces=NSS)[0]
 
+        founddefs = svg.xpath('//svg:defs', namespaces=NSS)
+        if len(founddefs) > 0:
+            self.defs = founddefs[0]
+        else:
+            self.defs = etree.Element(inkex.addNS("defs", "svg"))
+            svg.append(self.defs)
+
         if self.bleed:
             self.bleedmaker = BleedMaker(svg)
 
@@ -1182,8 +1184,10 @@ class CountersheetEffect(inkex.Effect):
         csv_file.seek(0)
         reader = csv.reader(csv_file, csv_dialect)
 
-        parser = CSVCounterDefinitionParser(self.logwrite, rects,
-                                            os.path.dirname(datafile))
+        parser = CSVCounterDefinitionParser(
+            self.logwrite, rects,
+            self.defs,
+            os.path.dirname(datafile))
         parser.parse(reader)
         counters = parser.counters
         hasback = parser.hasback
@@ -1433,9 +1437,10 @@ class CountersheetEffect(inkex.Effect):
         pass
 
 class CSVCounterDefinitionParser:
-    def __init__(self, logwrite, rects, datadir):
+    def __init__(self, logwrite, rects, defs, datadir):
         self.logwrite = logwrite
         self.rects = rects
+        self.defs = defs
         self.counters = []
         self.hasback = False
         self.datadir = datadir
@@ -1450,7 +1455,8 @@ class CSVCounterDefinitionParser:
             return self.parse_counter_row(row, factory)
         elif self.is_newheaders(row):
             self.logwrite('Found new headers: %s\n' % ';'.join(row))
-            return CSVCounterFactory(self.rects, row, self.datadir)
+            return CSVCounterFactory(self.rects, self.defs,
+                                     row, self.datadir)
         else:
             self.logwrite('Empty row... reset headers.\n')
             return False
@@ -1495,7 +1501,9 @@ class CSVCounterDefinitionParser:
                         nr = int(nrstr)
                         repeat = RepeatExact(nr)
                     except ValueError:
-                        return CSVCounterFactory(self.rects, row,
+                        return CSVCounterFactory(self.rects,
+                                                 self.defs,
+                                                 row,
                                                  self.datadir)
         self.logwrite('new counter: %s\n' % ';'.join(row))
         cfront = factory.create_counter(repeat, row)
@@ -1508,14 +1516,15 @@ class CSVCounterDefinitionParser:
         return factory
 
 class CounterFactory (object):
-    def __init__(self, rects, datadir):
+    def __init__(self, rects, defs, datadir):
         self.rects = rects
+        self.defs = defs
         self.hasback = False
         self.datadir = datadir
 
 class CSVCounterFactory (CounterFactory):
-    def __init__(self, rects, row, datadir):
-        super(CSVCounterFactory, self).__init__(rects, datadir)
+    def __init__(self, rects, defs, row, datadir):
+        super(CSVCounterFactory, self).__init__(rects, defs, datadir)
         self.parse_headers(row)
 
     def parse_headers(self, row):
@@ -1552,7 +1561,8 @@ class CSVCounterFactory (CounterFactory):
         elif self.ismultioptionheader(h):
             return CounterMultiOptionLayout(h[:-2])
         elif self.isattributeheader(h):
-            return AttributeLayout(h, self.rects)
+            return AttributeLayout(h, self.rects,
+                                   self.defs)
         elif self.isidheader(h):
             return IDLayout()
         elif self.isbackheader(h):
@@ -1720,22 +1730,36 @@ class DefaultValueLayoutDecorator:
         self.header.set_setting(setting, value)
 
 class AttributeLayout:
-    def __init__(self, h, rects):
+    def __init__(self, h, rects, defs):
         self.raw = h
         self.rects = rects
+        self.defs = defs
         astart = h.find('[')
         self.aid = h[:astart]
         self.aname = h[astart+1:-1]
 
     def set_setting(self, setting, value):
         aname = self.aname
-        if len(value) and value[0] == '<':
-            if self.aname.startswith('style:'):
-                pname = aname[6:]
+        if self.aname.startswith('style:') and len(value) > 0 :
+            pname = aname[6:]
+            if value[0] == '<':
                 oldv = self.rects[value[1:]].get("style")
                 value = self.getrefstyle(oldv, pname, value)
+            elif pname in set(['fill', 'stroke']):
+                value = self.color_lookup(value)
         setting.set(CounterAttribute(self.aid, aname, value))
 
+    def color_lookup(self, color):
+        found_id = self.defs.xpath("*[@id='%s']" % color,
+                                   namespaces=NSS)
+        found_xref = self.defs.xpath("*[@xlink:href='#%s']" % color,
+                                     namespaces=NSS)
+        if len(found_xref) > 0:
+            return make_def_ref(found_xref[0].get('id'))
+        elif len(found_id) > 0:
+            return make_def_ref(color)
+        else:
+            return color
     def getrefstyle(self, oldv, pname, value):
         [pstart, pend] = (
             find_stylepart(oldv, pname))
@@ -1879,6 +1903,9 @@ def get_search_paths(filename, extra_paths=None):
                os.path.join(home, 'Documents', filename),
                os.path.join(home, 'Documents', 'countersheets', filename),
             ])
+
+def make_def_ref(color):
+    return "url(#%s)" % color
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
