@@ -28,6 +28,8 @@
         _gui-text="Text Markup (*bold*, /italics/)">true</param>
   <param name="bleed" type="boolean"
         _gui-text="Bleed">false</param>
+  <param name="oneside" type="boolean"
+         _gui-text="One-Sided Sheets">false</param>
   <param name="log" type="string" _gui-text="Log File (optional)"></param>
   <effect>
     <object-type>all</object-type>

@@ -35,7 +35,9 @@ chosen = [a for a in sys.argv[1:]
 tests = [
     ['battlelabels.csv', 'battlelabels.svg'],
     ['nato1.csv', 'nato.svg'],
+    ['nato1.csv', 'nato.svg', '-o', 'true'],
     ['nato2.csv', 'nato.svg'],
+    ['nato2.csv', 'nato.svg', '-o', 'true'],
     ['use.csv', 'use.svg'],
     ['symbols.csv', 'symbols.svg'],
     ['commas_in_semicolons.csv', 'card.svg'],
@@ -47,6 +49,7 @@ tests = [
     ['cards.csv', 'cards.svg'],
     ['counters.csv', 'counters.svg'],
     ['counters-2sides.csv', 'counters.svg'],
+    ['counters-2sides.csv', 'counters.svg', '-o', 'true'],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],
     ['yndice-en.csv', 'yndice.svg'],
     ['jndice-sv.csv', 'yndice.svg'],
@@ -65,6 +68,7 @@ tests = [
     ['stars-5.csv', 'star.svg'],
     ['bleed.csv', 'bleed.svg', '-B', 'true'],
     ['backgrounds.csv', 'backgrounds.svg'],
+    ['backgrounds.csv', 'backgrounds.svg', '-o', 'true'],
     ['textformat.csv', 'textformat.svg'],
     ['dynamic.csv', 'texttokens.svg'],
 ]

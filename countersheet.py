@@ -380,6 +380,8 @@ class CountersheetEffect(inkex.Effect):
                                      action = 'store', default = "true")
         self.OptionParser.add_option('-B', '--bleed', dest='bleed',
                                      action = 'store', default = "false")
+        self.OptionParser.add_option('-o', '--oneside', default = "false",
+                                     action = "store", dest="oneside")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -1101,8 +1103,11 @@ class CountersheetEffect(inkex.Effect):
 
         self.textmarkup = self.options.textmarkup == "true"
         self.bleed = self.options.bleed == "true"
+        self.oneside = self.options.oneside == "true"
 
         self.logwrite("bleed enabled: %r\n" % self.bleed)
+
+        self.logwrite("one-sided sheets: %r\n" % self.oneside)
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
@@ -1192,7 +1197,10 @@ class CountersheetEffect(inkex.Effect):
         backlayer = None
 
         if hasback:
-            backlayer = self.addLayer(svg, what, 1, "back")
+            if self.oneside:
+                backlayer = layer
+            else:
+                backlayer = self.addLayer(svg, what, 1, "back")
 
         docwidth = self.getViewBoxWidth(svg)
 
@@ -1313,16 +1321,19 @@ class CountersheetEffect(inkex.Effect):
                                 bstack = []
                                 backxs = []
                                 backys = []
-                                svg.append(backlayer)
-                                backlayers.append((backlayer, csn-1))
-                                self.cslayers.append(backlayer.get('id'))
-                                backlayer = self.addLayer(svg, what,
-                                                          csn, "back")
+                                if not self.oneside:
+                                    svg.append(backlayer)
+                                    backlayers.append((backlayer, csn-1))
+                                    self.cslayers.append(backlayer.get('id'))
+                                    backlayer = self.addLayer(svg, what,
+                                                              csn, "back")
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
                             layer = self.addLayer(svg, what, csn)
                             box = 0
+                            if self.oneside:
+                                backlayer = layer
                 c.added_one(last_on_row, last_in_box, last_on_sheet)
 
         if ((len(xregistrationmarks) > 1
@@ -1342,7 +1353,7 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite(" add_bleed_to %d\n" % len(counters))
             self.bleedmaker.add_bleed_to(counters)
 
-        if hasback and len(backlayer.getchildren()):
+        if not self.oneside and hasback and len(backlayer.getchildren()):
             svg.append(backlayer)
             backlayers.append((backlayer, csn))
             self.cslayers.append(backlayer.get('id'))

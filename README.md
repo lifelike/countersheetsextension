@@ -9,7 +9,7 @@ generated images are refered to as counters,
 except in examples explicitly about making something else (like sheets
 of cards). There is very little in the tool that is specific to
 counters though, or to board games. It can be used as a
-generic templating tool (mail merge).
+generic templating tool (mail merge or data merge).
 
 Features
 --------
@@ -118,6 +118,7 @@ http://creativecommons.org/licenses/by/3.0/
 Included examples in the documentation (the SVG and CSV files) are copyright
 Pelle Nilsson and made avilable under the Creative Commons Zero License
 (https://creativecommons.org/publicdomain/zero/1.0/) for any use (including
-commercial). Some images used in the examples are by
-KenneyNL (https://kenney.itch.io/) made available under the Creative Commons
-Zero License.
+commercial). Some images used in the examples are by KenneyNL
+(https://kenney.itch.io/), some by various users on https://openclipart.org, all
+also made available under the Creative Commons Zero License.
+
