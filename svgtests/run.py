@@ -72,9 +72,12 @@ tests = [
     ['backgrounds.csv', 'backgrounds.svg', '-o', 'true'],
     ['textformat.csv', 'textformat.svg'],
     ['dynamic.csv', 'texttokens.svg'],
+    ['prototype_cards_all.csv', 'prototype_cards.svg'],
 ]
 
-for f in glob.glob(os.path.join(inputdir, "*.png")):
+copyfiles = (glob.glob(os.path.join(inputdir, "*.png"))
+             + [os.path.join(inputdir, "extcard.svg")])
+for f in copyfiles:
     shutil.copy(f, outputdir)
     shutil.copy(f, bitmapsdir)
     shutil.copy(f, pdfdir)
