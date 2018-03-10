@@ -10,36 +10,36 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="prototype_cards.svg"
-   inkscape:version="0.92.1 r15371"
-   id="svg4819"
-   version="1.1"
-   viewBox="0 0 210 297"
+   width="210mm"
    height="297mm"
-   width="210mm">
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg4819"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="prototype_cards.svg">
   <defs
      id="defs4813" />
   <sodipodi:namedview
-     units="mm"
-     showguides="false"
-     inkscape:window-maximized="1"
-     inkscape:window-y="0"
-     inkscape:window-x="0"
-     inkscape:window-height="720"
-     inkscape:window-width="1366"
-     inkscape:snap-global="false"
-     showgrid="false"
-     inkscape:current-layer="layer1"
-     inkscape:document-units="mm"
-     inkscape:cy="-291.06688"
-     inkscape:cx="-369.62795"
-     inkscape:zoom="0.7"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="-146.2776"
+     inkscape:cy="-353.47477"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="720"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     showguides="false"
+     units="mm" />
   <metadata
      id="metadata4816">
     <rdf:RDF>
@@ -57,8 +57,8 @@
      id="layer2"
      inkscape:label="background"
      style="display:inline"
-     sodipodi:insensitive="true"
-     transform="translate(0,1e-5)">
+     transform="translate(0,1e-5)"
+     sodipodi:insensitive="true">
     <rect
        style="opacity:1;vector-effect:none;fill:#ecf886;fill-opacity:1;stroke:#000000;stroke-width:0.3729887px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect5436"
@@ -77,6 +77,13 @@
          x="-398.76611"
          y="360.61017"
          style="stroke-width:0.26458332">plaincard</tspan></text>
+    <rect
+       y="325.83768"
+       x="-2.0489302"
+       height="687.28644"
+       width="379.39734"
+       id="rect18810"
+       style="opacity:1;vector-effect:none;fill:#ecf886;fill-opacity:1;stroke:#000000;stroke-width:0.3729887px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
   <g
      inkscape:label="Layer 1"
@@ -387,15 +394,15 @@
            y="-44.190063"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px">imagecardtitle</tspan></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="-42.989502"
-         x="-244.84155"
-         id="cardimage"
-         preserveAspectRatio="none"
-         height="35.324905"
+         inkscape:label="#image5725"
          width="35.324905"
-         inkscape:label="#image5725" />
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="cardimage"
+         x="-244.84155"
+         y="-42.989502" />
     </g>
     <text
        xml:space="preserve"
@@ -545,25 +552,25 @@
            id="tspan5794"
            sodipodi:role="line">imagescardtitle</tspan></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="-42.989502"
+         x="-171.07516"
+         id="cardimage1"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
          inkscape:label="#image5725"
          width="35.324905"
          height="35.324905"
          preserveAspectRatio="none"
-         id="cardimage1"
-         x="-171.07516"
-         y="-42.989502" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
-         xlink:href="g4274.png"
-         y="-8.9716444"
-         x="-171.07516"
          id="cardimage2"
-         preserveAspectRatio="none"
-         height="35.324905"
-         width="35.324905"
-         inkscape:label="#image5725" />
+         x="-171.07516"
+         y="-8.9716444" />
     </g>
     <text
        xml:space="preserve"
@@ -661,45 +668,45 @@
            y="-44.190063"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px">fourimagescardtitle</tspan></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="-43.115368"
-         x="-103.03944"
+         inkscape:label="#image5725"
+         width="28.521334"
+         height="28.521334"
+         preserveAspectRatio="none"
          id="image1of4"
-         preserveAspectRatio="none"
-         height="28.521334"
-         width="28.521334"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="28.521334"
-         height="28.521334"
-         preserveAspectRatio="none"
-         id="image3of4"
          x="-103.03944"
-         y="-15.649347" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="28.521334"
-         height="28.521334"
-         preserveAspectRatio="none"
-         id="image2of4"
-         x="-76.959076"
          y="-43.115368" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
          y="-15.649347"
-         x="-76.959076"
-         id="image4of4"
+         x="-103.03944"
+         id="image3of4"
          preserveAspectRatio="none"
          height="28.521334"
          width="28.521334"
          inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="-43.115368"
+         x="-76.959076"
+         id="image2of4"
+         preserveAspectRatio="none"
+         height="28.521334"
+         width="28.521334"
+         inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="28.521334"
+         height="28.521334"
+         preserveAspectRatio="none"
+         id="image4of4"
+         x="-76.959076"
+         y="-15.649347" />
       <flowRoot
          inkscape:label="#flowRoot5856"
          transform="scale(0.26458333)"
@@ -791,15 +798,15 @@
            x="-368.32635"
            y="159.46933" /></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="164.3578"
-         x="-396.22412"
-         id="cardicon1"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon1"
+         x="-396.22412"
+         y="164.3578"
+         inkscape:label="#image6088" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext1"
@@ -815,15 +822,15 @@
              y="626.09113"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Standard Symbols L';-inkscape-font-specification:'Standard Symbols L, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
            id="flowPara6110">cardicontext1 with automatic line-breaks</flowPara></flowRoot>      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon2"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="180.85008"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon2"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,14.602402)"
@@ -839,15 +846,15 @@
              width="156.4286"
              id="rect6130" /></flowRegion><flowPara
            id="flowPara6134">cardicontext2 with automatic line-breaks</flowPara></flowRoot>      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="197.34238"
-         x="-396.22412"
-         id="cardicon3"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon3"
+         x="-396.22412"
+         y="197.34238"
+         inkscape:label="#image6088" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext3"
@@ -863,15 +870,15 @@
              y="626.09113"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Standard Symbols L';-inkscape-font-specification:'Standard Symbols L, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
            id="flowPara6158">cardicontext3 with automatic line-breaks</flowPara></flowRoot>      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon4"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="213.83466"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon4"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,47.586976)"
@@ -996,25 +1003,25 @@
            y="225.40816"
            style="stroke-width:0.26458332">imagecardline5</tspan></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="lineicon"
-         x="-316.84912"
+         inkscape:label="#image6088"
          y="149.61673"
-         inkscape:label="#image6088" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="35.324905"
-         height="35.324905"
+         x="-316.84912"
+         id="lineicon"
          preserveAspectRatio="none"
-         id="lineimage"
+         height="13.628309"
+         width="13.628309" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="162.2735"
          x="-305.75626"
-         y="162.2735" />
+         id="lineimage"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -1212,35 +1219,35 @@
            id="tspan6292"
            sodipodi:role="line">advcardline5</tspan></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4332.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="149.61673"
-         x="-240.49792"
-         id="advcardicon1"
-         preserveAspectRatio="none"
-         height="13.628309"
-         width="13.628309" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
-         xlink:href="g4274.png"
-         y="162.2735"
-         x="-229.40506"
-         id="advcardimage"
-         preserveAspectRatio="none"
-         height="35.324905"
-         width="35.324905"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4546.png"
-         xlink:href="g4546.png"
          width="13.628309"
          height="13.628309"
          preserveAspectRatio="none"
-         id="advcardicon2"
-         x="-197.20026"
-         y="213.22688"
+         id="advcardicon1"
+         x="-240.49792"
+         y="149.61673"
          inkscape:label="#image6088" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="35.324905"
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="advcardimage"
+         x="-229.40506"
+         y="162.2735" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4546.png"
+         xlink:href="g4546.png"
+         inkscape:label="#image6088"
+         y="213.22688"
+         x="-197.20026"
+         id="advcardicon2"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <circle
          r="7.9375"
          cy="153.936"
@@ -1279,73 +1286,53 @@
        y="240.60612"
        id="text6411"><tspan
          sodipodi:role="line"
-         id="tspan6409"
          x="-162.2326"
          y="240.60612"
-         style="stroke-width:0.26458332">Image is 200:133 (so you could</tspan><tspan
+         style="stroke-width:0.26458332"
+         id="tspan6427">Image has preserveAspectRatio</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="246.77974"
          style="stroke-width:0.26458332"
-         id="tspan6413">for instance use an image that</tspan><tspan
+         id="tspan15494">attribute set so that images</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="252.95334"
          style="stroke-width:0.26458332"
-         id="tspan6415">is 1200x798 pixels to get the</tspan><tspan
+         id="tspan15496">of different shapes can be used</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="259.12695"
          style="stroke-width:0.26458332"
-         id="tspan6417">correct aspect ratio; notice that</tspan><tspan
+         id="tspan15498">without being deforme.</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="265.30057"
          style="stroke-width:0.26458332"
-         id="tspan6419">the example image in the template</tspan><tspan
+         id="tspan15500">It is possible to toggle</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="271.47418"
          style="stroke-width:0.26458332"
-         id="tspan6421">has a lot of transparent pixels around</tspan><tspan
+         id="tspan6587">how many icons to have visible</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="277.6478"
          style="stroke-width:0.26458332"
-         id="tspan6423">the edges, so it does not show</tspan><tspan
+         id="tspan6589">in the title line of the cards (see</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="283.82141"
          style="stroke-width:0.26458332"
-         id="tspan6425">perfectly the full expanse of the</tspan><tspan
+         id="tspan6591">example CSV spreadsheet). (Any</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
          y="289.995"
          style="stroke-width:0.26458332"
-         id="tspan6427">image). It is possible to toggle</tspan><tspan
-         sodipodi:role="line"
-         x="-162.2326"
-         y="296.16861"
-         style="stroke-width:0.26458332"
-         id="tspan6587">how many icons to have visible</tspan><tspan
-         sodipodi:role="line"
-         x="-162.2326"
-         y="302.34222"
-         style="stroke-width:0.26458332"
-         id="tspan6589">in the title line of the cards (see</tspan><tspan
-         sodipodi:role="line"
-         x="-162.2326"
-         y="308.51584"
-         style="stroke-width:0.26458332"
-         id="tspan6591">example CSV spreadsheet). (Any</tspan><tspan
-         sodipodi:role="line"
-         x="-162.2326"
-         y="314.68945"
-         style="stroke-width:0.26458332"
          id="tspan6593">other element of any card can</tspan><tspan
          sodipodi:role="line"
          x="-162.2326"
-         y="320.86307"
+         y="296.16861"
          style="stroke-width:0.26458332"
          id="tspan6595">be toggled the same way.)</tspan></text>
     <text
@@ -1401,45 +1388,45 @@
            x="-163.88422"
            sodipodi:role="line" /></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="146.37096"
-         x="-108.53409"
+         inkscape:label="#image6578"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgicon1"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6578" />
+         x="-108.53409"
+         y="146.37096" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgicon2"
+         inkscape:label="#image6581"
+         y="146.37096"
          x="-112.49859"
-         y="146.37096"
-         inkscape:label="#image6581" />
+         id="ccgicon2"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="146.37096"
-         x="-116.46307"
+         inkscape:label="#image6583"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgicon3"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6583" />
+         x="-116.46307"
+         y="146.37096" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgicon4"
-         x="-120.42757"
+         inkscape:label="#image6585"
          y="146.37096"
-         inkscape:label="#image6585" />
+         x="-120.42757"
+         id="ccgicon4"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.25825071px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6597"
@@ -1450,15 +1437,15 @@
          rx="0"
          ry="0" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="58.796597"
-         height="39.099735"
-         preserveAspectRatio="none"
-         id="ccgimage"
+         y="152.96933"
          x="-164.10214"
-         y="152.96933" />
+         id="ccgimage"
+         preserveAspectRatio="xMidyMid slice"
+         height="39.099735"
+         width="58.796597"
+         inkscape:label="#image5725" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6599"
@@ -1486,45 +1473,45 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px"
            id="tspan6603" /></text>
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgticon1"
+         inkscape:label="#image6607"
+         y="194.74673"
          x="-108.53409"
-         y="194.74673"
-         inkscape:label="#image6607" />
+         id="ccgticon1"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="194.74673"
-         x="-112.49859"
+         inkscape:label="#image6609"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgticon2"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6609" />
+         x="-112.49859"
+         y="194.74673" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgticon3"
+         inkscape:label="#image6611"
+         y="194.74673"
          x="-116.46307"
-         y="194.74673"
-         inkscape:label="#image6611" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4290.png"
-         xlink:href="g4290.png"
-         y="194.74673"
-         x="-120.42757"
-         id="ccgticon4"
+         id="ccgticon3"
          preserveAspectRatio="none"
          height="4.0543714"
+         width="4.0543714" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
+         xlink:href="g4290.png"
+         inkscape:label="#image6613"
          width="4.0543714"
-         inkscape:label="#image6613" />
+         height="4.0543714"
+         preserveAspectRatio="none"
+         id="ccgticon4"
+         x="-120.42757"
+         y="194.74673" />
       <rect
          ry="0"
          rx="0"
@@ -1643,15 +1630,15 @@
          id="fullimagecard"
          style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.61433947px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/g4274.png"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="63.5"
-         height="88.900002"
-         preserveAspectRatio="none"
-         id="fullimage"
+         y="363.05301"
          x="-328.04578"
-         y="363.05301" />
+         id="fullimage"
+         preserveAspectRatio="none"
+         height="88.900002"
+         width="63.5"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -1771,15 +1758,15 @@
          y="368.50745"
          inkscape:label="#rect7520" />
       <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/examples/extcard.svg"
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/extcard.svg"
          xlink:href="extcard.svg"
-         y="368.66797"
-         x="-240.2628"
-         id="extimage"
-         preserveAspectRatio="none"
-         height="88.900002"
+         inkscape:label="#image5725"
          width="63.5"
-         inkscape:label="#image5725" />
+         height="88.900002"
+         preserveAspectRatio="none"
+         id="extimage"
+         x="-240.2628"
+         y="368.66797" />
       <path
          style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.16880417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:connector-curvature="0"

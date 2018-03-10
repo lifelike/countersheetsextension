@@ -29,10 +29,12 @@ from copy import deepcopy
 import sys
 import simpletransform
 
-CSNS = ""
-
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
+# Trying to make inserted inlined images show up slightly
+# more well-aligned with the surrounding text by shifting
+# them slightly downwards. This will fail for non-horizontal
+# text. Hopefully sometihing better can be implemented.
 DEFAULT_INLINE_IMAGE_YSHIFT = 0.2
 
 # A bit of a hack because of rounding errors sometimes
@@ -1752,10 +1754,10 @@ class AttributeLayout:
     def color_lookup(self, color):
         found_id = self.defs.xpath("*[@id='%s']" % color,
                                    namespaces=NSS)
-        found_xref = self.defs.xpath("*[@xlink:href='#%s']" % color,
+        found_href = self.defs.xpath("*[@xlink:href='#%s']" % color,
                                      namespaces=NSS)
-        if len(found_xref) > 0:
-            return make_def_ref(found_xref[0].get('id'))
+        if len(found_href) > 0:
+            return make_def_ref(found_href[0].get('id'))
         elif len(found_id) > 0:
             return make_def_ref(color)
         else:
