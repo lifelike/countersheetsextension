@@ -1122,7 +1122,7 @@ class CountersheetEffect(inkex.Effect):
             svg.append(self.defs)
 
         if self.bleed:
-            self.bleedmaker = BleedMaker(svg)
+            self.bleedmaker = BleedMaker(svg, self.defs)
 
         try:
             self.registrationmarkslen = self.unittouu(
