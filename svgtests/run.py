@@ -12,8 +12,11 @@ def add_countersheets_paths():
     sys.path.insert(0, os.getcwd())
 
 def namefrom(args):
-    if len(args):
-        return "_".join([a.replace("-", "") for a in args]) + ".svg"
+    if len(args.keys()):
+        argslist = []
+        for a in args.iteritems():
+            argslist.extend(a)
+        return "_".join([a.replace("-", "") for a in argslist]) + ".svg"
     else:
         return ""
 
@@ -35,9 +38,9 @@ chosen = [a for a in sys.argv[1:]
 tests = [
     ['battlelabels.csv', 'battlelabels.svg'],
     ['nato1.csv', 'nato.svg'],
-    ['nato1.csv', 'nato.svg', '-o', 'true'],
+    ['nato1.csv', 'nato.svg', {'-o' : 'true'}],
     ['nato2.csv', 'nato.svg'],
-    ['nato2.csv', 'nato.svg', '-o', 'true'],
+    ['nato2.csv', 'nato.svg', {'-o' : 'true'}],
     ['use.csv', 'use.svg'],
     ['symbols.csv', 'symbols.svg'],
     ['commas_in_semicolons.csv', 'card.svg'],
@@ -50,7 +53,7 @@ tests = [
     ['counters.csv', 'counters.svg'],
     ['counters.csv', 'counters-swatches.svg'],
     ['counters-2sides.csv', 'counters.svg'],
-    ['counters-2sides.csv', 'counters.svg', '-o', 'true'],
+    ['counters-2sides.csv', 'counters.svg', {'-o' : 'true'}],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],
     ['yndice-en.csv', 'yndice.svg'],
     ['jndice-sv.csv', 'yndice.svg'],
@@ -67,9 +70,9 @@ tests = [
     ['stars-3.csv', 'star.svg'],
     ['stars-4.csv', 'star.svg'],
     ['stars-5.csv', 'star.svg'],
-    ['bleed.csv', 'bleed.svg', '-B', 'true'],
+    ['bleed.csv', 'bleed.svg', {'-B' : 'true'}],
     ['backgrounds.csv', 'backgrounds.svg'],
-    ['backgrounds.csv', 'backgrounds.svg', '-o', 'true'],
+    ['backgrounds.csv', 'backgrounds.svg', {'-o' :  'true'}],
     ['textformat.csv', 'textformat.svg'],
     ['dynamic.csv', 'texttokens.svg'],
     ['prototype_cards_all.csv', 'prototype_cards.svg'],
@@ -88,7 +91,10 @@ skipped = 0
 for test in tests:
     basedatafile = test[0]
     basesvginfile = test[1]
-    extraargs = test[2:]
+    if len(test) == 3:
+        extraargs = test[2]
+    else:
+        extraargs = {}
     if chosen:
         matches = False
         for c in chosen:
@@ -106,17 +112,23 @@ for test in tests:
     command = os.path.join('.', 'countersheet.py')
     logfile = os.path.join(logdir, 'cs_svgtests-%s.txt' % svgoutbasename)
     layer_names = "cs_" + svgoutbasename
+    default_args = {'-d' : datafile,
+                   '-l' : logfile,
+                   '-r' : '10pt',
+                   '-O' : '7pt',
+                   '-f' : '90',
+                   '-w' : '0',
+                   '-y' : '0'}
+    combined_args_dict = default_args.copy()
+    combined_args_dict.update(extraargs)
+    combined_args = []
+    for k, v in combined_args_dict.iteritems():
+        combined_args.append(k)
+        combined_args.append(v)
     commandline = [command,
-                   '-d', datafile,
-                   '-l', logfile,
-                   '-r', '10pt',
-                   '-O', '7pt',
-                   '-f', '90',
-                   '-w', '0',
-                   '-y', '0',
                    '-b', bitmapsdir,
                    '-p', pdfdir,
-                   '-N', svgoutbasename] + extraargs + ['--', svginfile]
+                   '-N', svgoutbasename] + combined_args +  ['--', svginfile]
 
     if ['-v' in sys.argv]:
         print >> sys.stderr, ' '.join(commandline)
