@@ -56,6 +56,7 @@ tests = [
     ['counters-2sides.csv', 'counters.svg', {'-o' : 'true'}],
     ['faces_multiselect.csv', 'faces_multiselect.svg'],
     ['yndice-en.csv', 'yndice.svg'],
+    ['yndice-en.csv', 'yndice.svg', {'-O' : '15pt'}],
     ['jndice-sv.csv', 'yndice.svg'],
     ['dicefold.csv', 'dicefold.svg'],
     ['labels17mm.csv', 'labels17mm.svg'],

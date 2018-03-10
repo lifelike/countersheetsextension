@@ -1225,12 +1225,12 @@ class CountersheetEffect(inkex.Effect):
                                    0.0,
                                    docwidth,
                                    self.getViewBoxHeight(svg))]
-            if self.registrationmarkslen > 0:
-                margin = self.registrationmarkslen
-                positions[0].x += margin
-                positions[0].y += margin
-                positions[0].w -= margin * 2
-                positions[0].h -= margin * 2
+            margin = max(self.registrationmarkslen,
+                         self.outlinedist)
+            positions[0].x += margin
+            positions[0].y += margin
+            positions[0].w -= margin * 2
+            positions[0].h -= margin * 2
 
         for n,p in enumerate(positions):
             self.logwrite("layout position %d: %f %f %f %f\n"
