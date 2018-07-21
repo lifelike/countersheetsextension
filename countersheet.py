@@ -1038,6 +1038,18 @@ class CountersheetEffect(inkex.Effect):
         layer.append(self.create_registrationline(
             x2, y1, x2, y2))
 
+
+    def from_len_arg(self, argvalue, name):
+        if argvalue is None or len(argvalue) == 0:
+            return 0.0
+        value = self.unittouu(argvalue)
+        if value < 0:
+            sys.exit("Negative %s marks makes no sense." % name)
+
+        self.logwrite("%s: %f\n"
+                      % (name, value))
+        return value
+
     def calculateScale(self, svg):
         """Calculates scale of the document (user-units size) and
         saves as self.xscale and self.yscale.
@@ -1076,7 +1088,7 @@ class CountersheetEffect(inkex.Effect):
         except:
             return float(svg.get(fallback)) # let it crash if this fails
 
-    # Because getDocumentWiddth in inkex fails because it makes assumptions about
+    # Because getDocumentWidth in inkex fails because it makes assumptions about
     # user-units. Trusting the viewBox instead for now.
     def getViewBoxWidth(self, svg):
         return self.getDocumentViewBoxValue(svg, 2, "width")
@@ -1106,6 +1118,10 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
 
+        self.logwrite("getDocumentWidth: %s\n" % self.getDocumentWidth())
+        self.logwrite("getDocumentHeight: %s\n" % self.getDocumentHeight())
+        self.logwrite("getDocumentUnit: %s\n" % self.getDocumentUnit())
+
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
         self.logwrite("full registration marks: %r\n"
@@ -1124,30 +1140,14 @@ class CountersheetEffect(inkex.Effect):
         if self.bleed:
             self.bleedmaker = BleedMaker(svg, self.defs)
 
-        try:
-            self.registrationmarkslen = self.unittouu(
-                self.options.registrationmarkslen)
-        except:
-            sys.exit("Failed to parse registration marks length %s. "
-                     "Must be a non-negative number optionally followed by "
-                     "a unit supported by SVG (eg mm, in, pt)."
-                          % self.options.registrationmarkslen)
-        if self.registrationmarkslen < 0:
-            sys.exit("Negative length of registration marks makes no sense.")
-        self.logwrite("registration marks length %f\n"
-                      % self.registrationmarkslen)
+        self.registrationmarkslen = self.from_len_arg(
+            self.options.registrationmarkslen,
+            "registration marks length")
+        self.outlinedist = self.from_len_arg(
+            self.options.outlinedist,
+            "outline distance")
 
-        self.outlinemarks = (len(self.options.outlinedist) > 0)
-        if self.outlinemarks:
-            try:
-                self.outlinedist = self.unittouu(
-                    self.options.outlinedist)
-            except:
-                sys.exit("Failed to parse outline distance %s. "
-                         "Must be a number optionally followed by "
-                         "a unit supported by SVG (eg mm, in, pt)."
-                         % self.options.outlinedist)
-                self.logwrite("outline marks distance: %f\n" % self.outlinedist)
+        self.outlinemarks = (self.outlinedist > 0)
 
         self.calculateScale(svg)
 

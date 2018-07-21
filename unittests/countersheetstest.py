@@ -12,6 +12,10 @@ def dummy_logwrite(msg):
 def stdout_logwrite(msg):
     print "LOG >> " + msg,
 
+class DummyLog(object):
+    def write(self, msg):
+        pass
+
 class CountersheetsTest(unittest.TestCase):
     def setUp(self):
         pass
@@ -224,6 +228,42 @@ class DocumentTopLeftCoordinateConverterTest(unittest.TestCase):
 
     def test_valid_replace_name_not_amp(self):
         self.assertFalse(countersheet.is_valid_name_to_replace("A&"))
+
+class PartialCountersheetEffect(countersheet.CountersheetEffect):
+    def __init__(self):
+        self.log = DummyLog()
+
+    def getDocumentWidth(self):
+        return "210mm"
+
+    def getDocumentHeight(self):
+        return "297mm"
+
+    def getDocumentUnit(self):
+        return "mm"
+
+class ParseLengthTest(unittest.TestCase):
+    def setUp(self):
+        self.cs = PartialCountersheetEffect()
+
+    def check_parse(self, s, expected):
+        self.assertAlmostEqual(self.cs.from_len_arg(s, "test"),
+                               expected, 2)
+
+    def test_1mm(self):
+        self.check_parse("1mm", 1.0)
+
+    def test_1in(self):
+        self.check_parse("1in", 25.4)
+
+    def test_none(self):
+        self.check_parse(None, 0.0)
+
+    def test_empty(self):
+        self.check_parse("", 0.0)
+
+    def test_0(self):
+        self.check_parse("0", 0.0)
 
 if __name__ == '__main__':
     unittest.main()
