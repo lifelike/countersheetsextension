@@ -5,6 +5,8 @@ import unittest
 
 import countersheet
 
+import dummydefs
+
 class CSVCounterFactoryTest(unittest.TestCase):
     def setUp(self):
         pass
@@ -24,7 +26,9 @@ class CSVCounterFactoryTest(unittest.TestCase):
         self.assertEqual('a', factory.headers[1].id)
 
     def create_factory(self, row):
-        return countersheet.CSVCounterFactory({}, row, ".")
+        dummy_defs = dummydefs.DummyDefs()
+        return countersheet.CSVCounterFactory({}, dummy_defs,
+                                              row, ".")
 
 if __name__ == '__main__':
     unittest.main()

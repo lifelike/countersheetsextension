@@ -5,6 +5,8 @@ import unittest
 
 import countersheet
 
+import dummydefs
+
 def dummy_logwrite(msg):
     pass
 
@@ -13,7 +15,9 @@ def stdout_logwrite(msg):
 
 class CSVCounterDefinitionParserTest(unittest.TestCase):
     def setUp(self):
+        dummy_defs = dummydefs.DummyDefs()
         self.parser = countersheet.CSVCounterDefinitionParser(dummy_logwrite,
+                                                              dummy_defs,
                                                               {}, ".")
     def test_empty(self):
         counters = self.parse_to_counters([[]])
