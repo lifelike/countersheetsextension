@@ -362,7 +362,7 @@ class CountersheetEffect(inkex.Effect):
         self.OptionParser.add_option('-r', '--registrationmarkslen',
                                      action = 'store',
                                      type = 'string',
-                                     default = '15mm',
+                                     default = '',
                                      dest = 'registrationmarkslen')
         self.OptionParser.add_option('-R', '--fullregistrationmarks',
                                      action = 'store',
@@ -950,8 +950,6 @@ class CountersheetEffect(inkex.Effect):
         return False
 
     def create_registrationline(self, x1, y1, x2, y2):
-        if self.registrationmarkslen <= 0:
-            return
         self.logwrite("create_registrationline %f,%f %f,%f\n"
                       % (x1, y1, x2, y2))
         line = etree.Element('line')
@@ -974,6 +972,8 @@ class CountersheetEffect(inkex.Effect):
 
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer, backlayer, docwidth):
+        if self.registrationmarkslen <= 0:
+            return
         linelen = self.registrationmarkslen
         max_x = 0
         max_y = 0
