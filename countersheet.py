@@ -1849,9 +1849,12 @@ def get_part(style, pname):
 def stylereplace(oldv, pname, v):
     out = ""
     replaced = False
-    newstylepart = "%s:%s;" % (pname, v)
-    if not v:
+    if v:
+        newstylepart = "%s:%s;" % (pname, v)
+    else:
         newstylepart = ""
+    if not oldv:
+        return newstylepart
     for part in oldv.split(";"):
         if part.startswith(pname + ':'):
             out += newstylepart
