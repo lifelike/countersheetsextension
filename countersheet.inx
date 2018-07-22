@@ -1,36 +1,58 @@
 <inkscape-extension>
   <_name>Create Countersheet</_name>
   <id>pelles.effect.countersheet</id>
-  <dependency type="executable" location="extensions">countersheet.py</dependency>
-  <dependency type="executable" location="extensions">inkex.py</dependency>
-  <param name="what" type="string" _gui-text="Name"></param>
-  <param name="data" type="string" _gui-text="Data File (CSV)">countersheet.csv</param>
-  <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
-        max="10000">56</param>
-  <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
-        max="10000">56</param>
-  <param name="registrationmarkslen" type="string"
+  <param name="name" type="notebook">
+
+    <page name="page1" gui-text="Input">
+      <param name="data" type="string"
+             _gui-text="Data File (CSV)">countersheet.csv</param>
+      <param name="textmarkup" type="boolean"
+        _gui-text="Text Markup (*bold*, /italics/)">true</param>
+    </page>
+
+    <page name="page2" gui-text="Layout">
+      <param name="oneside" type="boolean"
+         _gui-text="One-Sided Sheets">false</param>
+    </page>
+
+    <page name="page3" gui-text="Style">
+      <param name="registrationmarkslen" type="string"
         _gui-text="Registration Marks Length (optional)">15mm</param>
-  <param name="fullregistrationmarks" type="boolean"
+      <param name="fullregistrationmarks" type="boolean"
          _gui-text="Full Registration Marks">false</param>
-  <param name="outlinedist" type="string"
+      <param name="outlinedist" type="string"
          _gui-text="Outline (Outset Distance)">10mm</param>
-  <param name="bitmapsheetsdpi"
+      <param name="bleed" type="boolean"
+        _gui-text="Bleed">false</param>
+    </page>
+
+    <page name="page4" gui-text="Output">
+      <param name="what" type="string" _gui-text="Name"></param>
+      <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
+        max="10000">56</param>
+      <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
+        max="10000">56</param>
+      <param name="bitmapsheetsdpi"
         type="int"
         _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
         min="0"
         max="6000">0</param>
-  <param name="bitmapdir" type="string"
+      <param name="bitmapdir" type="string"
         _gui-text="Bitmap Output Directory (optional)"></param>
-  <param name="pdfdir" type="string"
+      <param name="pdfdir" type="string"
         _gui-text="PDF Output Directory (optional)"></param>
-  <param name="textmarkup" type="boolean"
-        _gui-text="Text Markup (*bold*, /italics/)">true</param>
-  <param name="bleed" type="boolean"
-        _gui-text="Bleed">false</param>
-  <param name="oneside" type="boolean"
-         _gui-text="One-Sided Sheets">false</param>
-  <param name="log" type="string" _gui-text="Log File (optional)"></param>
+    </page>
+
+    <page name="page5" gui-text="Debug">
+      <param name="log" type="string" _gui-text="Log File (optional)"></param>
+    </page>
+
+  </param>
+
+  <dependency type="executable" location="extensions">countersheet.py</dependency>
+
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+
   <effect>
     <object-type>all</object-type>
     <effects-menu>

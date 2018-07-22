@@ -331,6 +331,7 @@ class CountersheetEffect(inkex.Effect):
             self.unittouu = inkex.unittouu
         self.log = False
         self.nextid = 1000000
+        self.OptionParser.add_option('-,', '--name', action = 'store')
         self.OptionParser.add_option('-l', '--log', action = 'store',
                                      type = 'string', dest = 'logfile')
         self.OptionParser.add_option('-n', '--what', action = 'store',
