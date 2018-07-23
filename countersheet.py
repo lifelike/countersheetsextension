@@ -441,12 +441,15 @@ class CountersheetEffect(inkex.Effect):
         return (rect.x + rect.w / 2.0,
                 rect.y + rect.h / 2.0)
 
-    def setMultilineText(self, element, lines):
+    def setMultilineText(self, element, name, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
         self.deleteFlowParas(element)
+        added_style = {}
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
-            self.setFormattedText(para, line.decode('utf8'), 'flowSpan')
+            self.setFormattedText(para, name,
+                                  line.decode('utf8'), 'flowSpan',
+                                  added_style)
             element.append(para)
 
     def deleteFlowParas(self, parent):
@@ -454,13 +457,14 @@ class CountersheetEffect(inkex.Effect):
             if c.tag == inkex.addNS('flowPara','svg'):
                 parent.remove(c)
 
-    def setFormattedText(self, element, text, spantag):
+    def setFormattedText(self, element, name, text, spantag,
+                         added_style):
         self.logwrite('setFormattedText: %s %s %s\n'
                       % (element.tag, text, spantag))
 
         if not self.textmarkup:
             element.text = text
-            return True
+            return
 
         first_bold = text.find("*")
         first_italics = text.find("/")
@@ -496,34 +500,41 @@ class CountersheetEffect(inkex.Effect):
             and first_bold >= 0
             and second_bold > first_bold
             and (first_italics < 0 or first_bold < first_italics)):
-            self.formatTextPart(element, text, spantag,
-                                  first_bold, second_bold,
-                                  "font-weight", "bold")
+            self.formatTextPart(element, name, text, spantag,
+                                first_bold, second_bold,
+                                "font-weight", "bold",
+                                added_style, "b")
         elif (not skip
               and first_italics >=0
               and second_italics > first_italics
               and (first_bold < 0 or first_italics < first_bold)):
-            self.formatTextPart(element, text, spantag,
-                                  first_italics, second_italics,
-                                  "font-style", "italic")
+            self.formatTextPart(element, name, text, spantag,
+                                first_italics, second_italics,
+                                "font-style", "italic",
+                                added_style, "i")
         else:
-            self.formatTextImages(element, text, spantag)
-        return True
+            self.formatTextImages(element, name, text, spantag,
+                                  added_style)
 
-    def formatTextImages(self, element, text, spantag):
+    def formatTextImages(self, element, name, text, spantag,
+                         added_style):
         m = re.search(r"[{][^{}]+[}]", text)
         if m:
             self.logwrite("Inline image: %s\n" % m.group(0))
             self.insertImagePlaceholder(element,
+                                        name,
                                         text,
                                         spantag,
                                         m.start(),
-                                        m.end() - 1)
+                                        m.end() - 1,
+                                        added_style)
         else:
             element.text = text
 
-    def insertImagePlaceholder(self, element, text, spantag,
-                               begin_index, end_index):
+    def insertImagePlaceholder(self, element, name,
+                               text, spantag,
+                               begin_index, end_index,
+                               added_style):
         filename = text[begin_index+1:end_index]
         if spantag != "tspan":
             sys.exit("Failed to insert inlined image %s "
@@ -535,7 +546,11 @@ class CountersheetEffect(inkex.Effect):
                      "inlined images in (flowing) multi-line "
                      "text elements." % (filename, spantag))
         span = etree.Element(inkex.addNS(spantag, 'svg'))
-        spanid = "cs_inline_%d" % len(self.placeholders)
+        if 'image' in added_style:
+            nr = added_style['image'] + 1
+        else:
+            nr = 1
+        spanid = '%s-cs-image-%s' % (name, nr)
         span.set('id', spanid)
         span.text = u"\u2b1b"
         span.set('style', 'font-size: 200%;fill-opacity:0;'
@@ -554,38 +569,60 @@ class CountersheetEffect(inkex.Effect):
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
         resttext = text[end_index+1:]
         self.setFormattedText(restspan,
+                              name,
                               resttext,
-                              spantag)
+                              spantag,
+                              added_style)
         element.text = text[:begin_index]
         element.append(span)
         element.append(restspan)
 
-    def formatTextPart(self, element, text, spantag,
+    def formatTextPart(self, element, name,
+                       text, spantag,
                        begin_index, end_index,
-                       style, style_value):
+                       style, style_value,
+                       added_style,
+                       style_tag):
+        if style_tag in added_style:
+            nr = added_style[style_tag] + 1
+        else:
+            nr = 1
+        added_style[style_tag] = nr
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
         stylespan.set('style', '%s:%s' % (style, style_value))
-        self.setFormattedText(stylespan,
+        spanid = '%s-cs-%s-%s' % (name, style_tag, nr)
+        self.logwrite("setting %s style id %s"
+                      % (style_value, spanid))
+        stylespan.set('id', spanid)
+        self.setFormattedText(stylespan, name,
                               text[begin_index+1:end_index],
-                              spantag)
+                              spantag,
+                              added_style)
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
-        self.setFormattedText(restspan,
+        self.setFormattedText(restspan, name,
                               text[end_index+1:],
-                              spantag)
-        self.formatTextImages(element, text[:begin_index], spantag)
+                              spantag,
+                              added_style)
+        self.formatTextImages(element, name,
+                              text[:begin_index], spantag,
+                              added_style)
         element.append(stylespan)
         element.append(restspan)
 
-    def setFirstTextChild(self, element, text):
+    def setFirstTextChild(self, element, name, text):
         for c in element.getchildren():
             if (c.tag == inkex.addNS('flowPara', 'svg')
                 or c.tag == inkex.addNS('flowSpan', 'svg')):
-                return self.setFormattedText(c, text.decode('utf8'), 'flowSpan')
+                self.setFormattedText(c, name, text.decode('utf8'), 'flowSpan',
+                                      {})
+                return True
             elif (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
                 self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
-                return self.setFormattedText(c, text.decode('utf8'), 'tspan')
-            elif self.setFirstTextChild(c, text):
+                self.setFormattedText(c, name, text.decode('utf8'), 'tspan',
+                                      {})
+                return True
+            elif self.setFirstTextChild(c, name, text):
                 return True
         return False
 
@@ -750,8 +787,8 @@ class CountersheetEffect(inkex.Effect):
                     t.text = subst
                 elif (t.tag == inkex.addNS('flowRoot','svg')
                     and subst.find("\\n") >= 0):
-                    self.setMultilineText(t, subst.split("\\n"))
-                elif not self.setFirstTextChild(t, subst):
+                    self.setMultilineText(t, textid, subst.split("\\n"))
+                elif not self.setFirstTextChild(t, textid, subst):
                     sys.exit("Failed to put substitute text in '%s'"
                              % textid)
                 if c.id:
@@ -1763,6 +1800,7 @@ class AttributeLayout:
             return make_def_ref(color)
         else:
             return color
+
     def getrefstyle(self, oldv, pname, value):
         [pstart, pend] = (
             find_stylepart(oldv, pname))

@@ -27,3 +27,7 @@ icard,ititle,iline1,iline2,iline3
 ,2 Images,Inline {g4290.png} and {g4452.png}.,,
 ,Bold Img,So *bold* {g4316.png} *icon*.,/Italics/ {g4316.png} /icon/,{g4316.png} alone
 
+card,title,text,*-cs-b-*[style:fill],*-cs-i-1[style:fill]
+,"Styled Text 1","*Bold red* text *again*",red,blue
+,"Styled Text 2","*Bold blue* and /italic green/ text.",blue,green
+,"Different Style","/First yellow/ and /second not/.",green,yellow
