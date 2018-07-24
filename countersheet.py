@@ -660,14 +660,10 @@ class CountersheetEffect(inkex.Effect):
             rect = rects[rectname]
             group = rect.getparent()
             source_layer = self.get_layer( rect )
-            if self.bleed:
-                gid = rectname
-            else:
-                gid = group.get('id')
-            x = self.geometry[gid].x
-            y = self.geometry[gid].y
-            width = self.geometry[gid].w
-            height = self.geometry[gid].h
+            x = self.geometry[rectname].x
+            y = self.geometry[rectname].y
+            width = self.geometry[rectname].w
+            height = self.geometry[rectname].h
             c.width = max(c.width, width)
             c.height = max(c.height, height)
             if self.is_layer( group ):
