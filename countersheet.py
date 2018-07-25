@@ -384,6 +384,7 @@ class CountersheetEffect(inkex.Effect):
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
         self.placeholders = {}
+        self.nr_styles_added = 0
 
     def logwrite(self, msg):
         if not self.log and self.options.logfile:
@@ -550,7 +551,8 @@ class CountersheetEffect(inkex.Effect):
             nr = added_style['image'] + 1
         else:
             nr = 1
-        spanid = '%s-cs-image-%s' % (name, nr)
+        spanid = '%s-%d-cs-image-%s' % (name, len(self.placeholders),
+                                        nr)
         span.set('id', spanid)
         span.text = u"\u2b1b"
         span.set('style', 'font-size: 200%;fill-opacity:0;'
@@ -588,9 +590,13 @@ class CountersheetEffect(inkex.Effect):
         else:
             nr = 1
         added_style[style_tag] = nr
+        self.nr_styles_added += 1
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
         stylespan.set('style', '%s:%s' % (style, style_value))
-        spanid = '%s-cs-%s-%s' % (name, style_tag, nr)
+        spanid = '%s-%d-cs-%s-%s' % (name,
+                                     self.nr_styles_added,
+                                     style_tag,
+                                     nr)
         self.logwrite("setting %s style id %s"
                       % (style_value, spanid))
         stylespan.set('id', spanid)
