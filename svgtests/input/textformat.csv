@@ -12,6 +12,11 @@ text,example
 ,*bold text with image: {g4452.png}*
 ,/italics text with image: {g4452.png}/
 
+seriftext,example-serif
+,*serif bold text* normal text
+,serif *bold text* normal text /italics text/ text
+
+
 
 
 
