@@ -16,6 +16,11 @@ seriftext,example-serif
 ,*serif bold text* normal text
 ,serif *bold text* normal text /italics text/ text
 
+multilinetext,example-multiline
+,serif *bold text* normal text\ntext /italics text/ text\nok?
+,mix *bold* and /italics/ and */bold italics/* in serif
+
+
 
 
 

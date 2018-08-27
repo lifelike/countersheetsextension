@@ -445,7 +445,8 @@ class CountersheetEffect(inkex.Effect):
         self.deleteFlowParas(element)
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
-            self.setFormattedText(para, line.decode('utf8'), 'flowSpan')
+            self.setFormattedText(para, line.decode('utf8'), 'flowSpan',
+                                  element.get('style'))
             element.append(para)
 
     def deleteFlowParas(self, parent):
@@ -453,7 +454,8 @@ class CountersheetEffect(inkex.Effect):
             if c.tag == inkex.addNS('flowPara','svg'):
                 parent.remove(c)
 
-    def setFormattedText(self, element, text, spantag):
+    def setFormattedText(self, element, text, spantag,
+                         normalstyle=None):
         self.logwrite('setFormattedText: %s %s %s\n'
                       % (element.tag, text, spantag))
 
@@ -497,19 +499,21 @@ class CountersheetEffect(inkex.Effect):
             and (first_italics < 0 or first_bold < first_italics)):
             self.formatTextPart(element, text, spantag,
                                   first_bold, second_bold,
-                                  "font-weight", "bold")
+                                  "font-weight", "bold",
+                                  normalstyle)
         elif (not skip
               and first_italics >=0
               and second_italics > first_italics
               and (first_bold < 0 or first_italics < first_bold)):
             self.formatTextPart(element, text, spantag,
                                   first_italics, second_italics,
-                                  "font-style", "italic")
+                                  "font-style", "italic",
+                                  normalstyle)
         else:
-            self.formatTextImages(element, text, spantag)
+            self.formatTextImages(element, text, spantag, normalstyle)
         return True
 
-    def formatTextImages(self, element, text, spantag):
+    def formatTextImages(self, element, text, spantag, normalstyle):
         m = re.search(r"[{][^{}]+[}]", text)
         if m:
             self.logwrite("Inline image: %s\n" % m.group(0))
@@ -517,12 +521,14 @@ class CountersheetEffect(inkex.Effect):
                                         text,
                                         spantag,
                                         m.start(),
-                                        m.end() - 1)
+                                        m.end() - 1,
+                                        normalstyle)
         else:
             element.text = text
 
     def insertImagePlaceholder(self, element, text, spantag,
-                               begin_index, end_index):
+                               begin_index, end_index,
+                               normalstyle):
         filename = text[begin_index+1:end_index]
         if spantag != "tspan":
             sys.exit("Failed to insert inlined image %s "
@@ -554,24 +560,31 @@ class CountersheetEffect(inkex.Effect):
         resttext = text[end_index+1:]
         self.setFormattedText(restspan,
                               resttext,
-                              spantag)
+                              spantag,
+                              normalstyle)
         element.text = text[:begin_index]
         element.append(span)
         element.append(restspan)
 
     def formatTextPart(self, element, text, spantag,
                        begin_index, end_index,
-                       style, style_value):
+                       style, style_value,
+                       normalstyle):
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
         stylespan.set('style', '%s:%s' % (style, style_value))
         self.setFormattedText(stylespan,
                               text[begin_index+1:end_index],
                               spantag)
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        # TODO this is a bit blunt and needs to be improved
+        if normalstyle:
+            restspan.set('style', normalstyle)
         self.setFormattedText(restspan,
                               text[end_index+1:],
-                              spantag)
-        self.formatTextImages(element, text[:begin_index], spantag)
+                              spantag,
+                              normalstyle)
+        self.formatTextImages(element, text[:begin_index], spantag,
+                              normalstyle)
         element.append(stylespan)
         element.append(restspan)
 
