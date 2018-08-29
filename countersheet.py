@@ -100,6 +100,8 @@ class Counter:
         return self.back
 
     def is_included(self, eid):
+       if eid is None:
+           return True
        for iglob in self.includeids:
             if fnmatch.fnmatchcase(eid, iglob):
                 return True
