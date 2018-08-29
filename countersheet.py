@@ -29,6 +29,8 @@ from copy import deepcopy
 import sys
 import simpletransform
 
+from simplestyle import parseStyle, formatStyle
+
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
 # Trying to make inserted inlined images show up slightly
@@ -1920,22 +1922,6 @@ def get_search_paths(filename, extra_paths=None):
 
 def make_def_ref(color):
     return "url(#%s)" % color
-
-
-# From simplestyle.py
-def parseStyle(s):
-    """Create a dictionary from the value of an inline style attribute"""
-    if s is None:
-      return {}
-    else:
-      return dict([[x.strip() for x in i.split(":")] for i in s.split(";") if len(i.strip())])
-
-# From simplestyle.py
-def formatStyle(a):
-    """Format an inline style attribute from a dictionary"""
-    return ";".join([att+":"+str(val) for att,val in a.iteritems()])
-
-
 
 
 if __name__ == '__main__':
