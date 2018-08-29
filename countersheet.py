@@ -457,7 +457,8 @@ class CountersheetEffect(inkex.Effect):
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, name,
                                   line.decode('utf8'), 'flowSpan',
-                                  added_style)
+                                  added_style,
+                                  parseStyle(element.get('style')))
             element.append(para)
 
     def deleteTextChildren(self, parent):
@@ -466,10 +467,9 @@ class CountersheetEffect(inkex.Effect):
                 parent.remove(c)
 
     def setFormattedText(self, element, name, text, spantag,
-                         added_style):
-        self.logwrite('setFormattedText: %s %s %s\n'
-                      % (element.tag, text, spantag))
-
+                         added_style, styles):
+        self.logwrite('setFormattedText: %s %s %s %s\n'
+                      % (element.tag, text, spantag, styles))
         if not self.textmarkup:
             element.text = text
             return
@@ -511,7 +511,7 @@ class CountersheetEffect(inkex.Effect):
             self.formatTextPart(element, name, text, spantag,
                                 first_bold, second_bold,
                                 "font-weight", "bold",
-                                added_style, "b")
+                                added_style, "b", styles)
         elif (not skip
               and first_italics >=0
               and second_italics > first_italics
@@ -519,13 +519,13 @@ class CountersheetEffect(inkex.Effect):
             self.formatTextPart(element, name, text, spantag,
                                 first_italics, second_italics,
                                 "font-style", "italic",
-                                added_style, "i")
+                                added_style, "i", styles)
         else:
             self.formatTextImages(element, name, text, spantag,
-                                  added_style)
+                                  added_style, styles)
 
     def formatTextImages(self, element, name, text, spantag,
-                         added_style):
+                         added_style, styles):
         m = re.search(r"[{][^{}]+[}]", text)
         if m:
             self.logwrite("Inline image: %s\n" % m.group(0))
@@ -535,14 +535,15 @@ class CountersheetEffect(inkex.Effect):
                                         spantag,
                                         m.start(),
                                         m.end() - 1,
-                                        added_style)
+                                        added_style,
+                                        styles)
         else:
             element.text = text
 
     def insertImagePlaceholder(self, element, name,
                                text, spantag,
                                begin_index, end_index,
-                               added_style):
+                               added_style, styles):
         filename = text[begin_index+1:end_index]
         if spantag != "tspan":
             sys.exit("Failed to insert inlined image %s "
@@ -581,7 +582,8 @@ class CountersheetEffect(inkex.Effect):
                               name,
                               resttext,
                               spantag,
-                              added_style)
+                              added_style,
+                              styles)
         element.text = text[:begin_index]
         element.append(span)
         element.append(restspan)
@@ -591,15 +593,20 @@ class CountersheetEffect(inkex.Effect):
                        begin_index, end_index,
                        style, style_value,
                        added_style,
-                       style_tag):
+                       style_tag,
+                       styles):
         if style_tag in added_style:
             nr = added_style[style_tag] + 1
         else:
             nr = 1
         added_style[style_tag] = nr
         self.nr_styles_added += 1
+
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
-        stylespan.set('style', '%s:%s' % (style, style_value))
+        combinedStyles = dict(styles)
+        combinedStyles[style] = style_value
+        stylespan.set('style', formatStyle(combinedStyles))
+
         spanid = '%s-%d-cs-%s-%s' % (name,
                                      self.nr_styles_added,
                                      style_tag,
@@ -610,15 +617,16 @@ class CountersheetEffect(inkex.Effect):
         self.setFormattedText(stylespan, name,
                               text[begin_index+1:end_index],
                               spantag,
-                              added_style)
+                              added_style, styles)
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
+        restspan.set('style', formatStyle(styles))
         self.setFormattedText(restspan, name,
                               text[end_index+1:],
                               spantag,
-                              added_style)
+                              added_style, styles)
         self.formatTextImages(element, name,
                               text[:begin_index], spantag,
-                              added_style)
+                              added_style, styles)
         element.append(stylespan)
         element.append(restspan)
 
@@ -627,13 +635,13 @@ class CountersheetEffect(inkex.Effect):
             if (c.tag == inkex.addNS('flowPara', 'svg')
                 or c.tag == inkex.addNS('flowSpan', 'svg')):
                 self.setFormattedText(c, name, text.decode('utf8'), 'flowSpan',
-                                      {})
+                                      {}, parseStyle(element.get('style')))
                 return True
             elif (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
                 self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
                 self.setFormattedText(c, name, text.decode('utf8'), 'tspan',
-                                      {})
+                                      {}, parseStyle(element.get('style')))
                 return True
             elif self.setFirstTextChild(c, name, text):
                 return True
