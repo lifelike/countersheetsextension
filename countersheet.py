@@ -444,16 +444,16 @@ class CountersheetEffect(inkex.Effect):
 
     def setMultilineText(self, element, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
-        self.deleteFlowParas(element)
+        self.deleteTextChildren(element)
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, line.decode('utf8'), 'flowSpan',
                                   parseStyle(element.get('style')))
             element.append(para)
 
-    def deleteFlowParas(self, parent):
+    def deleteTextChildren(self, parent):
         for c in parent.getchildren():
-            if c.tag == inkex.addNS('flowPara','svg'):
+            if c.tag != inkex.addNS('flowRegion','svg'):
                 parent.remove(c)
 
     def setFormattedText(self, element, text, spantag, styles):
@@ -572,7 +572,7 @@ class CountersheetEffect(inkex.Effect):
                        style, style_value,
                        styles):
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
-        
+
         combinedStyles = dict(styles)
         combinedStyles[style] = style_value
         stylespan.set('style', formatStyle(combinedStyles))
@@ -592,12 +592,10 @@ class CountersheetEffect(inkex.Effect):
 
     def setFirstTextChild(self, element, text):
         for c in element.getchildren():
-            if (c.tag == inkex.addNS('flowPara', 'svg')
-                or c.tag == inkex.addNS('flowSpan', 'svg')):
-                return self.setFormattedText(c, text.decode('utf8'), 'flowSpan', parseStyle(element.get('style')))
-            elif (c.tag == inkex.addNS('text', 'svg')
+            if (c.tag == inkex.addNS('text', 'svg')
                   or c.tag == inkex.addNS('tspan', 'svg')):
                 self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
+                self.deleteTextChildren(c)
                 return self.setFormattedText(c, text.decode('utf8'), 'tspan', parseStyle(element.get('style')))
             elif self.setFirstTextChild(c, text):
                 return True
@@ -757,9 +755,9 @@ class CountersheetEffect(inkex.Effect):
                 continue
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
+                    self.deleteTextChildren(t)
                     t.text = subst
-                elif (t.tag == inkex.addNS('flowRoot','svg')
-                    and subst.find("\\n") >= 0):
+                elif (t.tag == inkex.addNS('flowRoot','svg')):
                     self.setMultilineText(t, subst.split("\\n"))
                 elif not self.setFirstTextChild(t, subst):
                     sys.exit("Failed to put substitute text in '%s'"
