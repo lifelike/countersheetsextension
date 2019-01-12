@@ -1,17 +1,17 @@
-unit,+,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
-,inf,1,II,23,3,4,4,darkseagreen,darkseagreen
-,inf,2,II,23,3,4,4,darkseagreen,darkseagreen
-,inf,3,II,23,3,4,4,darkseagreen,darkseagreen
-,arm,112,I,23,4,4,6,darkseagreen,darkseagreen
-,art,15,I,23,4,1,2,darkseagreen,darkseagreen
-,art,16,I,23,4,1,2,darkseagreen,darkseagreen
+unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
+,inf,1,II,23,3,4,4,darkseagreen,seagreen
+,inf,2,II,23,3,4,4,darkseagreen,seagreen
+,inf,3,II,23,3,4,4,darkseagreen,seagreen
+,arm,112,I,23,4,4,6,darkseagreen,seagreen
+,art,15,I,23,4,1,2,darkseagreen,seagreen
+,art,16,I,23,4,1,2,darkseagreen,seagreen
 ,hq,23,III,,,,,darkseagreen,seagreen
 ,inf,1,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,2,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,3,II,9,3,4,4,darkseagreen,darkseagreen
 ,arm,113,I,9,4,4,6,darkseagreen,darkseagreen
 ,art,17,I,9,4,1,2,darkseagreen,darkseagreen
-,hq,9,III,,,,,lightgrey,grey
+,hq,9,III,,,,,darkseagreen,darkseagreen
 ,inf,A,II,12,3,4,4,lightgrey,lightgrey
 ,inf,B,II,12,3,4,4,lightgrey,lightgrey
 ,inf,C,II,12,3,4,4,lightgrey,lightgrey
@@ -19,6 +19,6 @@ unit,+,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
 ,art,15R,I,12,4,1,2,lightgrey,lightgrey
 ,art,16,I,12,4,1,2,lightgrey,lightgrey
 ,cav,19,II,12,3,3,5,lightgrey,lightgrey
-,hq,12,III,,,,,lightgrey,grey
+,hq,12,III,,,,,lightgrey,lightgrey
 
 
