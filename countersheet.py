@@ -458,10 +458,6 @@ class CountersheetEffect(inkex.Effect):
             self.setFormattedText(para, name,
                                   line.decode('utf8'), 'flowSpan',
                                   added_style)
-        for line in lines:
-            para = etree.Element(inkex.addNS('flowLine', 'svg'))
-            self.setFormattedText(para, line.decode('utf8'), 'flowSpan',
-                                  parseStyle(element.get('style')))
             element.append(para)
 
     def deleteTextChildren(self, parent):
@@ -520,10 +516,10 @@ class CountersheetEffect(inkex.Effect):
               and first_italics >=0
               and second_italics > first_italics
               and (first_bold < 0 or first_italics < first_bold)):
-        self.formatTextPart(element, name, text, spantag,
-                            first_italics, second_italics,
-                            "font-style", "italic",
-                            added_style, "i")
+            self.formatTextPart(element, name, text, spantag,
+                                first_italics, second_italics,
+                                "font-style", "italic",
+                                added_style, "i")
         else:
             self.formatTextImages(element, name, text, spantag,
                                   added_style)
@@ -543,7 +539,8 @@ class CountersheetEffect(inkex.Effect):
         else:
             element.text = text
 
-    def insertImagePlaceholder(self, element, text, spantag,
+    def insertImagePlaceholder(self, element, name,
+                               text, spantag,
                                begin_index, end_index,
                                added_style):
         filename = text[begin_index+1:end_index]
@@ -1969,7 +1966,6 @@ def get_search_paths(filename, extra_paths=None):
 
 def make_def_ref(color):
     return "url(#%s)" % color
-
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
