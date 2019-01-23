@@ -29,6 +29,8 @@ from copy import deepcopy
 import sys
 import simpletransform
 
+from simplestyle import parseStyle, formatStyle
+
 NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
 
 # Trying to make inserted inlined images show up slightly
@@ -100,6 +102,8 @@ class Counter:
         return self.back
 
     def is_included(self, eid):
+       if eid is None:
+           return True
        for iglob in self.includeids:
             if fnmatch.fnmatchcase(eid, iglob):
                 return True
@@ -428,8 +432,11 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
         old_element = self.document.xpath("//*[@id='%s']"% old_ref,
                                           namespaces=NSS)[0]
-        new_element = self.document.xpath("//*[@id='%s']"% new_ref,
-                                          namespaces=NSS)[0]
+        new_elements = self.document.xpath("//*[@id='%s']"% new_ref,
+                                           namespaces=NSS)
+        if len(new_elements) < 1:
+            sys.exit("Failed to find new clone target: %s" % new_ref)
+        new_element = new_elements[0]
         (old_x, old_y) = self.find_reasonable_center_xy(old_element)
         (new_x, new_y) = self.find_reasonable_center_xy(new_element)
         self.logwrite(" use data: old %f,%f   new %f,%f\n"
@@ -444,18 +451,22 @@ class CountersheetEffect(inkex.Effect):
 
     def setMultilineText(self, element, name, lines):
         self.logwrite("setting multiline text: %s\n" % lines)
-        self.deleteFlowParas(element)
+        self.deleteTextChildren(element)
         added_style = {}
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, name,
                                   line.decode('utf8'), 'flowSpan',
                                   added_style)
+        for line in lines:
+            para = etree.Element(inkex.addNS('flowLine', 'svg'))
+            self.setFormattedText(para, line.decode('utf8'), 'flowSpan',
+                                  parseStyle(element.get('style')))
             element.append(para)
 
-    def deleteFlowParas(self, parent):
+    def deleteTextChildren(self, parent):
         for c in parent.getchildren():
-            if c.tag == inkex.addNS('flowPara','svg'):
+            if c.tag != inkex.addNS('flowRegion','svg'):
                 parent.remove(c)
 
     def setFormattedText(self, element, name, text, spantag,
@@ -509,10 +520,10 @@ class CountersheetEffect(inkex.Effect):
               and first_italics >=0
               and second_italics > first_italics
               and (first_bold < 0 or first_italics < first_bold)):
-            self.formatTextPart(element, name, text, spantag,
-                                first_italics, second_italics,
-                                "font-style", "italic",
-                                added_style, "i")
+        self.formatTextPart(element, name, text, spantag,
+                            first_italics, second_italics,
+                            "font-style", "italic",
+                            added_style, "i")
         else:
             self.formatTextImages(element, name, text, spantag,
                                   added_style)
@@ -532,8 +543,7 @@ class CountersheetEffect(inkex.Effect):
         else:
             element.text = text
 
-    def insertImagePlaceholder(self, element, name,
-                               text, spantag,
+    def insertImagePlaceholder(self, element, text, spantag,
                                begin_index, end_index,
                                added_style):
         filename = text[begin_index+1:end_index]
@@ -735,8 +745,11 @@ class CountersheetEffect(inkex.Effect):
                     continue
                 for glob,image in c.subst.iteritems():
                     if fnmatch.fnmatchcase(imageid, glob):
-                        i.set(inkex.addNS("absref", "sodipodi"), image)
-                        i.set(inkex.addNS("href", "xlink"), image)
+                        if len(image) > 0:
+                            i.set(inkex.addNS("absref", "sodipodi"), image)
+                            i.set(inkex.addNS("href", "xlink"), image)
+                        else:
+                            i.getparent().remove(i)
                     elif is_valid_name_to_replace(glob):
                         absref = i.get(inkex.addNS("absref", "sodipodi"), image)
                         href = i.get(inkex.addNS("href", "xlink"), image)
@@ -751,10 +764,13 @@ class CountersheetEffect(inkex.Effect):
                     continue
                 for glob,new_ref in c.subst.iteritems():
                     if fnmatch.fnmatchcase(useid, glob):
-                        xlink_attribute = inkex.addNS("href", "xlink")
-                        old_ref = u.get(xlink_attribute)[1:]
-                        u.set(xlink_attribute, "#" + new_ref)
-                        self.translate_use_element(u, old_ref, new_ref)
+                        if len(new_ref) > 0:
+                            xlink_attribute = inkex.addNS("href", "xlink")
+                            old_ref = u.get(xlink_attribute)[1:]
+                            u.set(xlink_attribute, "#" + new_ref)
+                            self.translate_use_element(u, old_ref, new_ref)
+                        else:
+                            u.getparent().remove(u)
 
             for name,value in c.subst.iteritems():
                 if is_valid_name_to_replace(name):
@@ -786,6 +802,7 @@ class CountersheetEffect(inkex.Effect):
                 continue
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
+                    self.deleteTextChildren(t)
                     t.text = subst
                 elif (t.tag == inkex.addNS('flowRoot','svg')
                     and subst.find("\\n") >= 0):
@@ -1952,6 +1969,7 @@ def get_search_paths(filename, extra_paths=None):
 
 def make_def_ref(color):
     return "url(#%s)" % color
+
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
