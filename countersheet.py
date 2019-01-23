@@ -709,8 +709,11 @@ class CountersheetEffect(inkex.Effect):
                     continue
                 for glob,image in c.subst.iteritems():
                     if fnmatch.fnmatchcase(imageid, glob):
-                        i.set(inkex.addNS("absref", "sodipodi"), image)
-                        i.set(inkex.addNS("href", "xlink"), image)
+                        if len(image) > 0:
+                            i.set(inkex.addNS("absref", "sodipodi"), image)
+                            i.set(inkex.addNS("href", "xlink"), image)
+                        else:
+                            i.getparent().remove(i)
                     elif is_valid_name_to_replace(glob):
                         absref = i.get(inkex.addNS("absref", "sodipodi"), image)
                         href = i.get(inkex.addNS("href", "xlink"), image)

@@ -63,6 +63,7 @@ tests = [
     ['labels17mm-140.csv', 'labels17mm-140.svg'],
     ['cloneslayout.csv', 'cloneslayout.svg'],
     ['imagereplace.csv', 'imagereplace.svg'],
+    ['imagetiles.csv', 'imagetiles.svg'],
     ['numbers.csv', 'numbers.svg'],
     ['numbers-endrow.csv', 'numbers.svg'],
     ['autonumbers.csv', 'numbers.svg'],
