@@ -430,8 +430,11 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
         old_element = self.document.xpath("//*[@id='%s']"% old_ref,
                                           namespaces=NSS)[0]
-        new_element = self.document.xpath("//*[@id='%s']"% new_ref,
-                                          namespaces=NSS)[0]
+        new_elements = self.document.xpath("//*[@id='%s']"% new_ref,
+                                           namespaces=NSS)
+        if len(new_elements) < 1:
+            sys.exit("Failed to find new clone target: %s" % new_ref)
+        new_element = new_elements[0]
         (old_x, old_y) = self.find_reasonable_center_xy(old_element)
         (new_x, new_y) = self.find_reasonable_center_xy(new_element)
         self.logwrite(" use data: old %f,%f   new %f,%f\n"
@@ -722,10 +725,13 @@ class CountersheetEffect(inkex.Effect):
                     continue
                 for glob,new_ref in c.subst.iteritems():
                     if fnmatch.fnmatchcase(useid, glob):
-                        xlink_attribute = inkex.addNS("href", "xlink")
-                        old_ref = u.get(xlink_attribute)[1:]
-                        u.set(xlink_attribute, "#" + new_ref)
-                        self.translate_use_element(u, old_ref, new_ref)
+                        if len(new_ref) > 0:
+                            xlink_attribute = inkex.addNS("href", "xlink")
+                            old_ref = u.get(xlink_attribute)[1:]
+                            u.set(xlink_attribute, "#" + new_ref)
+                            self.translate_use_element(u, old_ref, new_ref)
+                        else:
+                            u.getparent().remove(u)
 
             for name,value in c.subst.iteritems():
                 if is_valid_name_to_replace(name):
