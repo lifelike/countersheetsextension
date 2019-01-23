@@ -1,4 +1,4 @@
-unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
+unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill],steploss?=n
 ,inf,1,II,23,3,4,4,darkseagreen,seagreen
 ,inf,2,II,23,3,4,4,darkseagreen,seagreen
 ,inf,3,II,23,3,4,4,darkseagreen,seagreen
@@ -9,6 +9,7 @@ unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
 ,inf,1,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,2,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,3,II,9,3,4,4,darkseagreen,darkseagreen
+,para,14,I,33,3,3,4,darkseagreen,lightblue
 ,arm,113,I,9,4,4,6,darkseagreen,darkseagreen
 ,art,17,I,9,4,1,2,darkseagreen,darkseagreen
 ,hq,9,III,,,,,darkseagreen,darkseagreen
@@ -16,9 +17,9 @@ unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill]
 ,inf,B,II,12,3,4,4,lightgrey,lightgrey
 ,inf,C,II,12,3,4,4,lightgrey,lightgrey
 ,arm,112,I,12,4,4,6,lightgrey,lightgrey
+,armcav,2,I,12,1,1,8,lightgrey,lightgrey
+,mech,3,II,12,6,6,6,lightgrey,lightgrey
 ,art,15R,I,12,4,1,2,lightgrey,lightgrey
 ,art,16,I,12,4,1,2,lightgrey,lightgrey
 ,cav,19,II,12,3,3,5,lightgrey,lightgrey
 ,hq,12,III,,,,,lightgrey,lightgrey
-
-
