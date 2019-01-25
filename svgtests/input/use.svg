@@ -10,32 +10,32 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="793.70081"
-   height="1122.5197"
-   id="svg3057"
-   version="1.1"
+   sodipodi:docname="use.svg"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="use.svg">
+   version="1.1"
+   id="svg3057"
+   height="1122.5197"
+   width="793.70081">
   <defs
      id="defs3059" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="287.50918"
-     inkscape:cy="911.30014"
-     inkscape:document-units="px"
-     inkscape:current-layer="svg3057"
+     inkscape:window-maximized="0"
+     inkscape:window-y="15"
+     inkscape:window-x="14"
+     inkscape:window-height="972"
+     inkscape:window-width="1871"
      showgrid="false"
-     inkscape:window-width="1254"
-     inkscape:window-height="962"
-     inkscape:window-x="0"
-     inkscape:window-y="1"
-     inkscape:window-maximized="0" />
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:cy="831.4344"
+     inkscape:cx="-3.3400302"
+     inkscape:zoom="0.35"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata3062">
     <rdf:RDF>
@@ -79,7 +79,7 @@
        id="path"
        inkscape:connector-curvature="0" />
     <g
-       id="g834">
+       id="g1149">
       <rect
          inkscape:label="#rect3076"
          y="101.56728"

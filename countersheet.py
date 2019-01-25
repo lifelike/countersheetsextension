@@ -417,13 +417,16 @@ class CountersheetEffect(inkex.Effect):
                         n.set(a, v)
 
 
-    def translate_element(self, element, dx, dy):
+    def translate_element(self, element, dx, dy, append=False):
         self.logwrite("translate_element %f,%f\n"
                       % (dx, dy))
         translate = "translate(%f,%f)" % (dx, dy)
         old_transform = element.get('transform')
-        if old_transform:
-            self.logwrite("old transform: %s\n" % old_transform)
+        if old_transform and append:
+            self.logwrite("old transform append: %s\n" % old_transform)
+            element.set('transform', old_transform + " " + translate)
+        elif old_transform:
+            self.logwrite("old transform prepend: %s\n" % old_transform)
             element.set('transform', translate + " " + old_transform)
         else:
             element.set('transform', translate)
@@ -442,7 +445,7 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite(" use data: old %f,%f   new %f,%f\n"
                       % (old_x, old_y,
                          new_x, new_y))
-        self.translate_element(use, old_x - new_x, old_y - new_y)
+        self.translate_element(use, old_x - new_x, old_y - new_y, True)
 
     def find_reasonable_center_xy(self, element):
         rect = self.geometry[element.get('id')]
