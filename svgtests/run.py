@@ -76,6 +76,7 @@ tests = [
     ['backgrounds.csv', 'backgrounds.svg'],
     ['backgrounds.csv', 'backgrounds.svg', {'-o' :  'true'}],
     ['textformat.csv', 'textformat.svg'],
+    ['textspan.csv', 'textspan.svg'],
     ['dynamic.csv', 'texttokens.svg'],
     ['prototype_cards_all.csv', 'prototype_cards.svg'],
     ['svgcolors.csv', 'colors.svg'],
