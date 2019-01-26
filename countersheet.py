@@ -758,7 +758,7 @@ class CountersheetEffect(inkex.Effect):
                             i.set(inkex.addNS("href", "xlink"), image)
                         else:
                             i.getparent().remove(i)
-                    elif is_valid_name_to_replace(glob):
+                    elif is_valid_name_to_replace(glob) and image is not None:
                         absref = i.get(inkex.addNS("absref", "sodipodi"), image)
                         href = i.get(inkex.addNS("href", "xlink"), image)
                         i.set(inkex.addNS("absref", "sodipodi"),
@@ -806,8 +806,10 @@ class CountersheetEffect(inkex.Effect):
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
-            if glob is None or subst is None:
+            if glob is None:
                 continue
+            if subst is None:
+                subst = ""
             if fnmatch.fnmatchcase(textid, glob):
                 if t.text:
                     self.deleteTextChildren(t)
@@ -1442,10 +1444,9 @@ class CountersheetEffect(inkex.Effect):
             geometry = self.queryAll(tmpfile)
             for spanid, info in self.placeholders.iteritems():
                 if not spanid in geometry:
-                    sys.exit("Could not query location for %s. "
-                             "This is bad. Please report this as a bug "
-                             "in the countersheetsgenerator."
-                             % spanid)
+                    self.logwrite("Could not query location for %s."
+                                  % spanid)
+                    continue
                 position = geometry[spanid]
                 image = etree.Element(inkex.addNS('image', 'svg'))
                 image.set(inkex.addNS("absref", "sodipodi"), info["filename"])

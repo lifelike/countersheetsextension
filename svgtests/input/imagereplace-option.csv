@@ -1,0 +1,15 @@
+textcounter,textimage?,imagenr,text
+,y,4546,text1
+,y,4546,"text2{g4546.png}"
+,y,4546
+,n,4546,text3
+,n,4546,"text4{g4546.png}"
+,n,4546
+
+textcounter,textimage?,textimage,text
+,y,"g4546.png",text5
+,y,"g4546.png","text6{g4546.png}"
+,y,,
+,n,"g4546.png",text7
+,n,"g4546.png","text8{g4546.png}"
+,n,,
