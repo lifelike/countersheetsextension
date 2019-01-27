@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.69999999"
-     inkscape:cx="-627.15232"
-     inkscape:cy="937.2579"
+     inkscape:zoom="0.35"
+     inkscape:cx="-563.74133"
+     inkscape:cy="643.35601"
      inkscape:document-units="mm"
-     inkscape:current-layer="g8341"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="1916"
@@ -306,42 +306,42 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888855px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-330.34512"
-       y="40.421253"
+       x="-338.66061"
+       y="41.933159"
        id="text5553"><tspan
          sodipodi:role="line"
          id="tspan5551"
-         x="-330.34512"
-         y="40.421253"
+         x="-338.66061"
+         y="41.933159"
          style="stroke-width:0.26458332">Card text as separate one-line</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="46.594864"
+         x="-338.66061"
+         y="48.10677"
          style="stroke-width:0.26458332"
          id="tspan5555">text objects makes the</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="52.768475"
+         x="-338.66061"
+         y="54.28038"
          style="stroke-width:0.26458332"
          id="tspan5557">insertion of inlined icons</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="58.942085"
+         x="-338.66061"
+         y="60.453991"
          style="stroke-width:0.26458332"
          id="tspan5559">work properly. The downside</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="65.115692"
+         x="-338.66061"
+         y="66.627594"
          style="stroke-width:0.26458332"
          id="tspan5561">is that text must be manually</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="71.289307"
+         x="-338.66061"
+         y="72.801208"
          style="stroke-width:0.26458332"
          id="tspan5563">put in different cells in the</tspan><tspan
          sodipodi:role="line"
-         x="-330.34512"
-         y="77.462921"
+         x="-338.66061"
+         y="78.974823"
          style="stroke-width:0.26458332"
          id="tspan5565">spreadsheet for every line.</tspan></text>
     <g
@@ -396,13 +396,13 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="-42.989502"
-         x="-244.84155"
-         id="cardimage"
-         preserveAspectRatio="none"
-         height="35.324905"
+         inkscape:label="#image5725"
          width="35.324905"
-         inkscape:label="#image5725" />
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="cardimage"
+         x="-244.84155"
+         y="-42.989502" />
     </g>
     <text
        xml:space="preserve"
@@ -554,23 +554,23 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="35.324905"
-         height="35.324905"
-         preserveAspectRatio="none"
+         y="-42.989502"
+         x="-171.07516"
          id="cardimage1"
-         x="-171.07516"
-         y="-42.989502" />
-      <image
-         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         y="-8.9716444"
-         x="-171.07516"
-         id="cardimage2"
          preserveAspectRatio="none"
          height="35.324905"
          width="35.324905"
          inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="35.324905"
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="cardimage2"
+         x="-171.07516"
+         y="-8.9716444" />
     </g>
     <text
        xml:space="preserve"
@@ -670,43 +670,43 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="-43.115368"
-         x="-103.03944"
+         inkscape:label="#image5725"
+         width="28.521334"
+         height="28.521334"
+         preserveAspectRatio="none"
          id="image1of4"
-         preserveAspectRatio="none"
-         height="28.521334"
-         width="28.521334"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="28.521334"
-         height="28.521334"
-         preserveAspectRatio="none"
-         id="image3of4"
          x="-103.03944"
-         y="-15.649347" />
-      <image
-         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="28.521334"
-         height="28.521334"
-         preserveAspectRatio="none"
-         id="image2of4"
-         x="-76.959076"
          y="-43.115368" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
          y="-15.649347"
-         x="-76.959076"
-         id="image4of4"
+         x="-103.03944"
+         id="image3of4"
          preserveAspectRatio="none"
          height="28.521334"
          width="28.521334"
          inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="-43.115368"
+         x="-76.959076"
+         id="image2of4"
+         preserveAspectRatio="none"
+         height="28.521334"
+         width="28.521334"
+         inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="28.521334"
+         height="28.521334"
+         preserveAspectRatio="none"
+         id="image4of4"
+         x="-76.959076"
+         y="-15.649347" />
       <flowRoot
          inkscape:label="#flowRoot5856"
          transform="scale(0.26458333)"
@@ -800,13 +800,13 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="164.3578"
-         x="-396.22412"
-         id="cardicon1"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon1"
+         x="-396.22412"
+         y="164.3578"
+         inkscape:label="#image6088" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext1"
@@ -824,13 +824,13 @@
            id="flowPara6110">cardicontext1 with automatic line-breaks</flowPara></flowRoot>      <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon2"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="180.85008"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon2"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,14.602402)"
@@ -848,13 +848,13 @@
            id="flowPara6134">cardicontext2 with automatic line-breaks</flowPara></flowRoot>      <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="197.34238"
-         x="-396.22412"
-         id="cardicon3"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon3"
+         x="-396.22412"
+         y="197.34238"
+         inkscape:label="#image6088" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext3"
@@ -872,13 +872,13 @@
            id="flowPara6158">cardicontext3 with automatic line-breaks</flowPara></flowRoot>      <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon4"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="213.83466"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon4"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,47.586976)"
@@ -1005,23 +1005,23 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="lineicon"
-         x="-316.84912"
+         inkscape:label="#image6088"
          y="149.61673"
-         inkscape:label="#image6088" />
+         x="-316.84912"
+         id="lineicon"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="35.324905"
-         height="35.324905"
-         preserveAspectRatio="none"
-         id="lineimage"
+         y="162.2735"
          x="-305.75626"
-         y="162.2735" />
+         id="lineimage"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -1221,33 +1221,33 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="149.61673"
-         x="-240.49792"
-         id="advcardicon1"
-         preserveAspectRatio="none"
-         height="13.628309"
-         width="13.628309" />
-      <image
-         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         y="162.2735"
-         x="-229.40506"
-         id="advcardimage"
-         preserveAspectRatio="none"
-         height="35.324905"
-         width="35.324905"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4546.png"
-         xlink:href="g4546.png"
          width="13.628309"
          height="13.628309"
          preserveAspectRatio="none"
-         id="advcardicon2"
-         x="-197.20026"
-         y="213.22688"
+         id="advcardicon1"
+         x="-240.49792"
+         y="149.61673"
          inkscape:label="#image6088" />
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="35.324905"
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="advcardimage"
+         x="-229.40506"
+         y="162.2735" />
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4546.png"
+         xlink:href="g4546.png"
+         inkscape:label="#image6088"
+         y="213.22688"
+         x="-197.20026"
+         id="advcardicon2"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <circle
          r="7.9375"
          cy="153.936"
@@ -1390,43 +1390,43 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="146.37096"
-         x="-108.53409"
+         inkscape:label="#image6578"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgicon1"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6578" />
+         x="-108.53409"
+         y="146.37096" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgicon2"
+         inkscape:label="#image6581"
+         y="146.37096"
          x="-112.49859"
-         y="146.37096"
-         inkscape:label="#image6581" />
+         id="ccgicon2"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="146.37096"
-         x="-116.46307"
+         inkscape:label="#image6583"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgicon3"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6583" />
+         x="-116.46307"
+         y="146.37096" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgicon4"
-         x="-120.42757"
+         inkscape:label="#image6585"
          y="146.37096"
-         inkscape:label="#image6585" />
+         x="-120.42757"
+         id="ccgicon4"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.25825071px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6597"
@@ -1439,13 +1439,13 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="58.796597"
-         height="39.099735"
-         preserveAspectRatio="xMidyMid slice"
-         id="ccgimage"
+         y="152.96933"
          x="-164.10214"
-         y="152.96933" />
+         id="ccgimage"
+         preserveAspectRatio="xMidyMid slice"
+         height="39.099735"
+         width="58.796597"
+         inkscape:label="#image5725" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6599"
@@ -1475,43 +1475,43 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgticon1"
+         inkscape:label="#image6607"
+         y="194.74673"
          x="-108.53409"
-         y="194.74673"
-         inkscape:label="#image6607" />
+         id="ccgticon1"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="194.74673"
-         x="-112.49859"
+         inkscape:label="#image6609"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgticon2"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714"
-         inkscape:label="#image6609" />
+         x="-112.49859"
+         y="194.74673" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgticon3"
+         inkscape:label="#image6611"
+         y="194.74673"
          x="-116.46307"
-         y="194.74673"
-         inkscape:label="#image6611" />
+         id="ccgticon3"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714" />
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         y="194.74673"
-         x="-120.42757"
-         id="ccgticon4"
-         preserveAspectRatio="none"
-         height="4.0543714"
+         inkscape:label="#image6613"
          width="4.0543714"
-         inkscape:label="#image6613" />
+         height="4.0543714"
+         preserveAspectRatio="none"
+         id="ccgticon4"
+         x="-120.42757"
+         y="194.74673" />
       <rect
          ry="0"
          rx="0"
@@ -1632,13 +1632,13 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="63.5"
-         height="88.900002"
-         preserveAspectRatio="none"
-         id="fullimage"
+         y="363.05301"
          x="-328.04578"
-         y="363.05301" />
+         id="fullimage"
+         preserveAspectRatio="none"
+         height="88.900002"
+         width="63.5"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -1760,13 +1760,13 @@
       <image
          sodipodi:absref="/Users/user/src/countersheetsextension/templates/extcard.svg"
          xlink:href="extcard.svg"
-         y="368.66797"
-         x="-240.2628"
-         id="extimage"
-         preserveAspectRatio="none"
-         height="88.900002"
+         inkscape:label="#image5725"
          width="63.5"
-         inkscape:label="#image5725" />
+         height="88.900002"
+         preserveAspectRatio="none"
+         id="extimage"
+         x="-240.2628"
+         y="368.66797" />
       <path
          style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.16880417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:connector-curvature="0"

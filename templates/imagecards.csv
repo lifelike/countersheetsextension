@@ -1,0 +1,7 @@
+imagecard,imagecardtitle,cardimage,imagecardtext
+,Card One,g4274.png,Example card showing how to use bleed.
+,Card Two,g4260.png,Notice that the imagecard rectangle is fully transparent.
+,Card Three,g4290.png,There is a larger rectangle behind it that sets the size including bleed.
+,Card Four,g4452.png,You need to enable bleed in options when running Generate Countersheet.
+,Card Five,g4546.png,Also try with 6mm spacing enabled (new in 2.2)!
+1++,Filler Card,g4516.png,Filling out the card sheet.

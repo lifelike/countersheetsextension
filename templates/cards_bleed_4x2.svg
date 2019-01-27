@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="cards_bleed_4x2.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   id="svg4819"
+   version="1.1"
+   viewBox="0 0 297 210"
+   height="210mm"
+   width="297mm">
+  <sodipodi:namedview
+     units="mm"
+     showguides="false"
+     inkscape:window-maximized="1"
+     inkscape:window-y="1"
+     inkscape:window-x="0"
+     inkscape:window-height="1035"
+     inkscape:window-width="1916"
+     inkscape:snap-global="false"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="289.95517"
+     inkscape:cx="390.1641"
+     inkscape:zoom="0.69999999"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <defs
+     id="defs4813">
+    <clipPath
+       id="bleed_63x88_False_False_False_False">
+      <rect
+         id="rect3459"
+         height="88.900002"
+         width="63.5"
+         y="0"
+         x="0" />
+    </clipPath>
+    <clipPath
+       id="bleed_63x88_True_True_True_True">
+      <rect
+         id="rect3462"
+         height="266.70001"
+         width="190.5"
+         y="-88.900002"
+         x="-63.5" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata4816">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     sodipodi:insensitive="true"
+     transform="translate(0,-86.99999)"
+     style="display:inline"
+     inkscape:label="background"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <rect
+       y="364.32516"
+       x="-447.47845"
+       height="251.10191"
+       width="550.99854"
+       id="rect5436"
+       style="opacity:1;vector-effect:none;fill:#ecf886;fill-opacity:1;stroke:#000000;stroke-width:0.3729887px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+  </g>
+  <g
+     transform="translate(0,-86.99999)"
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1"
+     style="display:inline">
+    <g
+       transform="translate(0,481.54167)"
+       id="g8301">
+      <rect
+         style="opacity:1;vector-effect:none;fill:#eafcfc;fill-opacity:1;stroke:none;stroke-width:0.61433947px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2592"
+         width="69.418106"
+         height="97.185349"
+         x="-261.10562"
+         y="-60.059235"
+         inkscape:label="#rect7520" />
+      <rect
+         inkscape:label="#rect7520"
+         y="-55.916561"
+         x="-258.14661"
+         height="88.900002"
+         width="63.5"
+         id="imagecard"
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:none;stroke-width:0.61433947px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         d="m -253.66985,-54.138562 h 54.51475 q 3.2385,0 3.2385,4.489444 v 76.365106 q 0,4.48945 -3.2385,4.48945 h -54.51475 q -3.20675,0 -3.20675,-4.48945 v -76.365106 q 0,-4.489444 3.20675,-4.489444 m 0,1.778 q -1.93675,0 -1.93675,2.711444 V 4.7576887 l 1.11125,1.555747 -1.11125,1.5113 v 4.4005563 l 1.778,2.489196 -1.778,2.4892 v 9.5123 q 0,2.71145 1.93675,2.71145 h 5.588 l 1.397,-1.9558 1.397,1.9558 h 46.13275 q 1.9685,0 1.9685,-2.71145 v -5.0673 l -2.6035,-3.6449 2.6035,-3.68935 v -49.028352 l -1.9685,-2.7559 1.9685,-2.800348 v -9.378956 q 0,-2.711444 -1.9685,-2.711444 h -24.47925 l -1.80975,2.5781 -1.8415,-2.5781 h -26.38425"
+         id="path5569"
+         inkscape:connector-curvature="0"
+         style="fill:#fcf4ea;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.16880417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         d="m -253.66986,-52.36056 h 26.38425 l 1.8415,2.5781 1.80975,-2.5781 h 24.47925 q 1.9685,0 1.9685,2.711444 v 9.378956 l -1.9685,2.800348 1.9685,2.7559 V 14.31444 l -2.6035,3.68935 2.6035,3.6449 v 5.0673 q 0,2.71145 -1.9685,2.71145 h -46.13275 l -1.397,-1.9558 -1.397,1.9558 h -5.588 q -1.93675,0 -1.93675,-2.71145 v -9.5123 l 1.778,-2.4892 -1.778,-2.489195 V 7.8247391 l 1.11125,-1.5113 -1.11125,-1.555747 V -49.649116 q 0,-2.711444 1.93675,-2.711444"
+         id="path5571"
+         inkscape:connector-curvature="0"
+         style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.75134218" />
+      <flowRoot
+         inkscape:label="#flowRoot4142"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:100%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="imagecardtext"
+         xml:space="preserve"
+         transform="matrix(0.28222223,0,0,0.28222223,-118.56872,-20.563376)"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+           id="flowRegion5575"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+             y="47.780663"
+             x="-478.98862"
+             height="133.07158"
+             width="189.44948"
+             id="rect5573" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+           id="flowPara5577">imagecardtext. This card has an image that can be easily swapped out for other images by using a column cardimage in the spreadsheet.</flowPara><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+           id="flowPara5728" /></flowRoot>      <text
+         inkscape:label="#text4138"
+         id="imagecardtitle"
+         y="-44.190063"
+         x="-226.98279"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px"
+           y="-44.190063"
+           x="-226.98279"
+           id="tspan5581"
+           sodipodi:role="line">imagecardtitle</tspan></text>
+      <image
+         sodipodi:absref="/Users/user/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="35.324905"
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="cardimage"
+         x="-244.84155"
+         y="-42.989502" />
+    </g>
+    <text
+       id="text5742"
+       y="418.26227"
+       x="-262.30896"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888855px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="stroke-width:0.26458332"
+         y="418.26227"
+         x="-262.30896"
+         id="tspan5740"
+         sodipodi:role="line">imagecard with ~3 mm bleed</tspan></text>
+    <text
+       id="text6753"
+       y="610.23987"
+       x="-425.83685"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         y="610.23987"
+         x="-425.83685"
+         id="tspan6751"
+         sodipodi:role="line">Images by kenney.nl (creative commons zero public domain).</tspan></text>
+    <text
+       id="text2596"
+       y="548.15955"
+       x="-425.12991"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;line-height:1000%;font-family:serif;-inkscape-font-specification:'serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.05833328;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       xml:space="preserve"
+       transform="translate(0,-1e-5)"><tspan
+         style="stroke-width:1.05833328"
+         y="548.15955"
+         x="-425.12991"
+         id="tspan2594"
+         sodipodi:role="line">This can be tested using imagecards.csv.</tspan></text>
+    <text
+       id="text2603"
+       y="567.80939"
+       x="-425.6012"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;line-height:1000%;font-family:serif;-inkscape-font-specification:'serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.05833328;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       xml:space="preserve"
+       transform="translate(0,-1e-5)"><tspan
+         id="tspan2605"
+         style="stroke-width:1.05833328"
+         y="567.80939"
+         x="-425.6012"
+         sodipodi:role="line">Use very short (about 5 mm) registration marks and outline distance to fit page.</tspan></text>
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="cs_layout"
+     id="layer3"
+     inkscape:groupmode="layer"
+     transform="translate(0,-87)"
+     sodipodi:insensitive="true">
+    <rect
+       y="100.35968"
+       x="11.89556"
+       height="183.88542"
+       width="272.78543"
+       id="rect2599"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fcf4ea;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+  </g>
+</svg>
