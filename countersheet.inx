@@ -24,6 +24,8 @@
          _gui-text="Outline (Outset Distance)">10mm</param>
       <param name="bleed" type="boolean"
         _gui-text="Bleed">false</param>
+      <param name="spacing" type="string"
+        _gui-text="Spacing">0mm</param>
     </page>
 
     <page name="page4" gui-text="Output">

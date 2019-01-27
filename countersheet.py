@@ -378,6 +378,11 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'string',
                                      dest = 'outlinedist',
                                      default = "")
+        self.OptionParser.add_option('-S', '--spacing',
+                                     action = 'store',
+                                     type = 'string',
+                                     dest = 'spacing',
+                                     default = "0")
         self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
                                      action = 'store', default = "true")
         self.OptionParser.add_option('-B', '--bleed', dest='bleed',
@@ -1246,6 +1251,9 @@ class CountersheetEffect(inkex.Effect):
         self.outlinedist = self.from_len_arg(
             self.options.outlinedist,
             "outline distance")
+        self.spacing = self.from_len_arg(
+            self.options.spacing,
+            "spacing")
 
         self.outlinemarks = (self.outlinedist > 0)
 
@@ -1369,24 +1377,26 @@ class CountersheetEffect(inkex.Effect):
                 c.addsubst("autonumber", str(nr))
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
+                xregistrationmarks.add(colx)
                 self.logwrite("   adding front\n")
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
                                                    positions[box].y+rowy)
                 self.logwrite("generated counter size: %fx%f\n"
                               % (width, height))
-                c.bleed_left.append(is_first_col)
+                c.bleed_left.append(is_first_col or self.spacing > 0)
                 is_first_col = False
-                c.bleed_up.append(is_first_row)
+                c.bleed_up.append(is_first_row or self.spacing > 0)
                 if c.hasback:
                     bstack.append(c)
                     backxs.append(positions[box].x + colx + width)
                     backys.append(positions[box].y + rowy)
                 col = col + 1
-                colx = colx + width
-                xregistrationmarks.add(colx)
-                if rowy + height > nextrowy:
-                    nextrowy = rowy + height
+                xregistrationmarks.add(colx + width)
+                colx = colx + width + self.spacing
+                if rowy + height + self.spacing > nextrowy:
+                    nextrowy = rowy + height + self.spacing
+                    yregistrationmarks.add(rowy + height)
                 if (colx + width > positions[box].w + BOX_MARGIN
                     or c.endbox or c.endrow):
                     last_on_row = True
@@ -1397,10 +1407,8 @@ class CountersheetEffect(inkex.Effect):
                     nextrowy = rowy
                     self.logwrite("new row %d (y=%f)\n"
                                   % (row, rowy))
-                    self.logwrite("  bleed right!\n")
                     is_first_col = True
                     is_first_row = False
-                    yregistrationmarks.add(rowy)
                     if (nextrowy + height > positions[box].h + BOX_MARGIN
                         or c.endbox):
                         last_in_box = True
@@ -1445,7 +1453,6 @@ class CountersheetEffect(inkex.Effect):
         if ((len(xregistrationmarks) > 1
              or len(yregistrationmarks) > 1)
             and len(layer.getchildren())):
-            yregistrationmarks.add(nextrowy)
             self.addregistrationmarks(
                 xregistrationmarks, yregistrationmarks,
                 positions[box], layer, backlayer, docwidth)
