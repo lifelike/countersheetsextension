@@ -634,21 +634,49 @@ class CountersheetEffect(inkex.Effect):
         element.append(restspan)
 
     def setFirstTextChild(self, element, name, text):
+        """Find the first child of a text element that already has
+        some text in it. This could be a tspan in a tspan nested
+        any number of times. Then delete all other tspans from the
+        text. Otherwise parts of the original text will remain
+        after the substitution. It is important to drill down and
+        find the first tspan that actually contains text (if any)
+        because that will have the style that the user expects
+        the new text to have, as any empty tspan will be invisible
+        (and is probably there by accident)."""
+        if ((element.tag == inkex.addNS('text', 'svg')
+             or element.tag == inkex.addNS('tspan', 'svg'))
+            and element.text is not None and len(element.text) > 0):
+            self.logwrite("text replace %s %s %r\n" % (element.get('id'),
+                                                       element.tag,
+                                                       text))
+            self.deleteTextChildren(element)
+            self.setFormattedText(element, name, text.decode('utf8'),
+                                  'tspan',
+                                  {}, parseStyle(element.get('style')))
+            return True
+        elif ((element.tag == inkex.addNS('flowPara', 'svg')
+               or element.tag == inkex.addNS('flowLine', 'svg')
+               or element.tag == inkex.addNS('flowSpan', 'svg'))
+              and element.text is not None and len(element.text) > 0):
+            self.logwrite("flow replace %s %s %r\n" % (element.get('id'),
+                                                       element.tag,
+                                                       text))
+            self.deleteTextChildren(element)
+            self.setFormattedText(element, name, text.decode('utf8'),
+                                  'flowSpan',
+                                  {}, parseStyle(element.get('style')))
+            return True
+        replaced = False
         for c in element.getchildren():
-            if (c.tag == inkex.addNS('flowPara', 'svg')
-                or c.tag == inkex.addNS('flowSpan', 'svg')):
-                self.setFormattedText(c, name, text.decode('utf8'), 'flowSpan',
-                                      {}, parseStyle(element.get('style')))
-                return True
-            elif (c.tag == inkex.addNS('text', 'svg')
-                  or c.tag == inkex.addNS('tspan', 'svg')):
-                self.logwrite("%s %s %r\n" % (c.get('id'), c.tag, text))
-                self.setFormattedText(c, name, text.decode('utf8'), 'tspan',
-                                      {}, parseStyle(element.get('style')))
-                return True
-            elif self.setFirstTextChild(c, name, text):
-                return True
-        return False
+            if replaced and c.tag != inkex.addNS('flowRegion', 'svg'):
+                element.remove(c)
+            elif c.tag != inkex.addNS('flowRegion', 'svg'):
+                child_replaced = self.setFirstTextChild(c, name, text)
+                if child_replaced:
+                    replaced = True
+                else:
+                    element.remove(c)
+        return replaced
 
     def addLayer(self, svg, what, nr, extra=""):
         if len(extra) > 0:
@@ -811,15 +839,20 @@ class CountersheetEffect(inkex.Effect):
             if subst is None:
                 subst = ""
             if fnmatch.fnmatchcase(textid, glob):
-                if t.text:
-                    self.deleteTextChildren(t)
-                    t.text = subst
-                elif (t.tag == inkex.addNS('flowRoot','svg')
+                if (t.tag == inkex.addNS('flowRoot','svg')
                     and subst.find("\\n") >= 0):
                     self.setMultilineText(t, textid, subst.split("\\n"))
-                elif not self.setFirstTextChild(t, textid, subst):
-                    sys.exit("Failed to put substitute text in '%s'"
-                             % textid)
+                else:
+                    if not self.setFirstTextChild(t, textid, subst):
+                        # Could not find anything to replace, so just delete
+                        # everything and set the text for all the text element.
+                        self.deleteTextChildren(t)
+                        childtype = 'tspan'
+                        if t.tag == inkex.addNS('flowRoot','svg'):
+                            childtype = 'flowSpan'
+                        self.setFormattedText(t, textid, subst.decode('utf8'),
+                                              childtype, {},
+                                              parseStyle(t.get('style')))
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 

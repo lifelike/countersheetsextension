@@ -20,6 +20,11 @@ multilinetext,example-multiline
 ,serif *bold text* normal text\ntext /italics text/ text\nok?
 ,mix *bold* and /italics/ and */bold italics/* in serif
 
+text,example,example?
+,*option y {g4452.png}*,y
+,*option n {g4452.png}*,n
+
+
 
 
 
