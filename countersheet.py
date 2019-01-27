@@ -1378,6 +1378,7 @@ class CountersheetEffect(inkex.Effect):
                 if c.hasback:
                     c.back.addsubst("autonumber", str(nr))
                 xregistrationmarks.add(colx)
+                yregistrationmarks.add(rowy)
                 self.logwrite("   adding front\n")
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
