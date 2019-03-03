@@ -705,26 +705,6 @@ class CountersheetEffect(inkex.Effect):
         layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
         return layer
 
-    def is_layer( self, element ):
-        try:
-            return element.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
-        except:
-            return False
-
-    def get_layer( self, element, sourceElementId = None ):
-        '''
-        finds the layer that the svg element is under
-
-        Should be called without the sourceElementId. The routine fills that in.
-        '''
-        if sourceElementId is None: sourceElementId = element.get( "id" )
-        if self.is_layer( element ): return element
-        parent = element.getparent()
-        if parent is None:
-            raise ValueError( "Unable to find layer for element [" + sourceElementId + "]" )
-        if self.is_layer( parent ): return parent
-        return self.get_layer( parent, sourceElementId )
-
     def generatecounter(self, c, rects, layer, colx, rowy):
         oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
                                     namespaces=NSS)
@@ -753,23 +733,23 @@ class CountersheetEffect(inkex.Effect):
                          "that was specified in the CSV data file."
                          % rectname)
             rect = rects[rectname]
-            group = rect.getparent()
-            source_layer = self.get_layer( rect )
+            group = find_top_level_group_for(rect)
+            if group is None:
+                self.logwrite("rect not in group '%s'.\n" % rectname)
+                sys.exit("Rectangle '%s' not in a group. Can not be template."
+                         % rectname)
+            source_layer = get_layer(rect)
             x = self.geometry[rectname].x
             y = self.geometry[rectname].y
             width = self.geometry[rectname].w
             height = self.geometry[rectname].h
             c.width = max(c.width, width)
             c.height = max(c.height, height)
-            if self.is_layer( group ):
-                self.logwrite("rect not in group '%s'.\n" % rectname)
-                sys.exit("Rectangle '%s' not in a group. Can not be template."
-                         % rectname)
             clone = deepcopy(group)
             if killrect:
                 for r in clone.xpath('//svg:rect', namespaces=NSS):
                     if r.get("id") == rectname:
-                        clone.remove(r)
+                        r.getparent().remove(r)
                         break
             textishnodes = []
             textishnodes.extend(clone.xpath('//svg:text', namespaces=NSS))
@@ -1497,16 +1477,14 @@ class CountersheetEffect(inkex.Effect):
                                    + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
                 image.set('width', str(position.w))
                 image.set('height', str(position.h))
-                parent = info["parent"]
-                while not self.is_layer(parent.getparent()):
-                    parent = parent.getparent()
-                transform = parent.get('transform')
+                group = find_top_level_group_for(info["parent"])
+                transform = group.get('transform')
                 translate = self.translatere.match(transform)
                 if translate:
                     dx = float(translate.group(1))
                     dy = float(translate.group(2))
                     self.translate_element(image, -dx, -dy)
-                parent.append(image)
+                group.append(image)
 
             #FIXME delete tmpfile
 
@@ -2019,6 +1997,35 @@ def get_search_paths(filename, extra_paths=None):
 
 def make_def_ref(color):
     return "url(#%s)" % color
+
+def find_top_level_group_for(element):
+    parent = element.getparent()
+    if parent is None:
+        return None
+    elif is_layer(parent):
+        return element
+    else:
+        return find_top_level_group_for(parent)
+
+def is_layer(element):
+    try:
+        return element.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
+    except:
+        return False
+
+def get_layer(element, sourceElementId=None):
+    '''
+        finds the layer that the svg element is under
+
+        Should be called without the sourceElementId. The routine fills that in.
+        '''
+    if sourceElementId is None:
+        sourceElementId = element.get("id")
+    top_level_group = find_top_level_group_for(element)
+    if top_level_group is None:
+        raise ValueError("Unable to find layer for element [" + sourceElementId + "]")
+    else:
+        return top_level_group.getparent()
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
