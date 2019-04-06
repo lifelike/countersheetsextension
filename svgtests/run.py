@@ -80,6 +80,7 @@ tests = [
     ['textspan.csv', 'textspan.svg'],
     ['dynamic.csv', 'texttokens.svg'],
     ['prototype_cards_all.csv', 'prototype_cards.svg'],
+    ['prototype_cards_ccg.csv', 'prototype_cards.svg'],
     ['svgcolors.csv', 'colors.svg'],
     ['aspect_ratio.csv', 'aspect_ratio.svg'],
     ['aspect_ratio_h.csv', 'aspect_ratio.svg'],
