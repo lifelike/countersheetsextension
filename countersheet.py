@@ -1171,7 +1171,7 @@ class CountersheetEffect(inkex.Effect):
         try:
             return float(svg.get('viewBox').split(' ')[n])
         except:
-            return float(svg.get(fallback)) # let it crash if this fails
+            return self.unittouu(svg.get(fallback)) # let it crash if this fails
 
     # Because getDocumentWidth in inkex fails because it makes assumptions about
     # user-units. Trusting the viewBox instead for now.

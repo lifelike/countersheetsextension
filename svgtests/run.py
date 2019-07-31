@@ -85,6 +85,7 @@ tests = [
     ['aspect_ratio.csv', 'aspect_ratio.svg'],
     ['aspect_ratio_h.csv', 'aspect_ratio.svg'],
     ['nostyle.csv', 'nostyle.svg'],
+    ['badsvg.csv', 'missing_viewbox.svg'],
 ]
 
 copyfiles = (glob.glob(os.path.join(inputdir, "*.png"))
