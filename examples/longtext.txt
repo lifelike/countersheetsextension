@@ -6,3 +6,4 @@ the text in an
 external text-file
 instead of in
 the spreadsheet data.
+Also with åäö.
