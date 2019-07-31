@@ -278,7 +278,7 @@ class NoSetting:
 
 class CounterPart:
     def __init__(self, id):
-        self.id = id
+        self.id = id.decode('utf8')
 
     def applyto(self, counter):
         counter.addpart(self.id)
@@ -289,7 +289,7 @@ class CounterExcludeID:
         self.exceptions = set()
 
     def addexception(self, id):
-        self.exceptions.add(id)
+        self.exceptions.add(id.decode('utf8'))
 
     def applyto(self, counter):
         counter.excludeid(self.id)
@@ -298,7 +298,7 @@ class CounterExcludeID:
 
 class CounterAttribute:
     def __init__(self, id, attribute, source):
-        self.id = id
+        self.id = id.decode('utf8')
         self.attribute = attribute
         self.source = source
 
@@ -904,7 +904,7 @@ class CountersheetEffect(inkex.Effect):
                               float(line[4]) / self.yscale)
                 self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
-                geometry[element_id] = r
+                geometry[element_id.decode('utf8')] = r
 
         f.close()
         return geometry

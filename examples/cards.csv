@@ -20,7 +20,7 @@ rcard,rtitle,HERE,there
 ,Replaced,word,ok
 ,Repl ÅÄÖ,word,åäö
 
-icard,ititle,iline1,iline2,iline3
+icärd,ititle,iline1,iline2,iline3
 ,Image 1,Inline icon {g4260.png},here,,
 ,Image 2,Inline icon {g4274.png} here.,,
 ,Image 3,,Inline icon {g4332.png}.,
