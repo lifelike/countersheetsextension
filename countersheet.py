@@ -893,7 +893,6 @@ class CountersheetEffect(inkex.Effect):
         cmd = 'inkscape --query-all "%s"' % filename
         _, f, err = os.popen3(cmd, 't')
         reader = csv.reader(f)
-        err.close()
         for line in reader:
             if len(line) == 5:
                 self.logwrite(",".join(line) + "\n")
@@ -905,8 +904,9 @@ class CountersheetEffect(inkex.Effect):
                 self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
                 geometry[element_id.decode('utf8')] = r
-
         f.close()
+        print_filtered_stderr(err)
+        err.close()
         return geometry
 
     def exportBitmaps(self, ids, width, height, dpi=0):
@@ -960,9 +960,11 @@ class CountersheetEffect(inkex.Effect):
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            f = os.popen(cmd,'r')
+            _, f, err = os.popen3(cmd,'t')
             f.read()
             f.close()
+            print_filtered_stderr(err)
+            err.close()
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
@@ -2006,6 +2008,15 @@ def find_top_level_group_for(element):
         return element
     else:
         return find_top_level_group_for(parent)
+
+MISSING_IMAGE_WARNING = "did not resolve to a valid image file"
+def print_filtered_stderr(err):
+    # ignore warnings about images missing
+    # often caused by substring replace in filenames
+    for errline in err.readlines():
+        if (errline.find(MISSING_IMAGE_WARNING) < 0
+            and len(errline.strip()) > 0):
+            print >> sys.stderr, errline
 
 def is_layer(element):
     try:
