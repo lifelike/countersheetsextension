@@ -1,4 +1,4 @@
-unit,@,name,size,parent,attack,defend,move,unit[style:fill],symback[style:fill],steploss?=n
+unit,@,name,size,parent,attack,defend,move,unit[style:fill],icon-rect-*[style:fill],steploss?=n
 ,inf,1,II,23,3,4,4,darkseagreen,seagreen
 ,inf,2,II,23,3,4,4,darkseagreen,seagreen
 ,inf,3,II,23,3,4,4,darkseagreen,seagreen
