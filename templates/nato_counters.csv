@@ -9,7 +9,7 @@ unit,@,name,size,parent,attack,defend,move,unit[style:fill],icon-rect-*[style:fi
 ,inf,1,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,2,II,9,3,4,4,darkseagreen,darkseagreen
 ,inf,3,II,9,3,4,4,darkseagreen,darkseagreen
-,para,14,I,33,3,3,4,darkseagreen,lightblue
+,parainf,14,I,33,3,3,4,darkseagreen,lightblue
 ,arm,113,I,9,4,4,6,darkseagreen,darkseagreen
 ,art,17,I,9,4,1,2,darkseagreen,darkseagreen
 ,hq,9,III,,,,,darkseagreen,darkseagreen

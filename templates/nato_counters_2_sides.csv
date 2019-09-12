@@ -9,7 +9,7 @@ unit>,@>,name>,size>,parent>,attack,defend,move>,unit[style:fill]>,icon-rect-*[s
 ,inf,1,II,9,3,4,4,darkseagreen,darkseagreen,,y,2,2
 ,inf,2,II,9,3,4,4,darkseagreen,darkseagreen,,y,2,2
 ,inf,3,II,9,3,4,4,darkseagreen,darkseagreen,,y,2,2
-,para,14,I,33,3,3,4,darkseagreen,lightblue,,y,2,2
+,parainf,14,I,33,3,3,4,darkseagreen,lightblue,,y,2,2
 ,arm,113,I,9,4,4,6,darkseagreen,darkseagreen,,y,1,2
 ,art,17,I,9,4,1,2,darkseagreen,darkseagreen,,n
 ,hq,9,III,,,,,darkseagreen,darkseagreen,,n
