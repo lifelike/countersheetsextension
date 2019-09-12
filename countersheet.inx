@@ -13,6 +13,10 @@
     <page name="page2" gui-text="Layout">
       <param name="oneside" type="boolean"
          _gui-text="One-Sided Sheets">false</param>
+      <param name="backoffsetx" type="string"
+         _gui-text="Back Side Horizontal Offset">0mm</param>
+      <param name="backoffsety" type="string"
+         _gui-text="Back Side Vertical Offset">0mm</param>
     </page>
 
     <page name="page3" gui-text="Style">

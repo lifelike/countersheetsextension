@@ -389,6 +389,10 @@ class CountersheetEffect(inkex.Effect):
                                      action = 'store', default = "false")
         self.OptionParser.add_option('-o', '--oneside', default = "false",
                                      action = "store", dest="oneside")
+        self.OptionParser.add_option('-X', '--backoffsetx', default = "0mm",
+                                     action = "store", dest="backoffsetx")
+        self.OptionParser.add_option('-Y', '--backoffsety', default = "0mm",
+                                     action = "store", dest="backoffsety")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -1126,11 +1130,11 @@ class CountersheetEffect(inkex.Effect):
             x2, y1, x2, y2))
 
 
-    def from_len_arg(self, argvalue, name):
+    def from_len_arg(self, argvalue, name, allow_negative=False):
         if argvalue is None or len(argvalue) == 0:
             return 0.0
         value = self.unittouu(argvalue)
-        if value < 0:
+        if not allow_negative and value < 0:
             sys.exit("Negative %s marks makes no sense." % name)
 
         self.logwrite("%s: %f\n"
@@ -1236,6 +1240,10 @@ class CountersheetEffect(inkex.Effect):
         self.spacing = self.from_len_arg(
             self.options.spacing,
             "spacing")
+        self.backoffsetx = self.from_len_arg(self.options.backoffsetx,
+                                             "back horizontal offset", True)
+        self.backoffsety = self.from_len_arg(self.options.backoffsety,
+                                             "back vertical offset", True)
 
         self.outlinemarks = (self.outlinedist > 0)
 
@@ -1296,7 +1304,7 @@ class CountersheetEffect(inkex.Effect):
             if self.oneside:
                 backlayer = layer
             else:
-                backlayer = self.addLayer(svg, what, 1, "back")
+                backlayer = self.create_backlayer(svg, what, 1)
 
         docwidth = self.getViewBoxWidth(svg)
 
@@ -1422,8 +1430,7 @@ class CountersheetEffect(inkex.Effect):
                                     svg.append(backlayer)
                                     backlayers.append((backlayer, csn-1))
                                     self.cslayers.append(backlayer.get('id'))
-                                    backlayer = self.addLayer(svg, what,
-                                                              csn, "back")
+                                    backlayer = self.create_backlayer(svg, what, csn)
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
@@ -1518,6 +1525,15 @@ class CountersheetEffect(inkex.Effect):
             del background.attrib[inkex.addNS('label', 'inkscape')]
             self.set_style(background, 'display', None)
             target.insert(0, background)
+
+    def create_backlayer(self, svg, what, csn):
+        backlayer = self.addLayer(svg, what,
+                      csn, "back")
+        if self.backoffsetx != 0 or self.backoffsety != 0:
+            self.translate_element(backlayer,
+                                   self.backoffsetx,
+                                   self.backoffsety)
+        return backlayer
 
     def before_counter(self, counter):
         pass
