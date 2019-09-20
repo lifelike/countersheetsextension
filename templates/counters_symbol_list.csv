@@ -1,6 +1,9 @@
 showcase,@,name
 ,aa,aa
 ,aa-mg,aa-mg
+,airart,airart
+,airat,airat
+,airat-alt,airat-alt
 ,airdef,airdef
 ,airmortar,airmortar
 ,at,at
@@ -29,11 +32,30 @@ showcase,@,name
 ,gliderinf,gliderinf
 ,gliderrecon,gliderrecon
 ,glidermortar,glidermortar
+,gun-light,gun-light
+,gun-heavy,gun-heavy
 ,heavyart,heavyart
 ,heavytank,heavytank
 ,horse-cav,horse-cav
 ,horse-drawn-art,horse-drawn-art
 ,hq,hq
+,hq-alt,hq-alt
+,hq-alt2,hq-alt2
+,hq-alt3,hq-alt3
+,inf-alt,inf-alt
+,inf-art,inf-art
+,inf-grl-heavy,inf-grl-heavy
+,inf-grl-light,inf-grl-light
+,inf-grl-medium,inf-grl-medium
+,inf-mg,inf-mg
+,inf-mg-heavy,inf-mg-heavy
+,inf-mg-light,inf-mg-light
+,inf-mg-medium,inf-mg-medium
+,inf-mortar,inf-mortar
+,inf-rifle,inf-rifle
+,inf-rifle-auto,inf-rifle-auto
+,inf-rifle-semiauto,inf-rifle-semiauto
+,inf-rifle-singleshot,inf-rifle-singleshot
 ,marine,marine
 ,marine-alt,marine-alt
 ,mech,mech
@@ -41,6 +63,7 @@ showcase,@,name
 ,mc-mg,mc-mg
 ,mc-recon,mc-recon
 ,mg,mg
+,mg-alt,mg-alt
 ,mg-inf,mg-inf
 ,missile,missile
 ,mtn-art,mnt-art
@@ -51,9 +74,11 @@ showcase,@,name
 ,rockets,rockets
 ,rotary-wing,rotary-wing
 ,spaa,spaa
+,wagon,wagon
 ,wheelinf,wheelinf
 ,wheelairdef,wheelairdef
 ,wheelart,wheelart
 ,wheelat,wheelat
 ,wheelat-alt,wheelat-alt
 ,textunit,textunit (sym-text)
+,only-text,only-text (sym-only-text)
