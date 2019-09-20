@@ -82,6 +82,7 @@ showcase,@,name
 ,observer,observer
 ,rail-art,rail-art
 ,rockets,rockets
+,rockets-alt,rockets-alt
 ,rotary-wing,rotary-wing
 ,spaa,spaa
 ,truck,truck
@@ -93,6 +94,8 @@ showcase,@,name
 ,wheelart,wheelart
 ,wheelat,wheelat
 ,wheelat-alt,wheelat-alt
+,wheelrockets,wheelrockets
+,wheelrockets-alt,wheelrockets-alt
 ,textunit,textunit (sym-text)
 ,texttank,texttank (sym-texttank)
 ,textwheeled,textwheeled (sym-textwheeled)
