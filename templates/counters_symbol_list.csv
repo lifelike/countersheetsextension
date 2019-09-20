@@ -16,7 +16,9 @@ showcase,@,unitname
 ,armcav-amph,armcav-amph
 ,armeng,armeng
 ,art,art
+,art-animal,art-animal
 ,art-snow,art-snow
+,art-towed,art-towed
 ,assaultgun,assaultgun
 ,at,at
 ,at-alt,at-alt
@@ -61,6 +63,7 @@ showcase,@,unitname
 ,inf-rifle-auto,inf-rifle-auto
 ,inf-rifle-semiauto,inf-rifle-semiauto
 ,inf-rifle-singleshot,inf-rifle-singleshot
+,inf-ski,inf-ski
 ,inf-snow,inf-snow
 ,marine,marine
 ,marine-alt,marine-alt
@@ -71,12 +74,17 @@ showcase,@,unitname
 ,mc-recon,mc-recon
 ,mg,mg
 ,mg-alt,mg-alt
+,mg-animal,mg-animal
 ,mg-inf,mg-inf
 ,mg-snow,mg-snow
+,mine-clearing,mine-clearing
+,mine-launcher,mine-launcher
+,mine-layer,mine-layer
 ,missile,missile
 ,mtn-art,mnt-art
 ,mtn-inf,mnt-inf
 ,mortar,mortar
+,mortar-animal,mortar-animal
 ,mortar-snow,mortar-snow
 ,obs-field-art,obs-field-art
 ,observer,observer
@@ -84,7 +92,9 @@ showcase,@,unitname
 ,rockets,rockets
 ,rockets-alt,rockets-alt
 ,rotary-wing,rotary-wing
+,signal,signal
 ,spaa,spaa
+,transport,transport
 ,truck,truck
 ,truck-crosscountry,truck-crosscountry
 ,truck-semitrailer,truck-semitrailer
