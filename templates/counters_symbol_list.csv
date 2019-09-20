@@ -6,22 +6,27 @@ showcase,@,name
 ,airat-alt,airat-alt
 ,airdef,airdef
 ,airmortar,airmortar
+,airinf,airinf
+,arm,arm
+,arm-amph,arm-amph
+,armart,armart
+,armart-amph,armart-amph
+,armbridging,armbridging
+,armcav,armcav
+,armcav-amph,armcav-amph
+,armeng,armeng
+,art,art
+,art-snow,art-snow
+,assaultgun,assaultgun
 ,at,at
 ,at-alt,at-alt
 ,at-alt2,at-alt2
-,airinf,airinf
-,arm,arm
-,armart,armart
-,armbridging,armbridging
-,armcav,armcav
-,armeng,armeng
-,art,art
-,assaultgun,assaultgun
 ,bicycle-inf,bicycle-inf
 ,bicycle-recon,bicycle-recon
 ,bridging,bridging
 ,cav,cav
 ,cavart,cavart
+,cbrn,cbrn
 ,combined-arms,combined-arms
 ,commandos,commandos
 ,eng,eng
@@ -56,21 +61,26 @@ showcase,@,name
 ,inf-rifle-auto,inf-rifle-auto
 ,inf-rifle-semiauto,inf-rifle-semiauto
 ,inf-rifle-singleshot,inf-rifle-singleshot
+,inf-snow,inf-snow
 ,marine,marine
 ,marine-alt,marine-alt
 ,mech,mech
+,mech-amph,mech-amph
 ,mc-inf,mc-inf
 ,mc-mg,mc-mg
 ,mc-recon,mc-recon
 ,mg,mg
 ,mg-alt,mg-alt
 ,mg-inf,mg-inf
+,mg-snow,mg-snow
 ,missile,missile
 ,mtn-art,mnt-art
 ,mtn-inf,mnt-inf
 ,mortar,mortar
+,mortar-snow,mortar-snow
 ,obs-field-art,obs-field-art
 ,observer,observer
+,rail-art,rail-art
 ,rockets,rockets
 ,rotary-wing,rotary-wing
 ,spaa,spaa
@@ -81,4 +91,9 @@ showcase,@,name
 ,wheelat,wheelat
 ,wheelat-alt,wheelat-alt
 ,textunit,textunit (sym-text)
+,texttank,texttank (sym-texttank)
+,textwheeled,textwheeled (sym-textwheeled)
+,truck,truck
+,truck-crosscountry,truck-crosscountry
+,truck-semitrailer,truck-semitrailer
 ,only-text,only-text (sym-only-text)
