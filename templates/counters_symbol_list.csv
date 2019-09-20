@@ -84,6 +84,9 @@ showcase,@,name
 ,rockets,rockets
 ,rotary-wing,rotary-wing
 ,spaa,spaa
+,truck,truck
+,truck-crosscountry,truck-crosscountry
+,truck-semitrailer,truck-semitrailer
 ,wagon,wagon
 ,wheelinf,wheelinf
 ,wheelairdef,wheelairdef
@@ -93,7 +96,4 @@ showcase,@,name
 ,textunit,textunit (sym-text)
 ,texttank,texttank (sym-texttank)
 ,textwheeled,textwheeled (sym-textwheeled)
-,truck,truck
-,truck-crosscountry,truck-crosscountry
-,truck-semitrailer,truck-semitrailer
 ,only-text,only-text (sym-only-text)
