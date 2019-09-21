@@ -97,7 +97,7 @@ tests = [
                                                    '-O' : '0'}],
     ['nato_counters.csv', 'template-counters.svg'],
     ['nato_counters_2_sides.csv', 'template-counters.svg'],
-    ['standees.csv', 'standees.svg'],
+    ['standees.csv', 'standees.svg', {'-R' : 'true', '-O' : '0'}],
     ['image_counters.csv', 'template-counters.svg'],
 ]
 
