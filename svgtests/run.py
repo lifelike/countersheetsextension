@@ -92,6 +92,9 @@ tests = [
     ['counters_size_list.csv', 'template-counters.svg', {'-r' : '0',
                                                          '-f' : '90',
                                                          '-O' : '0'}],
+    ['markers_list.csv', 'template-counters.svg', {'-r' : '0',
+                                                   '-f' : '90',
+                                                   '-O' : '0'}],
     ['nato_counters.csv', 'template-counters.svg'],
     ['nato_counters_2_sides.csv', 'template-counters.svg'],
 ]
