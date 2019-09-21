@@ -1,19 +1,19 @@
 sif20x20,sif20x20fi,sif20x20ftext,sif20x20fbar[style:fill],sif20x20fbg[style:fill],sif20x20bbg[style:fill]
-,g4516.png,STANDEE1,khaki,white,ghostwhite
+,artillery_small.png,STANDEE1,khaki,white,ghostwhite
 
 sifb20x20,sifb20x20fi,sifb20x20bi,sifb20x20ftext,sifb20x20btext,sifb20x20fbar[style:fill],sifb20x20bbar[style:fill],sifb20x20fbg[style:fill],sifb20x20bbg[style:fill]
-,g4332.png,g4546.png,STANDEE2,BACK 2,khaki,salmon,white,ghostwhite
+,infantry_small.png,light_infantry_small.png,STANDEE2,BACK 2,khaki,salmon,white,ghostwhite
 
 sifb20x20,sifb20x20*i,sifb20x20*text,sifb20x20*bar[style:fill],sifb20x20*bg[style:fill]
-,g4452.png,STANDEE3,khaki,white
+,infantry_small.png,STANDEE3,khaki,white
 ENDBOX
 sif20x35,sif20x35fi,sif20x35ftext,sif20x35fbar[style:fill],sif20x35fbg[style:fill],sif20x35bbg[style:fill]
-,g4498.png,STANDEE4,khaki,white,ghostwhite
+,w_artillery_tall.png,STANDEE4,khaki,white,ghostwhite
 
 sifb20x35,sifb20x35fi,sifb20x35bi,sifb20x35ftext,sifb20x35btext,sifb20x35fbar[style:fill],sifb20x35bbar[style:fill],sifb20x35fbg[style:fill],sifb20x35bbg[style:fill]
-,g4290.png,g4260.png,STANDEE5,BACK 5,khaki,salmon,white,ghostwhite
+,w_infantry_tall.png,w_light_infantry_tall.png,STANDEE5,BACK 5,khaki,salmon,white,ghostwhite
 
-sifb20x35,sifb20x35*i,sifb20x35*text,sifb20x35*bar[style:fill],sif20x20fbg[style:fill],sif20x20bbg[style:fill]
-,g4274.png,STANDEE6,khaki,white,ghostwhite
+sifb20x35,sifb20x35*i,sifb20x35*text,sifb20x35*bar[style:fill],sifb20x35fbg[style:fill],sifb20x35bbg[style:fill]
+,w_infantry_tall.png,STANDEE6,khaki,white,white
 
 
