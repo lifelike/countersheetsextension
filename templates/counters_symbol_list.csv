@@ -109,6 +109,7 @@ showcase,@,unitname,unitnote
 ,wheelat-alt,wheelat-alt,
 ,wheelrockets,wheelrockets,
 ,wheelrockets-alt,wheelrockets-alt,
+,imageunit,imageunit,(sym-image)
 ,textunit,textunit,(sym-text)
 ,texttank,texttank,(sym-texttank)
 ,textwheeled,textwheeled,(sym-textwheeled)
