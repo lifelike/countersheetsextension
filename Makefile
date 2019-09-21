@@ -3,7 +3,8 @@ docimages: doc/counter_symbols-1.png \
 	doc/counters_size_list.png \
 	doc/markers_list.png \
 	doc/standees_20x20.png \
-	doc/standees_20x35.png
+	doc/standees_20x35.png \
+	doc/image_counters.png
 
 svgtests:
 	svgtests/run.sh
@@ -21,6 +22,9 @@ doc/standees_20x20.png: svgtests/bitmaps/standees.csv-standees.svgcs_layer_0001.
 	cp -v $^ $@
 
 doc/standees_20x35.png: svgtests/bitmaps/standees.csv-standees.svgcs_layer_0002.png
+	cp -v $^ $@
+
+doc/image_counters.png: svgtests/bitmaps/image_counters.csv-template-counters.svgcs_layer_0001.png
 	cp -v $^ $@
 
 .PHONY: docimages svgtests
