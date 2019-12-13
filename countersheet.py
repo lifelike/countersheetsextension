@@ -2044,10 +2044,12 @@ def make_def_ref(color):
     return "url(#%s)" % color
 
 def find_top_level_group_for(element):
+    if element is None:
+        return None
     parent = element.getparent()
     if parent is None:
         return None
-    elif is_layer(parent):
+    elif is_group(element) and is_layer(parent):
         return element
     else:
         return find_top_level_group_for(parent)
@@ -2066,6 +2068,9 @@ def is_layer(element):
         return element.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
     except:
         return False
+
+def is_group(element):
+    return element.tag == inkex.addNS('g','svg')
 
 def get_layer(element, sourceElementId=None):
     '''
