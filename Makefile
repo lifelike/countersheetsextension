@@ -8,7 +8,6 @@ docimages: doc/counter_symbols-1.png \
 	doc/counters-2sides.csv-counters.svg.png \
 	doc/counters-2sides.csv-counters.svgR_true.png \
 	doc/counters-2sides.csv-counters.svgR_true.png \
-	doc/counters-2sides.csv-counters.svgD_true_R_true_back.png \
 	doc/counters-2sides.csv-counters.svgD_true_back.png \
 	doc/counters-2sides.csv-counters.svg_back.png
 
@@ -44,9 +43,6 @@ doc/counters-2sides.csv-counters.svg_back.png: svgtests/bitmaps/counters-2sides.
 	cp -v $^ $@
 
 doc/counters-2sides.csv-counters.svgR_true.png: svgtests/bitmaps/counters-2sides.csv-counters.svgR_true.svgcs_layer_0001.png
-	cp -v $^ $@
-
-doc/counters-2sides.csv-counters.svgD_true_R_true_back.png: svgtests/bitmaps/counters-2sides.csv-counters.svgD_true_R_true.svgcs_layer_0001_back.png
 	cp -v $^ $@
 
 .PHONY: docimages svgtests
