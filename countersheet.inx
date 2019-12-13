@@ -24,6 +24,8 @@
         _gui-text="Registration Marks Length (optional)">15mm</param>
       <param name="fullregistrationmarks" type="boolean"
          _gui-text="Full Registration Marks">false</param>
+      <param name="registrationmarksbothsides" type="boolean"
+         _gui-text="Registration Marks Both Sides">false</param>
       <param name="outlinedist" type="string"
          _gui-text="Outline (Outset Distance)">10mm</param>
       <param name="bleed" type="boolean"

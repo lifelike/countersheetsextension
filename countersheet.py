@@ -373,6 +373,10 @@ class CountersheetEffect(inkex.Effect):
                                      action = 'store',
                                      dest = 'fullregistrationmarks',
                                      default = "false")
+        self.OptionParser.add_option('-D', '--registrationmarksbothsides',
+                                     action = 'store',
+                                     dest = 'registrationmarksbothsides',
+                                     default = "false")
         self.OptionParser.add_option('-O', '--outlinedist',
                                      action = 'store',
                                      type = 'string',
@@ -1061,6 +1065,16 @@ class CountersheetEffect(inkex.Effect):
                 return regstyle
         return DEFAULT_REGISTRATION_MARK_STYLE
 
+    def add_registration_line(self, x1, y1, x2, y2, layer):
+            layer.append(self.create_registrationline(x1, y1, x2, y2))
+
+    def add_registration_line_both_sides(self, x1, y1, x2, y2, layer,
+                                         backlayer, docwidth):
+        self.add_registration_line(x1, y1, x2, y2, layer)
+        if backlayer is not None and self.registrationmarksbothsides:
+                self.add_registration_line(docwidth-x1, y1, docwidth-x2,
+                                           y2, backlayer)
+
     def addregistrationmarks(self, xregistrationmarks, yregistrationmarks,
                              position, layer, backlayer, docwidth):
         if self.registrationmarkslen <= 0:
@@ -1070,41 +1084,51 @@ class CountersheetEffect(inkex.Effect):
         max_y = 0
         for x in xregistrationmarks:
             self.logwrite("registrationmark x: %f\n" % x)
-            layer.append(
-                self.create_registrationline(position.x + x,
-                                             position.y,
-                                             position.x + x,
-                                             position.y - linelen))
+            self.add_registration_line_both_sides(position.x + x,
+                                                  position.y,
+                                                  position.x + x,
+                                                  position.y - linelen,
+                                                  layer,
+                                                  backlayer,
+                                                  docwidth)
             max_x = max(max_x, x)
 
         for y in yregistrationmarks:
             self.logwrite("registrationmark y: %f\n" % y)
-            layer.append(self.create_registrationline(position.x,
-                                                      position.y + y,
-                                                      position.x - linelen,
-                                                      position.y + y))
+            self.add_registration_line_both_sides(position.x,
+                                                  position.y + y,
+                                                  position.x - linelen,
+                                                  position.y + y,
+                                                  layer,
+                                                  backlayer,
+                                                  docwidth)
             max_y = max(max_y, y)
 
         for x in xregistrationmarks:
             start_y = position.y + max_y
             if self.fullregistrationmarks:
                 start_y = position.y
-            layer.append(
-                self.create_registrationline(
+            self.add_registration_line_both_sides(
                 position.x + x,
                 start_y,
                 position.x + x,
-                position.y + max_y + linelen))
+                position.y + max_y + linelen,
+                layer,
+                backlayer,
+                docwidth)
 
         for y in yregistrationmarks:
             start_x = position.x + max_x
             if self.fullregistrationmarks:
                 start_x = position.x
-            layer.append(self.create_registrationline(
+            self.add_registration_line_both_sides(
                 start_x,
                 position.y + y,
                 position.x + max_x + linelen,
-                position.y + y))
+                position.y + y,
+                layer,
+                backlayer,
+                docwidth)
 
         if self.outlinemarks:
             x1 = position.x - self.outlinedist
@@ -1215,6 +1239,9 @@ class CountersheetEffect(inkex.Effect):
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
+        self.registrationmarksbothsides = (self.options.registrationmarksbothsides
+                                           == "true")
+
         self.logwrite("full registration marks: %r\n"
                       % self.fullregistrationmarks)
 

@@ -4,7 +4,10 @@ docimages: doc/counter_symbols-1.png \
 	doc/markers_list.png \
 	doc/standees_20x20.png \
 	doc/standees_20x35.png \
-	doc/image_counters.png
+	doc/image_counters.png \
+	doc/counters-2sides.csv-counters.svg.png \
+	doc/counters-2sides.csv-counters.svgD_true_back.png \
+	doc/counters-2sides.csv-counters.svg_back.png
 
 svgtests:
 	svgtests/run.sh
@@ -25,6 +28,18 @@ doc/standees_20x35.png: svgtests/bitmaps/standees.csv-standees.svgO_0_R_true.svg
 	cp -v $^ $@
 
 doc/image_counters.png: svgtests/bitmaps/image_counters.csv-template-counters.svgcs_layer_0001.png
+	cp -v $^ $@
+
+doc/counters-2sides.csv-counters.svgD_true.png: svgtests/bitmaps/counters-2sides.csv-counters.svgD_true.svgcs_layer_0001.png
+	cp -v $^ $@
+
+doc/counters-2sides.csv-counters.svg.png: svgtests/bitmaps/counters-2sides.csv-counters.svgcs_layer_0001.png
+	cp -v $^ $@
+
+doc/counters-2sides.csv-counters.svgD_true_back.png: svgtests/bitmaps/counters-2sides.csv-counters.svgD_true.svgcs_layer_0001_back.png
+	cp -v $^ $@
+
+doc/counters-2sides.csv-counters.svg_back.png: svgtests/bitmaps/counters-2sides.csv-counters.svgcs_layer_0001_back.png
 	cp -v $^ $@
 
 .PHONY: docimages svgtests
