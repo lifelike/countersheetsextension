@@ -28,6 +28,7 @@ from lxml import etree
 from copy import deepcopy
 import sys
 import simpletransform
+from tempfile import mkstemp
 
 from simplestyle import parseStyle, formatStyle
 
@@ -898,7 +899,14 @@ class CountersheetEffect(inkex.Effect):
     def queryAll(self, filename):
         "Return geometry Rectangle (x, y, w, h) for each element id, as dict."
         geometry = {}
-        cmd = 'inkscape --query-all "%s"' % filename
+        # TODO some error-checking would be good for the next few lines
+        inputfile = open(filename, "r")
+        filecontents = inputfile.read()
+        tmpfile = mkstemp(".svg")
+        tmpfilefile = os.fdopen(tmpfile[0], 'w')
+        tmpfilefile.write(filecontents)
+        tmpfilefile.close()
+        cmd = 'inkscape --query-all "%s"' % tmpfile[1]
         _, f, err = os.popen3(cmd, 't')
         reader = csv.reader(f)
         for line in reader:
@@ -915,6 +923,7 @@ class CountersheetEffect(inkex.Effect):
         f.close()
         print_filtered_stderr(err)
         err.close()
+        os.remove(tmpfile[1])
         return geometry
 
     def exportBitmaps(self, ids, width, height, dpi=0):
@@ -934,7 +943,6 @@ class CountersheetEffect(inkex.Effect):
         when done with it.
         Use exportdir=None to use default system tmp dir.
         Returns filename."""
-        from tempfile import mkstemp
         if exportdir is not None:
             exportdir = os.path.abspath(exportdir)
         tmpfile = mkstemp(".svg", "tmp", exportdir, True)
@@ -950,9 +958,6 @@ class CountersheetEffect(inkex.Effect):
                               noidexportworkaround=False):
         tmpfilename = self.make_temporary_svg(exportdir)
         self.logwrite("export to tmpfilename: %s\n" % tmpfilename)
-        tmpfile = open(tmpfilename, 'w')
-        self.document.write(tmpfile)
-        tmpfile.close()
         self.logwrite(" ids to export: %r\n" % ids)
         for id in ids:
             if len(self.document.xpath("//*[@id='%s']" % id,
