@@ -17,6 +17,20 @@
          _gui-text="Back Side Horizontal Offset">0mm</param>
       <param name="backoffsety" type="string"
          _gui-text="Back Side Vertical Offset">0mm</param>
+      <param name="rotatefronts" type="enum"
+             _gui-text="Rotate Fronts">
+             <item value="0">0</item>
+             <item value="90">90</item>
+             <item value="180">180</item>
+             <item value="-90">-90</item>
+             </param>
+      <param name="rotatebacks" type="enum"
+             _gui-text="Rotate Backs">
+             <item value="0">0</item>
+             <item value="90">90</item>
+             <item value="180">180</item>
+             <item value="-90">-90</item>
+             </param>
     </page>
 
     <page name="page3" gui-text="Style">

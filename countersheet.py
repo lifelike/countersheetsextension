@@ -353,6 +353,14 @@ class CountersheetEffect(inkex.Effect):
                                      type = 'int', dest = 'bitmapwidth',
                                      default = '56',
                                      help = 'ID bitmap width')
+        self.OptionParser.add_option('-F', '--rotatefronts', action = 'store',
+                                     type = 'int', dest = 'rotatefronts',
+                                     default = '0',
+                                     help = 'Rotate Fronts (degrees)')
+        self.OptionParser.add_option('-G', '--rotatebacks', action = 'store',
+                                     type = 'int', dest = 'rotatebacks',
+                                     default = '0',
+                                     help = 'Rotate Backs (degrees)')
         self.OptionParser.add_option('-y', '--bitmaph', action = 'store',
                                      type = 'int', dest = 'bitmapheight',
                                      default = '56',
@@ -444,6 +452,24 @@ class CountersheetEffect(inkex.Effect):
             element.set('transform', translate + " " + old_transform)
         else:
             element.set('transform', translate)
+
+    def rotate_element(self, element, degrees, width, height):
+        if degrees == 0 or degrees == 180:
+            return
+        rotate = "rotate(%f,%f,%f)" % (degrees,
+                                          width / 2.0,
+                                          height / 2.0)
+        if degrees == 90 or degrees == -90:
+            rotate_xshift = (height - width) / 2.0
+            rotate_yshift = (width - height) / 2.0
+            rotate = "translate(%f,%f) %s" % (rotate_xshift,
+                                              rotate_yshift,
+                                              rotate)
+        old_transform = element.get('transform')
+        if old_transform:
+            element.set('transform', old_transform + " " + rotate)
+        else:
+            element.set('transform', rotate)
 
     def translate_use_element(self, use, old_ref, new_ref):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
@@ -714,7 +740,7 @@ class CountersheetEffect(inkex.Effect):
         layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
         return layer
 
-    def generatecounter(self, c, rects, layer, colx, rowy):
+    def generatecounter(self, c, rects, layer, colx, rowy, rotate):
         oldcs = self.document.xpath("//svg:g[@id='%s']"% c.id,
                                     namespaces=NSS)
         if len(oldcs):
@@ -823,8 +849,13 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
         self.translate_element(clonegroup, colx, rowy)
+        self.rotate_element(clonegroup, rotate, c.width, c.height)
         layer.append(clonegroup)
-        return [c.width, c.height]
+        # this is not ideal, but works for the inx enum
+        if rotate == 90 or rotate == -90:
+            return [c.height, c.width]
+        else:
+            return [c.width, c.height]
 
     def substitute_text(self, c, t, textid):
         for glob,subst in c.subst.iteritems():
@@ -891,7 +922,8 @@ class CountersheetEffect(inkex.Effect):
             self.generatecounter(c.back, rects,
                                  layer,
                                  docwidth - x,
-                                 y)
+                                 y,
+                                 self.options.rotatebacks)
 
     # Looked a bit at code in Inkscape text_merge.py for this idea.
     # That file is Copyright (C) 2013 Nicolas Dufour (jazzynico).
@@ -1404,7 +1436,8 @@ class CountersheetEffect(inkex.Effect):
                 self.logwrite("   adding front\n")
                 width, height=self.generatecounter(c, rects, layer,
                                                    positions[box].x+colx,
-                                                   positions[box].y+rowy)
+                                                   positions[box].y+rowy,
+                                                   self.options.rotatefronts)
                 self.logwrite("generated counter size: %fx%f\n"
                               % (width, height))
                 c.bleed_left.append(is_first_col or self.spacing > 0)
