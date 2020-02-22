@@ -331,9 +331,6 @@ class Rectangle:
 class CountersheetEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        # quick attempt compatibility with Inkscape older than 0.91:
-        if not hasattr(self, 'unittouu'):
-            self.unittouu = inkex.unittouu
         self.log = False
         self.nextid = 1000000
         self.arg_parser.add_argument('-,', '--name')
@@ -1188,7 +1185,7 @@ class CountersheetEffect(inkex.Effect):
     def from_len_arg(self, argvalue, name, allow_negative=False):
         if argvalue is None or len(argvalue) == 0:
             return 0.0
-        value = self.unittouu(argvalue)
+        value = self.svg.unittouu(argvalue)
         if not allow_negative and value < 0:
             sys.exit("Negative %s marks makes no sense." % name)
 
@@ -1206,7 +1203,7 @@ class CountersheetEffect(inkex.Effect):
         the rest of this extension.
         Error-handling is lacking.
         """
-        self.xscale = self.yscale = 1.0 / self.unittouu('1px')
+        self.xscale = self.yscale = 1.0 / self.svg.unittouu('1px')
         xscale = yscale = 0.0
         try:
             viewbox = svg.get('viewBox')
@@ -1215,14 +1212,14 @@ class CountersheetEffect(inkex.Effect):
                 (viewx, viewy, vieww, viewh) = list(map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4)))
                 svgwidth = svg.get('width')
                 svgheight = svg.get('height')
-                svguuwidth = self.unittouu(svgwidth)
-                svguuheight = self.unittouu(svgheight)
+                svguuwidth = self.svg.unittouu(svgwidth)
+                svguuheight = self.svg.unittouu(svgheight)
                 self.logwrite("SVG widthxheight: %sx%s\n"
                               % (svgwidth, svgheight))
                 self.logwrite("SVG size in user-units: %fx%f\n"
                               % (svguuwidth, svguuheight))
-                xscale = self.unittouu(svg.get('width')) / vieww / self.unittouu("1px")
-                yscale = self.unittouu(svg.get('height')) / viewh / self.unittouu("1px")
+                xscale = self.svg.unittouu(svg.get('width')) / vieww / self.svg.unittouu("1px")
+                yscale = self.svg.unittouu(svg.get('height')) / viewh / self.svg.unittouu("1px")
                 self.xscale = xscale
                 self.yscale = yscale
         except Exception as e:
@@ -1232,7 +1229,7 @@ class CountersheetEffect(inkex.Effect):
         try:
             return float(svg.get('viewBox').split(' ')[n])
         except:
-            return self.unittouu(svg.get(fallback)) # let it crash if this fails
+            return self.svg.unittouu(svg.get(fallback)) # let it crash if this fails
 
     # Because getDocumentWidth in inkex fails because it makes assumptions about
     # user-units. Trusting the viewBox instead for now.
@@ -1312,7 +1309,7 @@ class CountersheetEffect(inkex.Effect):
         # a small, "pixel-size", length, to use for making small
         # adjustments that works in Inkscape 0.91 and later, similar
         # to what "1px" always was in earlier Inkscape versions
-        PS = self.unittouu("%fin" % (1.0 / 90))
+        PS = self.svg.unittouu("%fin" % (1.0 / 90))
 
         rects = {}
         for r in doc.xpath('//svg:rect', namespaces=NSS):
@@ -1366,8 +1363,8 @@ class CountersheetEffect(inkex.Effect):
 
         docwidth = self.getViewBoxWidth(svg)
 
-        self.logwrite("user-units in 1 inch: %f\n" % self.unittouu("1in"))
-        self.logwrite("user-units in 1 px: %f\n" % self.unittouu("1px"))
+        self.logwrite("user-units in 1 inch: %f\n" % self.svg.unittouu("1in"))
+        self.logwrite("user-units in 1 px: %f\n" % self.svg.unittouu("1px"))
 #        self.logwrite("uuconv['in']: %f\n" % self.__uuconv["in"])
 
         self.logwrite("calculated document scale: %f %f\n"
