@@ -338,15 +338,15 @@ class CountersheetEffect(inkex.Effect):
         self.nextid = 1000000
         self.arg_parser.add_argument('-,', '--name')
         self.arg_parser.add_argument('-l', '--log',
-                                     type = string, dest = 'logfile')
+                                     type = str, dest = 'logfile')
         self.arg_parser.add_argument('-n', '--what',
-                                     type = string, dest = 'what',
+                                     type = str, dest = 'what',
                                      default = '',
                                      help = 'Name')
         self.arg_parser.add_argument('-N', '--sheets-bitmap-name', dest='bitmapname',
                                      default = '') # undocumented, for svgtests
         self.arg_parser.add_argument('-d', '--data',
-                                     type = string, dest = 'datafile',
+                                     type = str, dest = 'datafile',
                                      default = 'countersheet.csv',
                                      help = 'CSV or XML data file.')
         self.arg_parser.add_argument('-w', '--bitmapw',
@@ -369,11 +369,11 @@ class CountersheetEffect(inkex.Effect):
                                      type = int, dest = 'bitmapsheetsdpi',
                                      default = '0')
         self.arg_parser.add_argument('-b', '--bitmapdir',
-                                     type = string, dest = 'bitmapdir')
+                                     type = str, dest = 'bitmapdir')
         self.arg_parser.add_argument('-p', '--pdfdir',
-                                     type = string, dest = 'pdfdir')
+                                     type = str, dest = 'pdfdir')
         self.arg_parser.add_argument('-r', '--registrationmarkslen',
-                                     type = string,
+                                     type = str,
                                      default = '',
                                      dest = 'registrationmarkslen')
         self.arg_parser.add_argument('-R', '--fullregistrationmarks',
@@ -383,11 +383,11 @@ class CountersheetEffect(inkex.Effect):
                                      dest = 'registrationmarksbothsides',
                                      default = "false")
         self.arg_parser.add_argument('-O', '--outlinedist',
-                                     type = string,
+                                     type = str,
                                      dest = 'outlinedist',
                                      default = "")
         self.arg_parser.add_argument('-S', '--spacing',
-                                     type = string,
+                                     type = str,
                                      dest = 'spacing',
                                      default = "0")
         self.arg_parser.add_argument('-m', '--textmarkup', dest='textmarkup',
