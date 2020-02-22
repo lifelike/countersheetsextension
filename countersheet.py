@@ -279,7 +279,7 @@ class NoSetting:
 
 class CounterPart:
     def __init__(self, id):
-        self.id = id.decode('utf8')
+        self.id = id
 
     def applyto(self, counter):
         counter.addpart(self.id)
@@ -290,7 +290,7 @@ class CounterExcludeID:
         self.exceptions = set()
 
     def addexception(self, id):
-        self.exceptions.add(id.decode('utf8'))
+        self.exceptions.add(id)
 
     def applyto(self, counter):
         counter.excludeid(self.id)
@@ -299,7 +299,7 @@ class CounterExcludeID:
 
 class CounterAttribute:
     def __init__(self, id, attribute, source):
-        self.id = id.decode('utf8')
+        self.id = id
         self.attribute = attribute
         self.source = source
 
@@ -493,7 +493,7 @@ class CountersheetEffect(inkex.Effect):
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, name,
-                                  line.decode('utf8'), 'flowSpan',
+                                  line, 'flowSpan',
                                   added_style,
                                   parseStyle(element.get('style')))
             element.append(para)
@@ -684,7 +684,7 @@ class CountersheetEffect(inkex.Effect):
                                                        element.tag,
                                                        text))
             self.deleteTextChildren(element)
-            self.setFormattedText(element, name, text.decode('utf8'),
+            self.setFormattedText(element, name, text,
                                   'tspan',
                                   {}, parseStyle(element.get('style')))
             return True
@@ -696,7 +696,7 @@ class CountersheetEffect(inkex.Effect):
                                                        element.tag,
                                                        text))
             self.deleteTextChildren(element)
-            self.setFormattedText(element, name, text.decode('utf8'),
+            self.setFormattedText(element, name, text,
                                   'flowSpan',
                                   {}, parseStyle(element.get('style')))
             return True
@@ -869,7 +869,7 @@ class CountersheetEffect(inkex.Effect):
                         childtype = 'tspan'
                         if t.tag == inkex.addNS('flowRoot','svg'):
                             childtype = 'flowSpan'
-                        self.setFormattedText(t, textid, subst.decode('utf8'),
+                        self.setFormattedText(t, textid, subst,
                                               childtype, {},
                                               parseStyle(t.get('style')))
                 if c.id:
@@ -945,7 +945,7 @@ class CountersheetEffect(inkex.Effect):
                               float(line[4]) / self.yscale)
                 self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
-                geometry[element_id.decode('utf8')] = r
+                geometry[element_id] = r
         f.close()
         print_filtered_stderr(err)
         err.close()
@@ -2043,7 +2043,7 @@ def string_replace_xml_text(element, pattern, value):
     if value is None:
         return
     if element.text:
-        element.text = element.text.replace(pattern, value.decode('utf8'))
+        element.text = element.text.replace(pattern, value)
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 
