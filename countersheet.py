@@ -336,76 +336,70 @@ class CountersheetEffect(inkex.Effect):
             self.unittouu = inkex.unittouu
         self.log = False
         self.nextid = 1000000
-        self.OptionParser.add_option('-,', '--name', action = 'store')
-        self.OptionParser.add_option('-l', '--log', action = 'store',
-                                     type = 'string', dest = 'logfile')
-        self.OptionParser.add_option('-n', '--what', action = 'store',
-                                     type = 'string', dest = 'what',
+        self.arg_parser.add_argument('-,', '--name')
+        self.arg_parser.add_argument('-l', '--log',
+                                     type = string, dest = 'logfile')
+        self.arg_parser.add_argument('-n', '--what',
+                                     type = string, dest = 'what',
                                      default = '',
                                      help = 'Name')
-        self.OptionParser.add_option('-N', '--sheets-bitmap-name', dest='bitmapname',
+        self.arg_parser.add_argument('-N', '--sheets-bitmap-name', dest='bitmapname',
                                      default = '') # undocumented, for svgtests
-        self.OptionParser.add_option('-d', '--data', action = 'store',
-                                     type = 'string', dest = 'datafile',
+        self.arg_parser.add_argument('-d', '--data',
+                                     type = string, dest = 'datafile',
                                      default = 'countersheet.csv',
                                      help = 'CSV or XML data file.')
-        self.OptionParser.add_option('-w', '--bitmapw', action = 'store',
-                                     type = 'int', dest = 'bitmapwidth',
+        self.arg_parser.add_argument('-w', '--bitmapw',
+                                     type = int, dest = 'bitmapwidth',
                                      default = '56',
                                      help = 'ID bitmap width')
-        self.OptionParser.add_option('-F', '--rotatefronts', action = 'store',
-                                     type = 'int', dest = 'rotatefronts',
+        self.arg_parser.add_argument('-F', '--rotatefronts',
+                                     type = int, dest = 'rotatefronts',
                                      default = '0',
                                      help = 'Rotate Fronts (degrees)')
-        self.OptionParser.add_option('-G', '--rotatebacks', action = 'store',
-                                     type = 'int', dest = 'rotatebacks',
+        self.arg_parser.add_argument('-G', '--rotatebacks',
+                                     type = int, dest = 'rotatebacks',
                                      default = '0',
                                      help = 'Rotate Backs (degrees)')
-        self.OptionParser.add_option('-y', '--bitmaph', action = 'store',
-                                     type = 'int', dest = 'bitmapheight',
+        self.arg_parser.add_argument('-y', '--bitmaph',
+                                     type = int, dest = 'bitmapheight',
                                      default = '56',
                                      help = 'Number of columns.')
-        self.OptionParser.add_option('-f', '--bitmapsheetsdpi',
-                                     action = 'store',
-                                     type = 'int', dest = 'bitmapsheetsdpi',
+        self.arg_parser.add_argument('-f', '--bitmapsheetsdpi',
+                                     type = int, dest = 'bitmapsheetsdpi',
                                      default = '0')
-        self.OptionParser.add_option('-b', '--bitmapdir', action = 'store',
-                                     type = 'string', dest = 'bitmapdir')
-        self.OptionParser.add_option('-p', '--pdfdir', action = 'store',
-                                     type = 'string', dest = 'pdfdir')
-        self.OptionParser.add_option('-r', '--registrationmarkslen',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-b', '--bitmapdir',
+                                     type = string, dest = 'bitmapdir')
+        self.arg_parser.add_argument('-p', '--pdfdir',
+                                     type = string, dest = 'pdfdir')
+        self.arg_parser.add_argument('-r', '--registrationmarkslen',
+                                     type = string,
                                      default = '',
                                      dest = 'registrationmarkslen')
-        self.OptionParser.add_option('-R', '--fullregistrationmarks',
-                                     action = 'store',
+        self.arg_parser.add_argument('-R', '--fullregistrationmarks',
                                      dest = 'fullregistrationmarks',
                                      default = "false")
-        self.OptionParser.add_option('-D', '--registrationmarksbothsides',
-                                     action = 'store',
+        self.arg_parser.add_argument('-D', '--registrationmarksbothsides',
                                      dest = 'registrationmarksbothsides',
                                      default = "false")
-        self.OptionParser.add_option('-O', '--outlinedist',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-O', '--outlinedist',
+                                     type = string,
                                      dest = 'outlinedist',
                                      default = "")
-        self.OptionParser.add_option('-S', '--spacing',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-S', '--spacing',
+                                     type = string,
                                      dest = 'spacing',
                                      default = "0")
-        self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
-                                     action = 'store', default = "true")
-        self.OptionParser.add_option('-B', '--bleed', dest='bleed',
-                                     action = 'store', default = "false")
-        self.OptionParser.add_option('-o', '--oneside', default = "false",
-                                     action = "store", dest="oneside")
-        self.OptionParser.add_option('-X', '--backoffsetx', default = "0mm",
-                                     action = "store", dest="backoffsetx")
-        self.OptionParser.add_option('-Y', '--backoffsety', default = "0mm",
-                                     action = "store", dest="backoffsety")
+        self.arg_parser.add_argument('-m', '--textmarkup', dest='textmarkup',
+                                     default = "true")
+        self.arg_parser.add_argument('-B', '--bleed', dest='bleed',
+                                     default = "false")
+        self.arg_parser.add_argument('-o', '--oneside', default = "false",
+                                     dest="oneside")
+        self.arg_parser.add_argument('-X', '--backoffsetx', default = "0mm",
+                                     dest="backoffsetx")
+        self.arg_parser.add_argument('-Y', '--backoffsety', default = "0mm",
+                                     dest="backoffsety")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
