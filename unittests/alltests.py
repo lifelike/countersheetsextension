@@ -6,8 +6,10 @@ def add_countersheets_paths():
     import sys
     import os
     sys.path.insert(0, os.getcwd())
-    sys.path.append('/usr/local/share/inkscape/extensions')
-    sys.path.append('/usr/share/inkscape/extensions')
+    # FIXME temporary for testing
+    sys.path.append('/home/pelle/src/extensions-inkscape')
+#    sys.path.append('/usr/local/share/inkscape/extensions')
+#    sys.path.append('/usr/share/inkscape/extensions')
 
 add_countersheets_paths()
 

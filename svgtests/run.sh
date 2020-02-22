@@ -1,3 +1,7 @@
 #!/bin/sh
 
-PYTHONPATH=/usr/share/inkscape/extensions/ svgtests/run.py "$@"
+# FIXME temporary to test
+#EXTENSIONSDIR=/usr/share/inkscape/extensions/
+EXTENSIONSDIR=/home/pelle/src/extensions-inkscape
+
+PYTHONPATH=$EXTENSIONSDIR svgtests/run.py "$@"
