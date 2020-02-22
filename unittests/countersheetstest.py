@@ -110,7 +110,8 @@ class MockGroup:
     def __init__(self, group_type, transform, parent = None):
         self._group_type = group_type
         self._transform = transform
-        self._parent = parent	
+        self._parent = parent
+        self.tag = inkex.addNS('g','svg')
 
     def get(self, attribute):
         if ( attribute == inkex.addNS('groupmode', 'inkscape') and self._group_type == "layer" ):
@@ -128,32 +129,28 @@ class LayerTranslationTest(unittest.TestCase):
         self.countersheet_effect = countersheet.CountersheetEffect()
 
     def test_number_is_not_a_layer(self):
-        self.assertFalse(self.countersheet_effect.is_layer( 4 ) )
+        self.assertFalse(countersheet.is_layer( 4 ) )
 
     def test_None_is_not_a_layer(self):
-        self.assertFalse(self.countersheet_effect.is_layer( None ) )
+        self.assertFalse(countersheet.is_layer( None ) )
 
     def test_a_layer_like_object_is_a_layer(self):
         mock_layer = MockGroup( "layer", None )
-        self.assertTrue(self.countersheet_effect.is_layer( mock_layer ) )
+        self.assertTrue(countersheet.is_layer( mock_layer ) )
 
     def test_a_non_layer_like_object_is_not_a_layer(self):
         mock_not_a_layer = MockGroup( "group not layer", None )
-        self.assertFalse(self.countersheet_effect.is_layer( mock_not_a_layer ) )
-
-    def test_get_layer_on_layer(self):
-        mock_layer = MockGroup( "layer", None )
-        self.assertEqual(self.countersheet_effect.get_layer(mock_layer), mock_layer)
+        self.assertFalse(countersheet.is_layer( mock_not_a_layer ) )
 
     def test_get_layer_on_group(self):
         mock_layer = MockGroup( "layer", None )
         mock_group = MockGroup( "not a layer", None, mock_layer )
-        self.assertEqual(self.countersheet_effect.get_layer(mock_group), mock_layer)
+        self.assertEqual(countersheet.get_layer(mock_group), mock_layer)
 
     def test_get_layer_on_object_without_parent(self):
         mock_group = MockGroup( "not a layer", None )
         with self.assertRaises(ValueError):
-            self.countersheet_effect.get_layer(mock_group)
+            countersheet.get_layer(mock_group)
 
 
 class DocumentTopLeftCoordinateConverterTest(unittest.TestCase):
