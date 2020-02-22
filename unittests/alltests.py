@@ -34,6 +34,6 @@ tests = (countersheetstest.CountersheetsTest,
          )
 
 if __name__ == '__main__':
-    suite = unittest.TestSuite(map(make_suite, tests))
+    suite = unittest.TestSuite(list(map(make_suite, tests)))
     runner = unittest.TextTestRunner(verbosity=1)
     runner.run(suite)

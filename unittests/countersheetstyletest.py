@@ -9,7 +9,7 @@ def dummy_logwrite(msg):
     pass
 
 def stdout_logwrite(msg):
-    print "LOG >> " + msg,
+    print("LOG >> " + msg, end=' ')
 
 class CountersheetStyleTest(unittest.TestCase):
     def setUp(self):

@@ -10,7 +10,7 @@ def dummy_logwrite(msg):
     pass
 
 def stdout_logwrite(msg):
-    print "LOG >> " + msg,
+    print("LOG >> " + msg, end=' ')
 
 class DummyLog(object):
     def write(self, msg):

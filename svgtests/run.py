@@ -12,9 +12,9 @@ def add_countersheets_paths():
     sys.path.insert(0, os.getcwd())
 
 def namefrom(args):
-    if len(args.keys()):
+    if len(list(args.keys())):
         argslist = []
-        for a in args.iteritems():
+        for a in args.items():
             argslist.extend(a)
         return "_".join([a.replace("-", "") for a in argslist]) + ".svg"
     else:
@@ -149,7 +149,7 @@ for test in tests:
     combined_args_dict = default_args.copy()
     combined_args_dict.update(extraargs)
     combined_args = []
-    for k, v in combined_args_dict.iteritems():
+    for k, v in combined_args_dict.items():
         combined_args.append(k)
         combined_args.append(v)
     commandline = [command,
@@ -158,7 +158,7 @@ for test in tests:
                    '-N', svgoutbasename] + combined_args +  ['--', svginfile]
 
     if ['-v' in sys.argv]:
-        print >> sys.stderr, ' '.join(commandline)
+        print(' '.join(commandline), file=sys.stderr)
 
     effect = subprocess.Popen(commandline,
                               stdout=svgout)
@@ -174,8 +174,8 @@ for test in tests:
     if outputsvg == expectedsvg:
         successes += 1
     else:
-        print "FAIL: diff %s %s" % (svgoutfile, expectedfile)
+        print("FAIL: diff %s %s" % (svgoutfile, expectedfile))
         fails += 1
 
-print ("%d/%d tests OK (%d skipped, %d FAILED)\n"
-       % (successes, len(tests), skipped, fails))
+print(("%d/%d tests OK (%d skipped, %d FAILED)\n"
+       % (successes, len(tests), skipped, fails)))

@@ -32,7 +32,7 @@ from tempfile import mkstemp
 
 from simplestyle import parseStyle, formatStyle
 
-NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
+NSS['cs'] = 'http://www.hexandcounter.org/countersheetsextension/'
 
 # Trying to make inserted inlined images show up slightly
 # more well-aligned with the surrounding text by shifting
@@ -266,11 +266,11 @@ class BleedMaker:
                     % clip)
 
     def hideall(self):
-        for element,clip in self.bleed_added.iteritems():
+        for element,clip in self.bleed_added.items():
             self.setclip(element, self.unbleed[clip])
 
     def showall(self):
-        for element,clip in self.bleed_added.iteritems():
+        for element,clip in self.bleed_added.items():
             self.setclip(element, clip)
 
 class NoSetting:
@@ -426,9 +426,9 @@ class CountersheetEffect(inkex.Effect):
             id = n.get("id")
             if not id:
                 continue
-            for glob,attr in attrs.iteritems():
+            for glob,attr in attrs.items():
                 if fnmatch.fnmatchcase(id, glob):
-                    for a,v in attr.iteritems():
+                    for a,v in attr.items():
                         if a.startswith('style:'):
                             pname = a[6:]
                             a = "style"
@@ -605,7 +605,7 @@ class CountersheetEffect(inkex.Effect):
         spanid = '%s-%d-cs-image-%s' % (name, len(self.placeholders),
                                         nr)
         span.set('id', spanid)
-        span.text = u"\u2b1b"
+        span.text = "\u2b1b"
         span.set('style', 'font-size: 200%;fill-opacity:0;'
                  'font-style:normal;font-weight:normal;'
                  'font-variant:normal;font-family:sans-serif;')
@@ -763,7 +763,7 @@ class CountersheetEffect(inkex.Effect):
             if rectname[0] == "@":
                 killrect = True
                 rectname = rectname[1:]
-            if not rects.has_key(rectname):
+            if rectname not in rects:
                 sys.exit("Unable to find rectangle with id '%s' "
                          "that was specified in the CSV data file."
                          % rectname)
@@ -799,7 +799,7 @@ class CountersheetEffect(inkex.Effect):
                 imageid = i.get("id")
                 if not imageid:
                     continue
-                for glob,image in c.subst.iteritems():
+                for glob,image in c.subst.items():
                     if fnmatch.fnmatchcase(imageid, glob):
                         if len(image) > 0:
                             i.set(inkex.addNS("absref", "sodipodi"), image)
@@ -818,7 +818,7 @@ class CountersheetEffect(inkex.Effect):
                 useid = u.get("id")
                 if not useid:
                     continue
-                for glob,new_ref in c.subst.iteritems():
+                for glob,new_ref in c.subst.items():
                     if fnmatch.fnmatchcase(useid, glob):
                         if len(new_ref) > 0:
                             xlink_attribute = inkex.addNS("href", "xlink")
@@ -828,7 +828,7 @@ class CountersheetEffect(inkex.Effect):
                         else:
                             u.getparent().remove(u)
 
-            for name,value in c.subst.iteritems():
+            for name,value in c.subst.items():
                 if is_valid_name_to_replace(name):
                     string_replace_xml_text(clone, "%%%s%%" % name, value)
 
@@ -858,7 +858,7 @@ class CountersheetEffect(inkex.Effect):
             return [c.width, c.height]
 
     def substitute_text(self, c, t, textid):
-        for glob,subst in c.subst.iteritems():
+        for glob,subst in c.subst.items():
             if glob is None:
                 continue
             if subst is None:
@@ -1218,7 +1218,7 @@ class CountersheetEffect(inkex.Effect):
             viewbox = svg.get('viewBox')
             if viewbox:
                 self.logwrite("viewBox: %s\n" % viewbox)
-                (viewx, viewy, vieww, viewh) = map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4))
+                (viewx, viewy, vieww, viewh) = list(map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4)))
                 svgwidth = svg.get('width')
                 svgheight = svg.get('height')
                 svguuwidth = self.unittouu(svgwidth)
@@ -1231,7 +1231,7 @@ class CountersheetEffect(inkex.Effect):
                 yscale = self.unittouu(svg.get('height')) / viewh / self.unittouu("1px")
                 self.xscale = xscale
                 self.yscale = yscale
-        except Exception, e:
+        except Exception as e:
             self.logwrite("Failed to calculate document scale:\n%s\n" % repr(e))
 
     def getDocumentViewBoxValue(self, svg, n, fallback):
@@ -1537,7 +1537,7 @@ class CountersheetEffect(inkex.Effect):
             tmpfile = self.make_temporary_svg()
             self.logwrite("Placeholders replace temporary file: %s\n" % tmpfile)
             geometry = self.queryAll(tmpfile)
-            for spanid, info in self.placeholders.iteritems():
+            for spanid, info in self.placeholders.items():
                 if not spanid in geometry:
                     self.logwrite("Could not query location for %s."
                                   % spanid)
@@ -1583,9 +1583,9 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite("  add layer background %d\n" % nr)
             background = deepcopy(sheet_template)
             string_replace_xml_text(background, "%SHEET%",
-                                    unicode(nr))
+                                    str(nr))
             string_replace_xml_text(background, "%SHEETS%",
-                                    unicode(nrsheets))
+                                    str(nrsheets))
             del background.attrib[inkex.addNS('groupmode', 'inkscape')]
             del background.attrib[inkex.addNS('label', 'inkscape')]
             self.set_style(background, 'display', None)
@@ -2099,7 +2099,7 @@ def print_filtered_stderr(err):
     for errline in err.readlines():
         if (errline.find(MISSING_IMAGE_WARNING) < 0
             and len(errline.strip()) > 0):
-            print >> sys.stderr, errline
+            print(errline, file=sys.stderr)
 
 def is_layer(element):
     try:
