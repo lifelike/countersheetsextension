@@ -73,8 +73,6 @@
 
   <dependency type="executable" location="extensions">countersheet.py</dependency>
 
-  <dependency type="executable" location="extensions">inkex.py</dependency>
-
   <effect>
     <object-type>all</object-type>
     <effects-menu>
