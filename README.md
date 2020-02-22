@@ -34,7 +34,9 @@ Features
 Installation
 ------------
 
-You need Inkscape 0.92 or later installed.
+You need Inkscape 0.92 or later installed. But NOT 1.0 or later!
+**Inkscape 1.0 is not yet supported. Use an older version
+of Inkscape to use this extension.**
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
@@ -68,7 +70,7 @@ for recent versions of the countersheetsextension can be found
 License
 --------
 
-Copyright (C) 2008-2019 Pelle Nilsson et al
+Copyright (C) 2008-2020 Pelle Nilsson et al
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -109,7 +111,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-Documentation is Copyright 2009-2019 Eric Hanuise and Pelle Nilsson,
+Documentation is Copyright 2009-2020 Eric Hanuise and Pelle Nilsson,
 available under the Creative Commons Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
 
