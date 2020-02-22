@@ -34,9 +34,7 @@ Features
 Installation
 ------------
 
-You need Inkscape 0.92 or later installed. But NOT 1.0 or later!
-**Inkscape 1.0 is not yet supported. Use an older version
-of Inkscape to use this extension.**
+You need Inkscape 1.0 or later installed.
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in
