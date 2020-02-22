@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Copyright 2008-2020 Pelle Nilsson and contributors
 # This program is free software; you can redistribute it and/or modify
