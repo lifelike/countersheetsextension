@@ -1089,8 +1089,8 @@ class CountersheetEffect(inkex.Effect):
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-	line.set("style", self.find_registration_line_style())
-	line.set("stroke-width", str(PS * 0.5))
+        line.set("style", self.find_registration_line_style())
+        line.set("stroke-width", str(PS * 0.5))
         return line
 
     def find_registration_line_style(self):
@@ -1251,7 +1251,7 @@ class CountersheetEffect(inkex.Effect):
         return self.getDocumentViewBoxValue(svg, 3, "height")
 
     def effect(self):
-	global PS
+        global PS
 
         # Get script "--what" option value.
         what = self.options.what
