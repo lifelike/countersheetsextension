@@ -6,3 +6,26 @@ hextc,hextc-t1,hextc-t2,hextc-t3,hextc-t4,hextc-t5,hextc-t6
 ,A,B,C,D,E,F
 ,1,2,3,4,5,6
 
+hexi,hexi-i
+,hex1.png
+,hex2.png
+
+hexi,hexi-i,+hextc,hextc-t1,hextc-t2,hextc-t3,hextc-t4,hextc-t5,hextc-t6,hextc-bg[style:opacity]=0
+,hex1.png,,A,B,C,D,E,F
+,hex2.png,,1,2,3,4,5,6
+
+hexis,hexis-i
+,g4332.png
+,g4452.png
+
+hexi,hexi-i,+hexis,hexis-i,hexis-bg[style:opacity]=0
+,hex1.png,,g4332.png
+,hex2.png,,g4452.png
+
+hexto,hexto-t1,hexto-t2,hexto-t3,hexto-t4,hexto-t5,hexto-t6
+,Alpha,Bravo,Charlie,Delta,Echo,Foxtrot
+,One,Two,Three,Four,Five,Six
+
+hextco,hextco-t1,hextco-t2,hextco-t3,hextco-t4,hextco-t5,hextco-t6
+,A,B,C,D,E,F
+
