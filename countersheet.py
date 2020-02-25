@@ -27,10 +27,7 @@ import lxml
 from lxml import etree
 from copy import deepcopy
 import sys
-import simpletransform
 from tempfile import mkstemp
-
-from simplestyle import parseStyle, formatStyle
 
 NSS['cs'] = 'http://www.hexandcounter.org/countersheetsextension/'
 
@@ -492,7 +489,7 @@ class CountersheetEffect(inkex.Effect):
             self.setFormattedText(para, name,
                                   line, 'flowSpan',
                                   added_style,
-                                  parseStyle(element.get('style')))
+                                  inkex.Style.parse_str(element.get('style')))
             element.append(para)
 
     def deleteTextChildren(self, parent):
@@ -639,7 +636,7 @@ class CountersheetEffect(inkex.Effect):
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
         combinedStyles = dict(styles)
         combinedStyles[style] = style_value
-        stylespan.set('style', formatStyle(combinedStyles))
+        stylespan.set('style', str(inkex.Style(combinedStyles)))
 
         spanid = '%s-%d-cs-%s-%s' % (name,
                                      self.nr_styles_added,
@@ -653,7 +650,7 @@ class CountersheetEffect(inkex.Effect):
                               spantag,
                               added_style, styles)
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
-        restspan.set('style', formatStyle(styles))
+        restspan.set('style', str(inkex.Style(styles)))
         self.setFormattedText(restspan, name,
                               text[end_index+1:],
                               spantag,
@@ -683,7 +680,7 @@ class CountersheetEffect(inkex.Effect):
             self.deleteTextChildren(element)
             self.setFormattedText(element, name, text,
                                   'tspan',
-                                  {}, parseStyle(element.get('style')))
+                                  {}, inkex.Style.parse_str(element.get('style')))
             return True
         elif ((element.tag == inkex.addNS('flowPara', 'svg')
                or element.tag == inkex.addNS('flowLine', 'svg')
@@ -695,7 +692,7 @@ class CountersheetEffect(inkex.Effect):
             self.deleteTextChildren(element)
             self.setFormattedText(element, name, text,
                                   'flowSpan',
-                                  {}, parseStyle(element.get('style')))
+                                  {}, inkex.Style.parse_str(element.get('style')))
             return True
         replaced = False
         for c in element.getchildren():
@@ -868,7 +865,7 @@ class CountersheetEffect(inkex.Effect):
                             childtype = 'flowSpan'
                         self.setFormattedText(t, textid, subst,
                                               childtype, {},
-                                              parseStyle(t.get('style')))
+                                              inkex.Style.parse_str(t.get('style')))
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
@@ -1967,7 +1964,7 @@ class DocumentTopLeftCoordinateConverter:
         '''
         transform = layerElement.get( "transform" )
         if not transform is None:
-           matrix = simpletransform.parseTransform( transform )
+           matrix = inkex.Transform(transform).matrix
            dx = matrix[ 0 ][ 2 ]
            dy = matrix[ 1 ][ 2 ]
         else:
