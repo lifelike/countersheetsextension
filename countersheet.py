@@ -513,6 +513,10 @@ class CountersheetEffect(inkex.Effect):
                          added_style, styles):
         self.logwrite('setFormattedText: %s %s %s %s\n'
                       % (element.tag, text, spantag, styles))
+
+        # replace tick mark with double quotes
+        text = text.replace("`", "\"")
+
         if not self.textmarkup:
             element.text = text
             return
@@ -1956,12 +1960,12 @@ class IDLayout:
 
 class DocumentTopLeftCoordinateConverter:
     '''
-    Converts SVG coordinates from/to coordinates with origin at the top-left of the document. 
-    These coordinates can get out of sync when the page size is changed. 
+    Converts SVG coordinates from/to coordinates with origin at the top-left of the document.
+    These coordinates can get out of sync when the page size is changed.
 
     The class computes any offset at time of initialization. If an instance of the class is changed
     then the page size is changed, the results of calculation will be wrong. Construct and discard
-    instances of this class as needed; do not keep instances for long times. 
+    instances of this class as needed; do not keep instances for long times.
 
     Different layers in the svg document can have different offsets. Create a separate converter for every
     layer you are working with.
