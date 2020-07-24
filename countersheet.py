@@ -15,7 +15,6 @@
 #along with this program; if not, write to the Free Software
 #Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
 import inkex
 from inkex import NSS
 import csv
@@ -937,12 +936,14 @@ class CountersheetEffect(inkex.Effect):
         # TODO some error-checking would be good for the next few lines
         inputfile = open(filename, "r")
         filecontents = inputfile.read()
+        inputfile.close()
         tmpfile = mkstemp(".svg")
         tmpfilefile = os.fdopen(tmpfile[0], 'w')
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
         cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        _, f, err = popen3(cmd, 't')
+        _in, f, err = popen3(cmd, 't')
+        _in.close()
         reader = csv.reader(f)
         for line in reader:
             if len(line) == 5:
@@ -1008,7 +1009,8 @@ class CountersheetEffect(inkex.Effect):
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            _, f, err = popen3(cmd,'t')
+            _in, f, err = popen3(cmd,'t')
+            _in.close()
             f.read()
             f.close()
             print_filtered_stderr(err)
