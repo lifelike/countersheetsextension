@@ -28,6 +28,7 @@ from lxml import etree
 from copy import deepcopy
 import sys
 from tempfile import mkstemp
+import subprocess
 
 NSS['cs'] = 'http://www.hexandcounter.org/countersheetsextension/'
 
@@ -47,6 +48,20 @@ BOX_MARGIN = 2.0
 PDF_DPI = 300
 
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
+
+def popen3(cmd, flags):
+    p = subprocess.Popen(cmd,
+        shell=True, text=True, close_fds=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+
+    # WARNING: Popen.wait() may deadlock if process produces too much output,
+    # see https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
+    # ... prefer Popen.communicate
+    p.wait()
+
+    return (p.stdin, p.stdout, p.stderr)
 
 class Counter:
     def __init__(self, repeat):
@@ -927,7 +942,7 @@ class CountersheetEffect(inkex.Effect):
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
         cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        _, f, err = os.popen3(cmd, 't')
+        _, f, err = popen3(cmd, 't')
         reader = csv.reader(f)
         for line in reader:
             if len(line) == 5:
@@ -993,7 +1008,7 @@ class CountersheetEffect(inkex.Effect):
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            _, f, err = os.popen3(cmd,'t')
+            _, f, err = popen3(cmd,'t')
             f.read()
             f.close()
             print_filtered_stderr(err)
@@ -1328,7 +1343,7 @@ class CountersheetEffect(inkex.Effect):
 
         csv_file = open(datafile, "rb")
         try:
-            csv_dialect = csv.Sniffer.sniff(csv_file.read(2000))
+            csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         except:
             self.logwrite("csv sniffer failed, trying just first line.\n")
             csv_file.seek(0)
