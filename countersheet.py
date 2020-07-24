@@ -1341,7 +1341,7 @@ class CountersheetEffect(inkex.Effect):
                      "files from your Inkscape extensions."
                      "folder. They are no longer used.");
 
-        csv_file = open(datafile, "rb")
+        csv_file = open(datafile, "rt")
         try:
             csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         except:
