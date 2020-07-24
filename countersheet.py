@@ -1258,9 +1258,9 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
 
-        self.logwrite("getDocumentWidth: %s\n" % self.getDocumentWidth())
-        self.logwrite("getDocumentHeight: %s\n" % self.getDocumentHeight())
-        self.logwrite("getDocumentUnit: %s\n" % self.getDocumentUnit())
+        self.logwrite("svg.width: %s\n" % self.svg.width)
+        self.logwrite("svg.height: %s\n" % self.svg.height)
+        self.logwrite("svg.unit: %s\n" % self.svg.unit)
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
@@ -1944,12 +1944,12 @@ class IDLayout:
 
 class DocumentTopLeftCoordinateConverter:
     '''
-    Converts SVG coordinates from/to coordinates with origin at the top-left of the document. 
-    These coordinates can get out of sync when the page size is changed. 
+    Converts SVG coordinates from/to coordinates with origin at the top-left of the document.
+    These coordinates can get out of sync when the page size is changed.
 
     The class computes any offset at time of initialization. If an instance of the class is changed
     then the page size is changed, the results of calculation will be wrong. Construct and discard
-    instances of this class as needed; do not keep instances for long times. 
+    instances of this class as needed; do not keep instances for long times.
 
     Different layers in the svg document can have different offsets. Create a separate converter for every
     layer you are working with.
@@ -2114,4 +2114,4 @@ def get_layer(element, sourceElementId=None):
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
-    effect.affect()
+    effect.run()
