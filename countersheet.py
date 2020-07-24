@@ -15,7 +15,6 @@
 #along with this program; if not, write to the Free Software
 #Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
 import inkex
 from inkex import NSS
 import csv
@@ -28,6 +27,7 @@ from lxml import etree
 from copy import deepcopy
 import sys
 from tempfile import mkstemp
+import subprocess
 
 NSS['cs'] = 'http://www.hexandcounter.org/countersheetsextension/'
 
@@ -47,6 +47,20 @@ BOX_MARGIN = 2.0
 PDF_DPI = 300
 
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
+
+def popen3(cmd, flags):
+    p = subprocess.Popen(cmd,
+        shell=True, text=True, close_fds=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+
+    # WARNING: Popen.wait() may deadlock if process produces too much output,
+    # see https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
+    # ... prefer Popen.communicate
+    p.wait()
+
+    return (p.stdin, p.stdout, p.stderr)
 
 class Counter:
     def __init__(self, repeat):
@@ -922,12 +936,14 @@ class CountersheetEffect(inkex.Effect):
         # TODO some error-checking would be good for the next few lines
         inputfile = open(filename, "r")
         filecontents = inputfile.read()
+        inputfile.close()
         tmpfile = mkstemp(".svg")
         tmpfilefile = os.fdopen(tmpfile[0], 'w')
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
         cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        _, f, err = os.popen3(cmd, 't')
+        _in, f, err = popen3(cmd, 't')
+        _in.close()
         reader = csv.reader(f)
         for line in reader:
             if len(line) == 5:
@@ -993,7 +1009,8 @@ class CountersheetEffect(inkex.Effect):
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            _, f, err = os.popen3(cmd,'t')
+            _in, f, err = popen3(cmd,'t')
+            _in.close()
             f.read()
             f.close()
             print_filtered_stderr(err)
@@ -1258,9 +1275,9 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
 
-        self.logwrite("getDocumentWidth: %s\n" % self.getDocumentWidth())
-        self.logwrite("getDocumentHeight: %s\n" % self.getDocumentHeight())
-        self.logwrite("getDocumentUnit: %s\n" % self.getDocumentUnit())
+        self.logwrite("svg.width: %s\n" % self.svg.width)
+        self.logwrite("svg.height: %s\n" % self.svg.height)
+        self.logwrite("svg.unit: %s\n" % self.svg.unit)
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
@@ -1326,9 +1343,9 @@ class CountersheetEffect(inkex.Effect):
                      "files from your Inkscape extensions."
                      "folder. They are no longer used.");
 
-        csv_file = open(datafile, "rb")
+        csv_file = open(datafile, "rt")
         try:
-            csv_dialect = csv.Sniffer.sniff(csv_file.read(2000))
+            csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         except:
             self.logwrite("csv sniffer failed, trying just first line.\n")
             csv_file.seek(0)
@@ -1944,12 +1961,12 @@ class IDLayout:
 
 class DocumentTopLeftCoordinateConverter:
     '''
-    Converts SVG coordinates from/to coordinates with origin at the top-left of the document. 
-    These coordinates can get out of sync when the page size is changed. 
+    Converts SVG coordinates from/to coordinates with origin at the top-left of the document.
+    These coordinates can get out of sync when the page size is changed.
 
     The class computes any offset at time of initialization. If an instance of the class is changed
     then the page size is changed, the results of calculation will be wrong. Construct and discard
-    instances of this class as needed; do not keep instances for long times. 
+    instances of this class as needed; do not keep instances for long times.
 
     Different layers in the svg document can have different offsets. Create a separate converter for every
     layer you are working with.
@@ -2114,4 +2131,4 @@ def get_layer(element, sourceElementId=None):
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
-    effect.affect()
+    effect.run()
