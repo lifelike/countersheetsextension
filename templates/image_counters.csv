@@ -3,8 +3,8 @@ unit-t2,@imageunit-small,sym-image-small,name-t2,size-t2=,parent-t2,values-t2,un
 2,,cavalry.png,,,,3-2-6,khaki,
 5,,infantry.png,,,,3-4-3,khaki,
 3,,light_infantry.png,,,,3-3-4,khaki,
-2,,w_artillery.png,,,,4-4,lightgrey,
-2,,w_cavalry.png,,,,3-2-6,lightgrey,
-5,,w_infantry.png,,,,3-4-3,lightgrey,
-3,,w_light_infantry.png,,,,3-3-4,lightgrey,
+2,,artillery.png,,,,4-4,lightgrey,
+2,,cavalry.png,,,,3-2-6,lightgrey,
+5,,infantry.png,,,,3-4-3,lightgrey,
+3,,light_infantry.png,,,,3-3-4,lightgrey,
 
