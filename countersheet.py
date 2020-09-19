@@ -1358,6 +1358,7 @@ class CountersheetEffect(inkex.Effect):
             self.defs,
             os.path.dirname(datafile))
         parser.parse(reader)
+        csv_file.close()
         counters = parser.counters
         hasback = parser.hasback
 
@@ -2097,12 +2098,18 @@ def find_top_level_group_for(element):
     else:
         return find_top_level_group_for(parent)
 
-MISSING_IMAGE_WARNING = "did not resolve to a valid image file"
+IGNORE_PATTERNS = ["did not resolve to a valid image file",
+                       ": dbind-WARNING **",
+                       ": WARNING **",
+                       "SPDocument::doUnref(): invalid ref count!"]
 def print_filtered_stderr(err):
-    # ignore warnings about images missing
-    # often caused by substring replace in filenames
     for errline in err.readlines():
-        if (errline.find(MISSING_IMAGE_WARNING) < 0
+        ignore_line = False
+        for p in IGNORE_PATTERNS:
+            if errline.find(p) >= 0:
+                ignore_line = True
+                break
+        if (not ignore_line
             and len(errline.strip()) > 0):
             print(errline, file=sys.stderr)
 
