@@ -50,7 +50,7 @@ DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
 
 def popen3(cmd, flags):
     p = subprocess.Popen(cmd,
-        shell=True, text=True, close_fds=True,
+        shell=True, universal_newlines=True, close_fds=True,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
