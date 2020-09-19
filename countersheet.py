@@ -982,7 +982,7 @@ class CountersheetEffect(inkex.Effect):
         if exportdir is not None:
             exportdir = os.path.abspath(exportdir)
         tmpfile = mkstemp(".svg", "tmp", exportdir, True)
-        tmpfileobject = os.fdopen(tmpfile[0], 'w')
+        tmpfileobject = os.fdopen(tmpfile[0], 'wb')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
         return tmpfile[1]
