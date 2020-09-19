@@ -1582,6 +1582,9 @@ class CountersheetEffect(inkex.Effect):
         self.exportSheetBitmaps()
         self.exportSheetPDFs()
 
+        if self.log:
+            self.log.close()
+
     def add_layer_backgrounds(self, layers, sheet_template, nrsheets):
         if sheet_template is None:
             return
