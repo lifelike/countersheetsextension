@@ -967,7 +967,7 @@ class CountersheetEffect(inkex.Effect):
             exportsize = "-d %d" % dpi
         else:
             exportsize = "-w %d -h %d" % (width, height)
-        self.export_using_inkscape(ids, exportsize, "-e",
+        self.export_using_inkscape(ids, exportsize,
                                    self.options.bitmapdir,
                                    "png")
 
@@ -987,8 +987,8 @@ class CountersheetEffect(inkex.Effect):
         tmpfileobject.close()
         return tmpfile[1]
 
-    def export_using_inkscape(self, ids, size_flags, export_flags,
-                              exportdir, extension,
+    def export_using_inkscape(self, ids, size_flags,
+                                exportdir, extension,
 # this is an ugly workaround for
 # https://bugs.launchpad.net/inkscape/+bug/1714365
                               noidexportworkaround=False):
@@ -1003,9 +1003,8 @@ class CountersheetEffect(inkex.Effect):
                 idflag = ""
             else:
                 idflag = "-i %s" % id
-            cmd='inkscape %s -j %s "%s" %s "%s"' % (
+            cmd='inkscape %s -j -o "%s" %s "%s"' % (
                 idflag,
-                export_flags,
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
@@ -1056,7 +1055,6 @@ class CountersheetEffect(inkex.Effect):
                 self.showlayers([layer])
                 self.export_using_inkscape([layer],
                                            "-d %d" % PDF_DPI,
-                                           "-A",
                                            self.options.pdfdir,
                                            "pdf",
                                            True)
