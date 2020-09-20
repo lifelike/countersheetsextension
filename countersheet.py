@@ -359,7 +359,7 @@ class CountersheetEffect(inkex.Effect):
                                      help = 'CSV or XML data file.')
         self.arg_parser.add_argument('-I', '--imagedir',
                                      type = str, dest = 'imagedir',
-                                     default = os.path.expanduser('~/Pictures/'),
+                                     default = '',
                                      help = 'Base path to external images')
         self.arg_parser.add_argument('-w', '--bitmapw',
                                      type = int, dest = 'bitmapwidth',

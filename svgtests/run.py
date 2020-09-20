@@ -140,6 +140,7 @@ for test in tests:
     logfile = os.path.join(logdir, 'cs_svgtests-%s.txt' % svgoutbasename)
     layer_names = "cs_" + svgoutbasename
     default_args = {'-d' : datafile,
+                    '-I' : os.path.realpath(outputdir),
                    '-l' : logfile,
                    '-r' : '10pt',
                    '-O' : '7pt',
