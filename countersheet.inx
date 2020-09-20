@@ -7,6 +7,9 @@
       <param type="path" name="data" gui-text="Data File (CSV)"
              mode="file" filetypes="csv"/>
 
+      <param type="path" name="imagedir" gui-text="Image Path"
+             mode="folder"/>
+
       <param name="textmarkup" type="boolean"
         gui-text="Text Markup (*bold*, /italics/)">true</param>
     </page>

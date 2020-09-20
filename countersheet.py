@@ -357,6 +357,10 @@ class CountersheetEffect(inkex.Effect):
                                      type = str, dest = 'datafile',
                                      default = 'countersheet.csv',
                                      help = 'CSV or XML data file.')
+        self.arg_parser.add_argument('-I', '--imagedir',
+                                     type = str, dest = 'imagedir',
+                                     default = os.path.expanduser('~/Pictures/'),
+                                     help = 'Base path to external images')
         self.arg_parser.add_argument('-w', '--bitmapw',
                                      type = int, dest = 'bitmapwidth',
                                      default = '56',
@@ -415,8 +419,10 @@ class CountersheetEffect(inkex.Effect):
         self.nr_styles_added = 0
 
     def logwrite(self, msg):
-        if not self.log and self.options.logfile:
-            self.log = open(self.options.logfile, 'w')
+        logfile = self.options.logfile
+        if (not self.log and logfile
+            and not os.path.isdir(logfile)):
+            self.log = open(logfile, 'w')
         if self.log:
             try:
                 self.log.write(msg)
@@ -804,13 +810,14 @@ class CountersheetEffect(inkex.Effect):
                 for glob,image in c.subst.items():
                     if fnmatch.fnmatchcase(imageid, glob):
                         if len(image) > 0:
-                            i.set(inkex.addNS("absref", "sodipodi"), image)
-                            i.set(inkex.addNS("href", "xlink"), image)
+                            href = self.make_image_href(image)
+                            i.set(inkex.addNS("absref", "sodipodi"), href)
+                            i.set(inkex.addNS("href", "xlink"), href)
                         else:
                             i.getparent().remove(i)
                     elif is_valid_name_to_replace(glob) and image is not None:
                         absref = i.get(inkex.addNS("absref", "sodipodi"), image)
-                        href = i.get(inkex.addNS("href", "xlink"), image)
+                        href = self.make_image_href(i.get(inkex.addNS("href", "xlink"), image))
                         i.set(inkex.addNS("absref", "sodipodi"),
                               absref.replace("%%%s%%" % glob, image))
                         i.set(inkex.addNS("href", "xlink"),
@@ -1269,6 +1276,8 @@ class CountersheetEffect(inkex.Effect):
         self.bleed = self.options.bleed == "true"
         self.oneside = self.options.oneside == "true"
 
+        self.logwrite("svg path: %s\n" % self.svg_path())
+
         self.logwrite("bleed enabled: %r\n" % self.bleed)
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
@@ -1317,6 +1326,11 @@ class CountersheetEffect(inkex.Effect):
         self.calculateScale(svg)
 
         datafile = find_file(self.options.datafile)
+
+        if self.options.imagedir and os.path.isdir(self.options.imagedir):
+            self.imagedir = self.options.imagedir
+        else:
+            self.imagedir = os.path.dirname(datafile)
 
         # a small, "pixel-size", length, to use for making small
         # adjustments that works in Inkscape 0.91 and later, similar
@@ -1548,8 +1562,9 @@ class CountersheetEffect(inkex.Effect):
                     continue
                 position = geometry[spanid]
                 image = etree.Element(inkex.addNS('image', 'svg'))
-                image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
-                image.set(inkex.addNS("href", "xlink"), info["filename"])
+                href = self.make_image_href(info["filename"])
+                image.set(inkex.addNS("absref", "sodipodi"), href)
+                image.set(inkex.addNS("href", "xlink"), href)
                 image.set('x', str(position.x))
                 image.set('y', str(position.y
                                    + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
@@ -1606,6 +1621,12 @@ class CountersheetEffect(inkex.Effect):
                                    self.backoffsetx,
                                    self.backoffsety)
         return backlayer
+
+    def make_image_href(self, filename):
+        if os.path.isabs(filename):
+            return filename
+        else:
+            return os.path.join(self.imagedir, filename)
 
     def before_counter(self, counter):
         pass
