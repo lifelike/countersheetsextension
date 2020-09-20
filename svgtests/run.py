@@ -51,7 +51,7 @@ tests = [
     ['layout10+10+10.csv', 'layout.svg'],
     ['cards.csv', 'cards.svg'],
     ['counters.csv', 'counters.svg'],
-    ['counters.csv', 'counters-swatches.svg'],
+    ['counters-swatches.csv', 'counters.svg'],
     ['counters-2sides.csv', 'counters.svg'],
     ['counters-2sides.csv', 'counters.svg', {'-D' : 'true'}],
     ['counters-2sides.csv', 'counters.svg', {'-R' : 'true'}],
@@ -153,8 +153,9 @@ for test in tests:
         combined_args.append(k)
         combined_args.append(v)
     commandline = [command,
-                   '-b', bitmapsdir,
-                   '-p', pdfdir,
+		   # Disable PNG and PDF export for now.
+                   # '-b', bitmapsdir,
+                   #                   '-p', pdfdir,
                    '-N', svgoutbasename] + combined_args +  ['--', svginfile]
 
     if ['-v' in sys.argv]:
