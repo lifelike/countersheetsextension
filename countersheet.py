@@ -48,19 +48,13 @@ PDF_DPI = 300
 
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
 
-def popen3(cmd, flags):
+def popen3(cmd):
     p = subprocess.Popen(cmd,
         shell=True, universal_newlines=True, close_fds=True,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
-
-    # WARNING: Popen.wait() may deadlock if process produces too much output,
-    # see https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
-    # ... prefer Popen.communicate
-    p.wait()
-
-    return (p.stdin, p.stdout, p.stderr)
+    return p.communicate()
 
 class Counter:
     def __init__(self, repeat):
@@ -949,9 +943,8 @@ class CountersheetEffect(inkex.Effect):
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
         cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        _in, f, err = popen3(cmd, 't')
-        _in.close()
-        reader = csv.reader(f)
+        out, err = popen3(cmd)
+        reader = csv.reader(out.splitlines())
         for line in reader:
             if len(line) == 5:
                 self.logwrite(",".join(line) + "\n")
@@ -963,9 +956,7 @@ class CountersheetEffect(inkex.Effect):
                 self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
                 geometry[element_id] = r
-        f.close()
         print_filtered_stderr(err)
-        err.close()
         os.remove(tmpfile[1])
         return geometry
 
@@ -1015,12 +1006,8 @@ class CountersheetEffect(inkex.Effect):
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            _in, f, err = popen3(cmd,'t')
-            _in.close()
-            f.read()
-            f.close()
+            _out, err = popen3(cmd)
             print_filtered_stderr(err)
-            err.close()
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
@@ -2125,7 +2112,7 @@ IGNORE_PATTERNS = ["did not resolve to a valid image file",
                        ": WARNING **",
                        "SPDocument::doUnref(): invalid ref count!"]
 def print_filtered_stderr(err):
-    for errline in err.readlines():
+    for errline in err.splitlines():
         ignore_line = False
         for p in IGNORE_PATTERNS:
             if errline.find(p) >= 0:

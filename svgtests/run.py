@@ -154,9 +154,8 @@ for test in tests:
         combined_args.append(k)
         combined_args.append(v)
     commandline = [command,
-		   # Disable PNG and PDF export for now.
-                   # '-b', bitmapsdir,
-                   #                   '-p', pdfdir,
+                   '-b', bitmapsdir,
+                   '-p', pdfdir,
                    '-N', svgoutbasename] + combined_args +  ['--', svginfile]
 
     if ['-v' in sys.argv]:
