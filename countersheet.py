@@ -607,7 +607,8 @@ class CountersheetEffect(inkex.Effect):
         spanid = '%s-%d-cs-image-%s' % (name, len(self.placeholders),
                                         nr)
         span.set('id', spanid)
-        span.text = "\u2b1b"
+        # span.text = "\u2b1b"
+        span.text = "X" # FIXME, there is something wrong with unicode rendering in Inkscape 1.0?
         span.set('style', 'font-size: 200%;fill-opacity:0;'
                  'font-style:normal;font-weight:normal;'
                  'font-variant:normal;font-family:sans-serif;')
@@ -1548,25 +1549,26 @@ class CountersheetEffect(inkex.Effect):
                                   % spanid)
                     continue
                 position = geometry[spanid]
+                self.logwrite('placeholder position: {},{} {}x{}'.format(position.x, position.y, position.w, position.h))
                 image = etree.Element(inkex.addNS('image', 'svg'))
                 href = self.make_image_href(info["filename"])
                 image.set(inkex.addNS("absref", "sodipodi"), href)
                 image.set(inkex.addNS("href", "xlink"), href)
-                image.set('x', str(position.x))
-                image.set('y', str(position.y
-                                   + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
+                dim_diff = position.h - position.w
+                dx = position.x
+                dy = position.y + position.h * DEFAULT_INLINE_IMAGE_YSHIFT + dim_diff / 2
                 image.set('width', str(position.w))
-                image.set('height', str(position.h))
+                image.set('height', str(position.h - dim_diff))
                 group = find_top_level_group_for(info["parent"])
                 transform = group.get('transform')
                 translate = self.translatere.match(transform)
                 if translate:
-                    dx = float(translate.group(1))
-                    dy = float(translate.group(2))
-                    self.translate_element(image, -dx, -dy)
+                    dx -= float(translate.group(1))
+                    dy -= float(translate.group(2))
+                    self.logwrite('placeholder translate: {},{}\n'.format(dx, dy))
+                self.translate_element(image, dx, dy)
                 group.append(image)
-
-            #FIXME delete tmpfile
+        #os.remove(tmpfile)
 
         self.logwrite("nrsheets: %d\n" % nrsheets)
         self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
