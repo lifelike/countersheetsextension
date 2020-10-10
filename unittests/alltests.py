@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import unittest
 
@@ -6,8 +6,10 @@ def add_countersheets_paths():
     import sys
     import os
     sys.path.insert(0, os.getcwd())
-    sys.path.append('/usr/local/share/inkscape/extensions')
-    sys.path.append('/usr/share/inkscape/extensions')
+    # FIXME temporary for testing
+    sys.path.append('/home/pelle/src/extensions-inkscape')
+#    sys.path.append('/usr/local/share/inkscape/extensions')
+#    sys.path.append('/usr/share/inkscape/extensions')
 
 add_countersheets_paths()
 
@@ -34,6 +36,6 @@ tests = (countersheetstest.CountersheetsTest,
          )
 
 if __name__ == '__main__':
-    suite = unittest.TestSuite(map(make_suite, tests))
+    suite = unittest.TestSuite(list(map(make_suite, tests)))
     runner = unittest.TextTestRunner(verbosity=1)
     runner.run(suite)

@@ -4,28 +4,32 @@
   <param name="name" type="notebook">
 
     <page name="page1" gui-text="Input">
-      <param name="data" type="string"
-             _gui-text="Data File (CSV)">countersheet.csv</param>
+      <param type="path" name="data" gui-text="Data File (CSV)"
+             mode="file" filetypes="csv"/>
+
+      <param type="path" name="imagedir" gui-text="Image Path"
+             mode="folder"/>
+
       <param name="textmarkup" type="boolean"
-        _gui-text="Text Markup (*bold*, /italics/)">true</param>
+        gui-text="Text Markup (*bold*, /italics/)">true</param>
     </page>
 
     <page name="page2" gui-text="Layout">
       <param name="oneside" type="boolean"
-         _gui-text="One-Sided Sheets">false</param>
+         gui-text="One-Sided Sheets">false</param>
       <param name="backoffsetx" type="string"
-         _gui-text="Back Side Horizontal Offset">0mm</param>
+         gui-text="Back Side Horizontal Offset">0mm</param>
       <param name="backoffsety" type="string"
-         _gui-text="Back Side Vertical Offset">0mm</param>
+         gui-text="Back Side Vertical Offset">0mm</param>
       <param name="rotatefronts" type="enum"
-             _gui-text="Rotate Fronts">
+             gui-text="Rotate Fronts">
              <item value="0">0</item>
              <item value="90">90</item>
              <item value="180">180</item>
              <item value="-90">-90</item>
              </param>
       <param name="rotatebacks" type="enum"
-             _gui-text="Rotate Backs">
+             gui-text="Rotate Backs">
              <item value="0">0</item>
              <item value="90">90</item>
              <item value="180">180</item>
@@ -35,45 +39,45 @@
 
     <page name="page3" gui-text="Style">
       <param name="registrationmarkslen" type="string"
-        _gui-text="Registration Marks Length (optional)">15mm</param>
+        gui-text="Registration Marks Length (optional)">15mm</param>
       <param name="fullregistrationmarks" type="boolean"
-         _gui-text="Full Registration Marks">false</param>
+         gui-text="Full Registration Marks">false</param>
       <param name="registrationmarksbothsides" type="boolean"
-         _gui-text="Registration Marks Both Sides">false</param>
+         gui-text="Registration Marks Both Sides">false</param>
       <param name="outlinedist" type="string"
-         _gui-text="Outline (Outset Distance)">10mm</param>
+         gui-text="Outline (Outset Distance)">10mm</param>
       <param name="bleed" type="boolean"
-        _gui-text="Bleed">false</param>
+        gui-text="Bleed">false</param>
       <param name="spacing" type="string"
-        _gui-text="Spacing">0mm</param>
+        gui-text="Spacing">0mm</param>
     </page>
 
     <page name="page4" gui-text="Output">
-      <param name="what" type="string" _gui-text="Name"></param>
-      <param name="bitmapw" type="int" _gui-text="ID Bitmap Width" min="1"
+      <param name="what" type="string" gui-text="Name"></param>
+      <param name="bitmapw" type="int" gui-text="ID Bitmap Width" min="1"
         max="10000">56</param>
-      <param name="bitmaph" type="int" _gui-text="ID Bitmap Height" min="1"
+      <param name="bitmaph" type="int" gui-text="ID Bitmap Height" min="1"
         max="10000">56</param>
       <param name="bitmapsheetsdpi"
         type="int"
-        _gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
+        gui-text="Export Complete Sheets Bitmaps DPI (0 to disable)"
         min="0"
         max="6000">0</param>
       <param name="bitmapdir" type="string"
-        _gui-text="Bitmap Output Directory (optional)"></param>
+        gui-text="Bitmap Output Directory (optional)"></param>
       <param name="pdfdir" type="string"
-        _gui-text="PDF Output Directory (optional)"></param>
+        gui-text="PDF Output Directory (optional)"></param>
     </page>
 
     <page name="page5" gui-text="Debug">
-      <param name="log" type="string" _gui-text="Log File (optional)"></param>
+      <param name="log" type="path" gui-text="Log File (optional)"
+             mode="file_new" filetypes="txt,log"></param>
+
     </page>
 
   </param>
 
   <dependency type="executable" location="extensions">countersheet.py</dependency>
-
-  <dependency type="executable" location="extensions">inkex.py</dependency>
 
   <effect>
     <object-type>all</object-type>

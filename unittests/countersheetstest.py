@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -10,7 +10,7 @@ def dummy_logwrite(msg):
     pass
 
 def stdout_logwrite(msg):
-    print "LOG >> " + msg,
+    print("LOG >> " + msg, end=' ')
 
 class DummyLog(object):
     def write(self, msg):
@@ -226,9 +226,17 @@ class DocumentTopLeftCoordinateConverterTest(unittest.TestCase):
     def test_valid_replace_name_not_amp(self):
         self.assertFalse(countersheet.is_valid_name_to_replace("A&"))
 
+class DummySvgElement:
+    def __init__(self):
+        pass
+
+    def unittouu(self, value):
+        return inkex.units.convert_unit(value, "mm")
+
 class PartialCountersheetEffect(countersheet.CountersheetEffect):
     def __init__(self):
         self.log = DummyLog()
+        self.svg = DummySvgElement()
 
     def getDocumentWidth(self):
         return "210mm"

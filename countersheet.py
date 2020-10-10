@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Copyright 2008-2020 Pelle Nilsson and contributors
 # This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,6 @@
 #along with this program; if not, write to the Free Software
 #Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
 import inkex
 from inkex import NSS
 import csv
@@ -27,12 +26,10 @@ import lxml
 from lxml import etree
 from copy import deepcopy
 import sys
-import simpletransform
 from tempfile import mkstemp
+import subprocess
 
-from simplestyle import parseStyle, formatStyle
-
-NSS[u'cs'] = u'http://www.hexandcounter.org/countersheetsextension/'
+NSS['cs'] = 'http://www.hexandcounter.org/countersheetsextension/'
 
 # Trying to make inserted inlined images show up slightly
 # more well-aligned with the surrounding text by shifting
@@ -50,6 +47,14 @@ BOX_MARGIN = 2.0
 PDF_DPI = 300
 
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
+
+def popen3(cmd):
+    p = subprocess.Popen(cmd,
+        shell=True, universal_newlines=True, close_fds=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+    return p.communicate()
 
 class Counter:
     def __init__(self, repeat):
@@ -266,11 +271,11 @@ class BleedMaker:
                     % clip)
 
     def hideall(self):
-        for element,clip in self.bleed_added.iteritems():
+        for element,clip in self.bleed_added.items():
             self.setclip(element, self.unbleed[clip])
 
     def showall(self):
-        for element,clip in self.bleed_added.iteritems():
+        for element,clip in self.bleed_added.items():
             self.setclip(element, clip)
 
 class NoSetting:
@@ -279,7 +284,7 @@ class NoSetting:
 
 class CounterPart:
     def __init__(self, id):
-        self.id = id.decode('utf8')
+        self.id = id
 
     def applyto(self, counter):
         counter.addpart(self.id)
@@ -290,7 +295,7 @@ class CounterExcludeID:
         self.exceptions = set()
 
     def addexception(self, id):
-        self.exceptions.add(id.decode('utf8'))
+        self.exceptions.add(id)
 
     def applyto(self, counter):
         counter.excludeid(self.id)
@@ -299,7 +304,7 @@ class CounterExcludeID:
 
 class CounterAttribute:
     def __init__(self, id, attribute, source):
-        self.id = id.decode('utf8')
+        self.id = id
         self.attribute = attribute
         self.source = source
 
@@ -331,81 +336,76 @@ class Rectangle:
 class CountersheetEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        # quick attempt compatibility with Inkscape older than 0.91:
-        if not hasattr(self, 'unittouu'):
-            self.unittouu = inkex.unittouu
         self.log = False
         self.nextid = 1000000
-        self.OptionParser.add_option('-,', '--name', action = 'store')
-        self.OptionParser.add_option('-l', '--log', action = 'store',
-                                     type = 'string', dest = 'logfile')
-        self.OptionParser.add_option('-n', '--what', action = 'store',
-                                     type = 'string', dest = 'what',
+        self.arg_parser.add_argument('-,', '--name')
+        self.arg_parser.add_argument('-l', '--log',
+                                     type = str, dest = 'logfile')
+        self.arg_parser.add_argument('-n', '--what',
+                                     type = str, dest = 'what',
                                      default = '',
                                      help = 'Name')
-        self.OptionParser.add_option('-N', '--sheets-bitmap-name', dest='bitmapname',
+        self.arg_parser.add_argument('-N', '--sheets-bitmap-name', dest='bitmapname',
                                      default = '') # undocumented, for svgtests
-        self.OptionParser.add_option('-d', '--data', action = 'store',
-                                     type = 'string', dest = 'datafile',
+        self.arg_parser.add_argument('-d', '--data',
+                                     type = str, dest = 'datafile',
                                      default = 'countersheet.csv',
                                      help = 'CSV or XML data file.')
-        self.OptionParser.add_option('-w', '--bitmapw', action = 'store',
-                                     type = 'int', dest = 'bitmapwidth',
+        self.arg_parser.add_argument('-I', '--imagedir',
+                                     type = str, dest = 'imagedir',
+                                     default = '',
+                                     help = 'Base path to external images')
+        self.arg_parser.add_argument('-w', '--bitmapw',
+                                     type = int, dest = 'bitmapwidth',
                                      default = '56',
                                      help = 'ID bitmap width')
-        self.OptionParser.add_option('-F', '--rotatefronts', action = 'store',
-                                     type = 'int', dest = 'rotatefronts',
+        self.arg_parser.add_argument('-F', '--rotatefronts',
+                                     type = int, dest = 'rotatefronts',
                                      default = '0',
                                      help = 'Rotate Fronts (degrees)')
-        self.OptionParser.add_option('-G', '--rotatebacks', action = 'store',
-                                     type = 'int', dest = 'rotatebacks',
+        self.arg_parser.add_argument('-G', '--rotatebacks',
+                                     type = int, dest = 'rotatebacks',
                                      default = '0',
                                      help = 'Rotate Backs (degrees)')
-        self.OptionParser.add_option('-y', '--bitmaph', action = 'store',
-                                     type = 'int', dest = 'bitmapheight',
+        self.arg_parser.add_argument('-y', '--bitmaph',
+                                     type = int, dest = 'bitmapheight',
                                      default = '56',
                                      help = 'Number of columns.')
-        self.OptionParser.add_option('-f', '--bitmapsheetsdpi',
-                                     action = 'store',
-                                     type = 'int', dest = 'bitmapsheetsdpi',
+        self.arg_parser.add_argument('-f', '--bitmapsheetsdpi',
+                                     type = int, dest = 'bitmapsheetsdpi',
                                      default = '0')
-        self.OptionParser.add_option('-b', '--bitmapdir', action = 'store',
-                                     type = 'string', dest = 'bitmapdir')
-        self.OptionParser.add_option('-p', '--pdfdir', action = 'store',
-                                     type = 'string', dest = 'pdfdir')
-        self.OptionParser.add_option('-r', '--registrationmarkslen',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-b', '--bitmapdir',
+                                     type = str, dest = 'bitmapdir')
+        self.arg_parser.add_argument('-p', '--pdfdir',
+                                     type = str, dest = 'pdfdir')
+        self.arg_parser.add_argument('-r', '--registrationmarkslen',
+                                     type = str,
                                      default = '',
                                      dest = 'registrationmarkslen')
-        self.OptionParser.add_option('-R', '--fullregistrationmarks',
-                                     action = 'store',
+        self.arg_parser.add_argument('-R', '--fullregistrationmarks',
                                      dest = 'fullregistrationmarks',
                                      default = "false")
-        self.OptionParser.add_option('-D', '--registrationmarksbothsides',
-                                     action = 'store',
+        self.arg_parser.add_argument('-D', '--registrationmarksbothsides',
                                      dest = 'registrationmarksbothsides',
                                      default = "false")
-        self.OptionParser.add_option('-O', '--outlinedist',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-O', '--outlinedist',
+                                     type = str,
                                      dest = 'outlinedist',
                                      default = "")
-        self.OptionParser.add_option('-S', '--spacing',
-                                     action = 'store',
-                                     type = 'string',
+        self.arg_parser.add_argument('-S', '--spacing',
+                                     type = str,
                                      dest = 'spacing',
                                      default = "0")
-        self.OptionParser.add_option('-m', '--textmarkup', dest='textmarkup',
-                                     action = 'store', default = "true")
-        self.OptionParser.add_option('-B', '--bleed', dest='bleed',
-                                     action = 'store', default = "false")
-        self.OptionParser.add_option('-o', '--oneside', default = "false",
-                                     action = "store", dest="oneside")
-        self.OptionParser.add_option('-X', '--backoffsetx', default = "0mm",
-                                     action = "store", dest="backoffsetx")
-        self.OptionParser.add_option('-Y', '--backoffsety', default = "0mm",
-                                     action = "store", dest="backoffsety")
+        self.arg_parser.add_argument('-m', '--textmarkup', dest='textmarkup',
+                                     default = "true")
+        self.arg_parser.add_argument('-B', '--bleed', dest='bleed',
+                                     default = "false")
+        self.arg_parser.add_argument('-o', '--oneside', default = "false",
+                                     dest="oneside")
+        self.arg_parser.add_argument('-X', '--backoffsetx', default = "0mm",
+                                     dest="backoffsetx")
+        self.arg_parser.add_argument('-Y', '--backoffsety', default = "0mm",
+                                     dest="backoffsety")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
         self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
@@ -413,8 +413,10 @@ class CountersheetEffect(inkex.Effect):
         self.nr_styles_added = 0
 
     def logwrite(self, msg):
-        if not self.log and self.options.logfile:
-            self.log = open(self.options.logfile, 'w')
+        logfile = self.options.logfile
+        if (not self.log and logfile
+            and not os.path.isdir(logfile)):
+            self.log = open(logfile, 'w')
         if self.log:
             try:
                 self.log.write(msg)
@@ -426,9 +428,9 @@ class CountersheetEffect(inkex.Effect):
             id = n.get("id")
             if not id:
                 continue
-            for glob,attr in attrs.iteritems():
+            for glob,attr in attrs.items():
                 if fnmatch.fnmatchcase(id, glob):
-                    for a,v in attr.iteritems():
+                    for a,v in attr.items():
                         if a.startswith('style:'):
                             pname = a[6:]
                             a = "style"
@@ -499,9 +501,9 @@ class CountersheetEffect(inkex.Effect):
         for line in lines:
             para = etree.Element(inkex.addNS('flowLine', 'svg'))
             self.setFormattedText(para, name,
-                                  line.decode('utf8'), 'flowSpan',
+                                  line, 'flowSpan',
                                   added_style,
-                                  parseStyle(element.get('style')))
+                                  inkex.Style.parse_str(element.get('style')))
             element.append(para)
 
     def deleteTextChildren(self, parent):
@@ -605,7 +607,8 @@ class CountersheetEffect(inkex.Effect):
         spanid = '%s-%d-cs-image-%s' % (name, len(self.placeholders),
                                         nr)
         span.set('id', spanid)
-        span.text = u"\u2b1b"
+        # span.text = "\u2b1b"
+        span.text = "X" # FIXME, there is something wrong with unicode rendering in Inkscape 1.0?
         span.set('style', 'font-size: 200%;fill-opacity:0;'
                  'font-style:normal;font-weight:normal;'
                  'font-variant:normal;font-family:sans-serif;')
@@ -648,7 +651,7 @@ class CountersheetEffect(inkex.Effect):
         stylespan = etree.Element(inkex.addNS(spantag, 'svg'))
         combinedStyles = dict(styles)
         combinedStyles[style] = style_value
-        stylespan.set('style', formatStyle(combinedStyles))
+        stylespan.set('style', str(inkex.Style(combinedStyles)))
 
         spanid = '%s-%d-cs-%s-%s' % (name,
                                      self.nr_styles_added,
@@ -662,7 +665,7 @@ class CountersheetEffect(inkex.Effect):
                               spantag,
                               added_style, styles)
         restspan = etree.Element(inkex.addNS(spantag, 'svg'))
-        restspan.set('style', formatStyle(styles))
+        restspan.set('style', str(inkex.Style(styles)))
         self.setFormattedText(restspan, name,
                               text[end_index+1:],
                               spantag,
@@ -690,9 +693,9 @@ class CountersheetEffect(inkex.Effect):
                                                        element.tag,
                                                        text))
             self.deleteTextChildren(element)
-            self.setFormattedText(element, name, text.decode('utf8'),
+            self.setFormattedText(element, name, text,
                                   'tspan',
-                                  {}, parseStyle(element.get('style')))
+                                  {}, inkex.Style.parse_str(element.get('style')))
             return True
         elif ((element.tag == inkex.addNS('flowPara', 'svg')
                or element.tag == inkex.addNS('flowLine', 'svg')
@@ -702,9 +705,9 @@ class CountersheetEffect(inkex.Effect):
                                                        element.tag,
                                                        text))
             self.deleteTextChildren(element)
-            self.setFormattedText(element, name, text.decode('utf8'),
+            self.setFormattedText(element, name, text,
                                   'flowSpan',
-                                  {}, parseStyle(element.get('style')))
+                                  {}, inkex.Style.parse_str(element.get('style')))
             return True
         replaced = False
         for c in element.getchildren():
@@ -763,7 +766,7 @@ class CountersheetEffect(inkex.Effect):
             if rectname[0] == "@":
                 killrect = True
                 rectname = rectname[1:]
-            if not rects.has_key(rectname):
+            if rectname not in rects:
                 sys.exit("Unable to find rectangle with id '%s' "
                          "that was specified in the CSV data file."
                          % rectname)
@@ -799,16 +802,17 @@ class CountersheetEffect(inkex.Effect):
                 imageid = i.get("id")
                 if not imageid:
                     continue
-                for glob,image in c.subst.iteritems():
+                for glob,image in c.subst.items():
                     if fnmatch.fnmatchcase(imageid, glob):
                         if len(image) > 0:
-                            i.set(inkex.addNS("absref", "sodipodi"), image)
-                            i.set(inkex.addNS("href", "xlink"), image)
+                            href = self.make_image_href(image)
+                            i.set(inkex.addNS("absref", "sodipodi"), href)
+                            i.set(inkex.addNS("href", "xlink"), href)
                         else:
                             i.getparent().remove(i)
                     elif is_valid_name_to_replace(glob) and image is not None:
                         absref = i.get(inkex.addNS("absref", "sodipodi"), image)
-                        href = i.get(inkex.addNS("href", "xlink"), image)
+                        href = self.make_image_href(i.get(inkex.addNS("href", "xlink"), image))
                         i.set(inkex.addNS("absref", "sodipodi"),
                               absref.replace("%%%s%%" % glob, image))
                         i.set(inkex.addNS("href", "xlink"),
@@ -818,7 +822,7 @@ class CountersheetEffect(inkex.Effect):
                 useid = u.get("id")
                 if not useid:
                     continue
-                for glob,new_ref in c.subst.iteritems():
+                for glob,new_ref in c.subst.items():
                     if fnmatch.fnmatchcase(useid, glob):
                         if len(new_ref) > 0:
                             xlink_attribute = inkex.addNS("href", "xlink")
@@ -828,7 +832,7 @@ class CountersheetEffect(inkex.Effect):
                         else:
                             u.getparent().remove(u)
 
-            for name,value in c.subst.iteritems():
+            for name,value in c.subst.items():
                 if is_valid_name_to_replace(name):
                     string_replace_xml_text(clone, "%%%s%%" % name, value)
 
@@ -858,7 +862,7 @@ class CountersheetEffect(inkex.Effect):
             return [c.width, c.height]
 
     def substitute_text(self, c, t, textid):
-        for glob,subst in c.subst.iteritems():
+        for glob,subst in c.subst.items():
             if glob is None:
                 continue
             if subst is None:
@@ -875,9 +879,9 @@ class CountersheetEffect(inkex.Effect):
                         childtype = 'tspan'
                         if t.tag == inkex.addNS('flowRoot','svg'):
                             childtype = 'flowSpan'
-                        self.setFormattedText(t, textid, subst.decode('utf8'),
+                        self.setFormattedText(t, textid, subst,
                                               childtype, {},
-                                              parseStyle(t.get('style')))
+                                              inkex.Style.parse_str(t.get('style')))
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
@@ -934,13 +938,14 @@ class CountersheetEffect(inkex.Effect):
         # TODO some error-checking would be good for the next few lines
         inputfile = open(filename, "r")
         filecontents = inputfile.read()
+        inputfile.close()
         tmpfile = mkstemp(".svg")
         tmpfilefile = os.fdopen(tmpfile[0], 'w')
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
         cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        _, f, err = os.popen3(cmd, 't')
-        reader = csv.reader(f)
+        out, err = popen3(cmd)
+        reader = csv.reader(out.splitlines())
         for line in reader:
             if len(line) == 5:
                 self.logwrite(",".join(line) + "\n")
@@ -954,7 +959,6 @@ class CountersheetEffect(inkex.Effect):
                 geometry[element_id.decode(sys.getfilesystemencoding())] = r
         f.close()
         print_filtered_stderr(err)
-        err.close()
         os.remove(tmpfile[1])
         return geometry
 
@@ -963,7 +967,7 @@ class CountersheetEffect(inkex.Effect):
             exportsize = "-d %d" % dpi
         else:
             exportsize = "-w %d -h %d" % (width, height)
-        self.export_using_inkscape(ids, exportsize, "-e",
+        self.export_using_inkscape(ids, exportsize,
                                    self.options.bitmapdir,
                                    "png")
 
@@ -978,13 +982,13 @@ class CountersheetEffect(inkex.Effect):
         if exportdir is not None:
             exportdir = os.path.abspath(exportdir)
         tmpfile = mkstemp(".svg", "tmp", exportdir, True)
-        tmpfileobject = os.fdopen(tmpfile[0], 'w')
+        tmpfileobject = os.fdopen(tmpfile[0], 'wb')
         self.document.write(tmpfileobject)
         tmpfileobject.close()
         return tmpfile[1]
 
-    def export_using_inkscape(self, ids, size_flags, export_flags,
-                              exportdir, extension,
+    def export_using_inkscape(self, ids, size_flags,
+                                exportdir, extension,
 # this is an ugly workaround for
 # https://bugs.launchpad.net/inkscape/+bug/1714365
                               noidexportworkaround=False):
@@ -999,17 +1003,13 @@ class CountersheetEffect(inkex.Effect):
                 idflag = ""
             else:
                 idflag = "-i %s" % id
-            cmd='inkscape %s -j %s "%s" %s "%s"' % (
+            cmd='inkscape %s -j -o "%s" %s "%s"' % (
                 idflag,
-                export_flags,
                 self.getbitmapfilename(id, exportdir, extension), #FIXME
                 size_flags, tmpfilename)
             self.logwrite(cmd + "\n")
-            _, f, err = os.popen3(cmd,'t')
-            f.read()
-            f.close()
+            _out, err = popen3(cmd)
             print_filtered_stderr(err)
-            err.close()
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
@@ -1051,7 +1051,6 @@ class CountersheetEffect(inkex.Effect):
                 self.showlayers([layer])
                 self.export_using_inkscape([layer],
                                            "-d %d" % PDF_DPI,
-                                           "-A",
                                            self.options.pdfdir,
                                            "pdf",
                                            True)
@@ -1089,8 +1088,8 @@ class CountersheetEffect(inkex.Effect):
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-	line.set("style", self.find_registration_line_style())
-	line.set("stroke-width", str(PS * 0.5))
+        line.set("style", self.find_registration_line_style())
+        line.set("stroke-width", str(PS * 0.5))
         return line
 
     def find_registration_line_style(self):
@@ -1194,7 +1193,7 @@ class CountersheetEffect(inkex.Effect):
     def from_len_arg(self, argvalue, name, allow_negative=False):
         if argvalue is None or len(argvalue) == 0:
             return 0.0
-        value = self.unittouu(argvalue)
+        value = self.svg.unittouu(argvalue)
         if not allow_negative and value < 0:
             sys.exit("Negative %s marks makes no sense." % name)
 
@@ -1212,33 +1211,33 @@ class CountersheetEffect(inkex.Effect):
         the rest of this extension.
         Error-handling is lacking.
         """
-        self.xscale = self.yscale = 1.0 / self.unittouu('1px')
+        self.xscale = self.yscale = 1.0 / self.svg.unittouu('1px')
         xscale = yscale = 0.0
         try:
             viewbox = svg.get('viewBox')
             if viewbox:
                 self.logwrite("viewBox: %s\n" % viewbox)
-                (viewx, viewy, vieww, viewh) = map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4))
+                (viewx, viewy, vieww, viewh) = list(map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4)))
                 svgwidth = svg.get('width')
                 svgheight = svg.get('height')
-                svguuwidth = self.unittouu(svgwidth)
-                svguuheight = self.unittouu(svgheight)
+                svguuwidth = self.svg.unittouu(svgwidth)
+                svguuheight = self.svg.unittouu(svgheight)
                 self.logwrite("SVG widthxheight: %sx%s\n"
                               % (svgwidth, svgheight))
                 self.logwrite("SVG size in user-units: %fx%f\n"
                               % (svguuwidth, svguuheight))
-                xscale = self.unittouu(svg.get('width')) / vieww / self.unittouu("1px")
-                yscale = self.unittouu(svg.get('height')) / viewh / self.unittouu("1px")
+                xscale = self.svg.unittouu(svg.get('width')) / vieww / self.svg.unittouu("1px")
+                yscale = self.svg.unittouu(svg.get('height')) / viewh / self.svg.unittouu("1px")
                 self.xscale = xscale
                 self.yscale = yscale
-        except Exception, e:
+        except Exception as e:
             self.logwrite("Failed to calculate document scale:\n%s\n" % repr(e))
 
     def getDocumentViewBoxValue(self, svg, n, fallback):
         try:
             return float(svg.get('viewBox').split(' ')[n])
         except:
-            return self.unittouu(svg.get(fallback)) # let it crash if this fails
+            return self.svg.unittouu(svg.get(fallback)) # let it crash if this fails
 
     # Because getDocumentWidth in inkex fails because it makes assumptions about
     # user-units. Trusting the viewBox instead for now.
@@ -1251,7 +1250,7 @@ class CountersheetEffect(inkex.Effect):
         return self.getDocumentViewBoxValue(svg, 3, "height")
 
     def effect(self):
-	global PS
+        global PS
 
         # Get script "--what" option value.
         what = self.options.what
@@ -1266,13 +1265,15 @@ class CountersheetEffect(inkex.Effect):
         self.bleed = self.options.bleed == "true"
         self.oneside = self.options.oneside == "true"
 
+        self.logwrite("svg path: %s\n" % self.svg_path())
+
         self.logwrite("bleed enabled: %r\n" % self.bleed)
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
 
-        self.logwrite("getDocumentWidth: %s\n" % self.getDocumentWidth())
-        self.logwrite("getDocumentHeight: %s\n" % self.getDocumentHeight())
-        self.logwrite("getDocumentUnit: %s\n" % self.getDocumentUnit())
+        self.logwrite("svg.width: %s\n" % self.svg.width)
+        self.logwrite("svg.height: %s\n" % self.svg.height)
+        self.logwrite("svg.unit: %s\n" % self.svg.unit)
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
@@ -1315,10 +1316,15 @@ class CountersheetEffect(inkex.Effect):
 
         datafile = find_file(self.options.datafile)
 
+        if self.options.imagedir and os.path.isdir(self.options.imagedir):
+            self.imagedir = self.options.imagedir
+        else:
+            self.imagedir = os.path.dirname(datafile)
+
         # a small, "pixel-size", length, to use for making small
         # adjustments that works in Inkscape 0.91 and later, similar
         # to what "1px" always was in earlier Inkscape versions
-        PS = self.unittouu("%fin" % (1.0 / 90))
+        PS = self.svg.unittouu("%fin" % (1.0 / 90))
 
         rects = {}
         for r in doc.xpath('//svg:rect', namespaces=NSS):
@@ -1338,9 +1344,9 @@ class CountersheetEffect(inkex.Effect):
                      "files from your Inkscape extensions."
                      "folder. They are no longer used.");
 
-        csv_file = open(datafile, "rb")
+        csv_file = open(datafile, "rt")
         try:
-            csv_dialect = csv.Sniffer.sniff(csv_file.read(2000))
+            csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         except:
             self.logwrite("csv sniffer failed, trying just first line.\n")
             csv_file.seek(0)
@@ -1353,6 +1359,7 @@ class CountersheetEffect(inkex.Effect):
             self.defs,
             os.path.dirname(datafile))
         parser.parse(reader)
+        csv_file.close()
         counters = parser.counters
         hasback = parser.hasback
 
@@ -1372,8 +1379,8 @@ class CountersheetEffect(inkex.Effect):
 
         docwidth = self.getViewBoxWidth(svg)
 
-        self.logwrite("user-units in 1 inch: %f\n" % self.unittouu("1in"))
-        self.logwrite("user-units in 1 px: %f\n" % self.unittouu("1px"))
+        self.logwrite("user-units in 1 inch: %f\n" % self.svg.unittouu("1in"))
+        self.logwrite("user-units in 1 px: %f\n" % self.svg.unittouu("1px"))
 #        self.logwrite("uuconv['in']: %f\n" % self.__uuconv["in"])
 
         self.logwrite("calculated document scale: %f %f\n"
@@ -1537,30 +1544,32 @@ class CountersheetEffect(inkex.Effect):
             tmpfile = self.make_temporary_svg()
             self.logwrite("Placeholders replace temporary file: %s\n" % tmpfile)
             geometry = self.queryAll(tmpfile)
-            for spanid, info in self.placeholders.iteritems():
+            for spanid, info in self.placeholders.items():
                 if not spanid in geometry:
                     self.logwrite("Could not query location for %s."
                                   % spanid)
                     continue
                 position = geometry[spanid]
+                self.logwrite('placeholder position: {},{} {}x{}'.format(position.x, position.y, position.w, position.h))
                 image = etree.Element(inkex.addNS('image', 'svg'))
-                image.set(inkex.addNS("absref", "sodipodi"), info["filename"])
-                image.set(inkex.addNS("href", "xlink"), info["filename"])
-                image.set('x', str(position.x))
-                image.set('y', str(position.y
-                                   + position.h * DEFAULT_INLINE_IMAGE_YSHIFT))
+                href = self.make_image_href(info["filename"])
+                image.set(inkex.addNS("absref", "sodipodi"), href)
+                image.set(inkex.addNS("href", "xlink"), href)
+                dim_diff = position.h - position.w
+                dx = position.x
+                dy = position.y + position.h * DEFAULT_INLINE_IMAGE_YSHIFT + dim_diff / 2
                 image.set('width', str(position.w))
-                image.set('height', str(position.h))
+                image.set('height', str(position.h - dim_diff))
                 group = find_top_level_group_for(info["parent"])
                 transform = group.get('transform')
                 translate = self.translatere.match(transform)
                 if translate:
-                    dx = float(translate.group(1))
-                    dy = float(translate.group(2))
-                    self.translate_element(image, -dx, -dy)
+                    dx -= float(translate.group(1))
+                    dy -= float(translate.group(2))
+                    self.logwrite('placeholder translate: {},{}\n'.format(dx, dy))
+                self.translate_element(image, dx, dy)
                 group.append(image)
-
-            #FIXME delete tmpfile
+        #os.remove(tmpfile)
 
         self.logwrite("nrsheets: %d\n" % nrsheets)
         self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
@@ -1576,6 +1585,9 @@ class CountersheetEffect(inkex.Effect):
         self.exportSheetBitmaps()
         self.exportSheetPDFs()
 
+        if self.log:
+            self.log.close()
+
     def add_layer_backgrounds(self, layers, sheet_template, nrsheets):
         if sheet_template is None:
             return
@@ -1583,9 +1595,9 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite("  add layer background %d\n" % nr)
             background = deepcopy(sheet_template)
             string_replace_xml_text(background, "%SHEET%",
-                                    unicode(nr))
+                                    str(nr))
             string_replace_xml_text(background, "%SHEETS%",
-                                    unicode(nrsheets))
+                                    str(nrsheets))
             del background.attrib[inkex.addNS('groupmode', 'inkscape')]
             del background.attrib[inkex.addNS('label', 'inkscape')]
             self.set_style(background, 'display', None)
@@ -1599,6 +1611,12 @@ class CountersheetEffect(inkex.Effect):
                                    self.backoffsetx,
                                    self.backoffsety)
         return backlayer
+
+    def make_image_href(self, filename):
+        if os.path.isabs(filename):
+            return filename
+        else:
+            return os.path.join(self.imagedir, filename)
 
     def before_counter(self, counter):
         pass
@@ -1956,12 +1974,12 @@ class IDLayout:
 
 class DocumentTopLeftCoordinateConverter:
     '''
-    Converts SVG coordinates from/to coordinates with origin at the top-left of the document. 
-    These coordinates can get out of sync when the page size is changed. 
+    Converts SVG coordinates from/to coordinates with origin at the top-left of the document.
+    These coordinates can get out of sync when the page size is changed.
 
     The class computes any offset at time of initialization. If an instance of the class is changed
     then the page size is changed, the results of calculation will be wrong. Construct and discard
-    instances of this class as needed; do not keep instances for long times. 
+    instances of this class as needed; do not keep instances for long times.
 
     Different layers in the svg document can have different offsets. Create a separate converter for every
     layer you are working with.
@@ -1976,7 +1994,7 @@ class DocumentTopLeftCoordinateConverter:
         '''
         transform = layerElement.get( "transform" )
         if not transform is None:
-           matrix = simpletransform.parseTransform( transform )
+           matrix = inkex.Transform(transform).matrix
            dx = matrix[ 0 ][ 2 ]
            dy = matrix[ 1 ][ 2 ]
         else:
@@ -2049,7 +2067,7 @@ def string_replace_xml_text(element, pattern, value):
     if value is None:
         return
     if element.text:
-        element.text = element.text.replace(pattern, value.decode('utf8'))
+        element.text = element.text.replace(pattern, value)
     for c in element.getchildren():
         string_replace_xml_text(c, pattern, value)
 
@@ -2092,14 +2110,20 @@ def find_top_level_group_for(element):
     else:
         return find_top_level_group_for(parent)
 
-MISSING_IMAGE_WARNING = "did not resolve to a valid image file"
+IGNORE_PATTERNS = ["did not resolve to a valid image file",
+                       ": dbind-WARNING **",
+                       ": WARNING **",
+                       "SPDocument::doUnref(): invalid ref count!"]
 def print_filtered_stderr(err):
-    # ignore warnings about images missing
-    # often caused by substring replace in filenames
-    for errline in err.readlines():
-        if (errline.find(MISSING_IMAGE_WARNING) < 0
+    for errline in err.splitlines():
+        ignore_line = False
+        for p in IGNORE_PATTERNS:
+            if errline.find(p) >= 0:
+                ignore_line = True
+                break
+        if (not ignore_line
             and len(errline.strip()) > 0):
-            print >> sys.stderr, errline
+            print(errline, file=sys.stderr)
 
 def is_layer(element):
     try:
@@ -2126,4 +2150,4 @@ def get_layer(element, sourceElementId=None):
 
 if __name__ == '__main__':
     effect = CountersheetEffect()
-    effect.affect()
+    effect.run()

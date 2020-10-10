@@ -1,3 +1,5 @@
 #!/bin/sh
 
-PYTHONPATH=/usr/share/inkscape/extensions/ svgtests/run.py "$@"
+EXTENSIONSDIR=/usr/share/inkscape/extensions/
+
+PYTHONPATH=$EXTENSIONSDIR svgtests/run.py "$@"

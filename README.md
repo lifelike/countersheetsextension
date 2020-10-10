@@ -1,5 +1,5 @@
 Countersheets Extension for Inkscape
-====================================
+========================================
 
 Inkscape extension for the layout of sheets of cards, tiles, or counters
 for boardgames.
@@ -34,9 +34,9 @@ Features
 Installation
 ------------
 
-You need Inkscape 0.92 or later installed. But NOT 1.0 or later!
-**Inkscape 1.0 is not yet supported. Use an older version
-of Inkscape to use this extension.**
+You need Inkscape 1.0 or later installed. If you are using an older
+version of Inkscape get one of the older versions of this
+extension instead (like [this one](https://github.com/lifelike/countersheetsextension/releases/tag/2.2hex1)).
 
 Copy countersheet.py, and countersheet.inx to where Inkscape
 looks for extensions. On my Mac and Linux computers this is in

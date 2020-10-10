@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -11,7 +11,7 @@ def dummy_logwrite(msg):
     pass
 
 def stdout_logwrite(msg):
-    print "LOG >> " + msg,
+    print("LOG >> " + msg, end=' ')
 
 class CSVCounterDefinitionParserTest(unittest.TestCase):
     def setUp(self):
