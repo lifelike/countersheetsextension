@@ -956,7 +956,7 @@ class CountersheetEffect(inkex.Effect):
                               float(line[4]) / self.yscale)
                 self.logwrite(" %s %f,%f %fx%f\n"
                               % (element_id, r.x, r.y, r.w, r.h))
-                geometry[element_id.decode(sys.getfilesystemencoding())] = r
+                geometry[element_id] = r
         f.close()
         print_filtered_stderr(err)
         os.remove(tmpfile[1])
