@@ -1343,7 +1343,7 @@ class CountersheetEffect(inkex.Effect):
                      "files from your Inkscape extensions."
                      "folder. They are no longer used.");
 
-        csv_file = open(datafile, "rt")
+        csv_file = open(datafile, "rt", encoding="utf-8-sig")
         try:
             csv_dialect = csv.Sniffer().sniff(csv_file.read(2000))
         except:
@@ -1786,7 +1786,7 @@ class CSVCounterFactory (CounterFactory):
 
     def read_value_from_file(self, filename):
         real_filename = find_file(filename, [self.datadir])
-        f = open(real_filename, 'r')
+        f = open(real_filename, 'rt', encoding="utf-8-sig")
         res = "\\n".join(f.readlines())
         f.close()
         return res
