@@ -41,7 +41,7 @@
       <param name="registrationmarkslen" type="string"
         gui-text="Registration Marks Length (optional)">15mm</param>
       <param name="registrationmarksdist" type="string"
-        gui-text="Registration Marks Distance">2mm</param>
+        gui-text="Registration Marks Distance (optional)">2mm</param>
       <param name="fullregistrationmarks" type="boolean"
          gui-text="Full Registration Marks">false</param>
       <param name="registrationmarksbothsides" type="boolean"
