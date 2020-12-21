@@ -382,6 +382,10 @@ class CountersheetEffect(inkex.Effect):
                                      type = str,
                                      default = '',
                                      dest = 'registrationmarkslen')
+        self.arg_parser.add_argument('-z', '--registrationmarksdist',
+                                     type = str,
+                                     default = '',
+                                     dest = 'registrationmarksdist')
         self.arg_parser.add_argument('-R', '--fullregistrationmarks',
                                      dest = 'fullregistrationmarks',
                                      default = "false")
@@ -1115,14 +1119,15 @@ class CountersheetEffect(inkex.Effect):
         if self.registrationmarkslen <= 0:
             return
         linelen = self.registrationmarkslen
+        linestart = self.registrationmarksdist
         max_x = 0
         max_y = 0
         for x in xregistrationmarks:
             self.logwrite("registrationmark x: %f\n" % x)
             self.add_registration_line_both_sides(position.x + x,
-                                                  position.y,
+                                                  position.y - linestart,
                                                   position.x + x,
-                                                  position.y - linelen,
+                                                  position.y - linelen - linestart,
                                                   layer,
                                                   backlayer,
                                                   docwidth)
@@ -1130,9 +1135,9 @@ class CountersheetEffect(inkex.Effect):
 
         for y in yregistrationmarks:
             self.logwrite("registrationmark y: %f\n" % y)
-            self.add_registration_line_both_sides(position.x,
+            self.add_registration_line_both_sides(position.x - linestart,
                                                   position.y + y,
-                                                  position.x - linelen,
+                                                  position.x - linelen - linestart,
                                                   position.y + y,
                                                   layer,
                                                   backlayer,
@@ -1145,9 +1150,9 @@ class CountersheetEffect(inkex.Effect):
                 start_y = position.y
             self.add_registration_line_both_sides(
                 position.x + x,
-                start_y,
+                start_y + linestart,
                 position.x + x,
-                position.y + max_y + linelen,
+                position.y + max_y + linelen + linestart,
                 layer,
                 backlayer,
                 docwidth)
@@ -1157,9 +1162,9 @@ class CountersheetEffect(inkex.Effect):
             if self.fullregistrationmarks:
                 start_x = position.x
             self.add_registration_line_both_sides(
-                start_x,
+                start_x + linestart,
                 position.y + y,
-                position.x + max_x + linelen,
+                position.x + max_x + linelen + linestart,
                 position.y + y,
                 layer,
                 backlayer,
@@ -1298,6 +1303,9 @@ class CountersheetEffect(inkex.Effect):
         self.registrationmarkslen = self.from_len_arg(
             self.options.registrationmarkslen,
             "registration marks length")
+        self.registrationmarksdist = self.from_len_arg(
+            self.options.registrationmarksdist,
+            "registration marks distance from component")
         self.outlinedist = self.from_len_arg(
             self.options.outlinedist,
             "outline distance")
