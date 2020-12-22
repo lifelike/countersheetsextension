@@ -48,6 +48,8 @@ PDF_DPI = 300
 
 DEFAULT_REGISTRATION_MARK_STYLE = "stroke:#aaa"
 
+DEFAULT_FOLDING_LINE_STYLE = "stroke:#aaa;stroke-dasharray:0.9,0.15;"
+
 def popen3(cmd):
     p = subprocess.Popen(cmd,
         shell=True, universal_newlines=True, close_fds=True,
@@ -402,6 +404,8 @@ class CountersheetEffect(inkex.Effect):
                                      default = "false")
         self.arg_parser.add_argument('-o', '--oneside', default = "false",
                                      dest="oneside")
+        self.arg_parser.add_argument('-L', '--foldingline', default = "false",
+                                     dest="foldingline")
         self.arg_parser.add_argument('-X', '--backoffsetx', default = "0mm",
                                      dest="backoffsetx")
         self.arg_parser.add_argument('-Y', '--backoffsety', default = "0mm",
@@ -1079,26 +1083,32 @@ class CountersheetEffect(inkex.Effect):
             return True
         return False
 
-    def create_registrationline(self, x1, y1, x2, y2):
-        self.logwrite("create_registrationline %f,%f %f,%f\n"
-                      % (x1, y1, x2, y2))
+    def create_line(self, x1, y1, x2, y2, style):
         line = etree.Element('line')
         line.set("x1", str(x1))
         line.set("y1", str(y1))
         line.set("x2", str(x2))
         line.set("y2", str(y2))
-        line.set("style", self.find_registration_line_style())
+        line.set("style", style)
         line.set("stroke-width", str(PS * 0.5))
         return line
 
-    def find_registration_line_style(self):
-        regstyle_elements = self.document.xpath("//*[@id='cs_regstyle']",
+    def create_registrationline(self, x1, y1, x2, y2):
+        self.logwrite("create_registrationline %f,%f %f,%f\n"
+                      % (x1, y1, x2, y2))
+        return self.create_line(x1, y1, x2, y2, self.find_registration_line_style())
+
+    def find_style(self, styleid, failback):
+        style_elements = self.document.xpath("//*[@id='%s']" % styleid,
                                                namespaces=NSS)
-        if len(regstyle_elements) > 0:
-            regstyle = regstyle_elements[0].get("style")
-            if regstyle is not None and len(regstyle) > 0:
-                return regstyle
-        return DEFAULT_REGISTRATION_MARK_STYLE
+        if len(style_elements) > 0:
+            style = style_elements[0].get("style")
+            if style is not None and len(style) > 0:
+                return style
+        return failback
+
+    def find_registration_line_style(self):
+        return self.find_style("cs_regstyle", DEFAULT_REGISTRATION_MARK_STYLE)
 
     def add_registration_line(self, x1, y1, x2, y2, layer):
             layer.append(self.create_registrationline(x1, y1, x2, y2))
@@ -1175,6 +1185,23 @@ class CountersheetEffect(inkex.Effect):
                 self.add_outlinemarks(backlayer,
                                       docwidth - x1, y1,
                                       docwidth - x2, y2)
+
+    def find_foldingline_style(self):
+        return self.find_style("cs_foldstyle", DEFAULT_FOLDING_LINE_STYLE)
+
+    def create_foldingline(self, docwidth, dochight):
+        margin = max(self.registrationmarkslen,
+                     self.outlinedist)
+        x1 = docwidth / 2
+        y1 = margin
+        x2 = docwidth / 2
+        y2 = dochight - margin
+        self.logwrite("create_foldingline %f, %f, %f, %f\n"
+                % (x1, y1, x2, y2))
+        return self.create_line(x1, y1, x2, y2, self.find_foldingline_style()) 
+
+    def add_foldingline(self, layer, docwidth, dochight):
+        layer.append(self.create_foldingline(docwidth, dochight))
 
     def add_outlinemarks(self, layer, x1, y1, x2, y2):
         self.logwrite("Outline rectangle around %f,%f %f,%f\n"
@@ -1263,12 +1290,15 @@ class CountersheetEffect(inkex.Effect):
         self.textmarkup = self.options.textmarkup == "true"
         self.bleed = self.options.bleed == "true"
         self.oneside = self.options.oneside == "true"
+        self.foldingline = self.options.foldingline == "true"
 
         self.logwrite("svg path: %s\n" % self.svg_path())
 
         self.logwrite("bleed enabled: %r\n" % self.bleed)
 
         self.logwrite("one-sided sheets: %r\n" % self.oneside)
+
+        self.logwrite("has folding line: %r\n" % self.foldingline)
 
         self.logwrite("svg.width: %s\n" % self.svg.width)
         self.logwrite("svg.height: %s\n" % self.svg.height)
@@ -1377,6 +1407,7 @@ class CountersheetEffect(inkex.Effect):
                 backlayer = self.create_backlayer(svg, what, 1)
 
         docwidth = self.getViewBoxWidth(svg)
+        dochight = self.getViewBoxHeight(svg)
 
         self.logwrite("user-units in 1 inch: %f\n" % self.svg.unittouu("1in"))
         self.logwrite("user-units in 1 px: %f\n" % self.svg.unittouu("1px"))
@@ -1392,7 +1423,7 @@ class CountersheetEffect(inkex.Effect):
             positions = [Rectangle(0.0,
                                    0.0,
                                    docwidth,
-                                   self.getViewBoxHeight(svg))]
+                                   dochight)]
             margin = max(self.registrationmarkslen,
                          self.outlinedist)
             positions[0].x += margin
@@ -1502,6 +1533,8 @@ class CountersheetEffect(inkex.Effect):
                                     backlayers.append((backlayer, csn-1))
                                     self.cslayers.append(backlayer.get('id'))
                                     backlayer = self.create_backlayer(svg, what, csn)
+                                if self.foldingline:
+                                    self.add_foldingline(layer, docwidth, dochight)
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
@@ -1522,6 +1555,9 @@ class CountersheetEffect(inkex.Effect):
             self.addbacks(backlayer, bstack,
                           backxs, backys,
                           docwidth, rects)
+
+        if self.foldingline:
+            self.add_foldingline(layer, docwidth, dochight)
 
         if self.bleed:
             self.logwrite(" add_bleed_to %d\n" % len(counters))

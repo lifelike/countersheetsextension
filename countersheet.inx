@@ -17,6 +17,8 @@
     <page name="page2" gui-text="Layout">
       <param name="oneside" type="boolean"
          gui-text="One-Sided Sheets">false</param>
+      <param name="foldingline" type="boolean"
+         gui-text="Folding line in the middle">false</param>
       <param name="backoffsetx" type="string"
          gui-text="Back Side Horizontal Offset">0mm</param>
       <param name="backoffsety" type="string"
