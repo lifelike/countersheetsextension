@@ -1189,19 +1189,19 @@ class CountersheetEffect(inkex.Effect):
     def find_foldingline_style(self):
         return self.find_style("cs_foldstyle", DEFAULT_FOLDING_LINE_STYLE)
 
-    def create_foldingline(self, docwidth, dochight):
+    def create_foldingline(self, docwidth, docheight):
         margin = max(self.registrationmarkslen,
                      self.outlinedist)
         x1 = docwidth / 2
         y1 = margin
         x2 = docwidth / 2
-        y2 = dochight - margin
+        y2 = docheight - margin
         self.logwrite("create_foldingline %f, %f, %f, %f\n"
                 % (x1, y1, x2, y2))
         return self.create_line(x1, y1, x2, y2, self.find_foldingline_style()) 
 
-    def add_foldingline(self, layer, docwidth, dochight):
-        layer.append(self.create_foldingline(docwidth, dochight))
+    def add_foldingline(self, layer, docwidth, docheight):
+        layer.append(self.create_foldingline(docwidth, docheight))
 
     def add_outlinemarks(self, layer, x1, y1, x2, y2):
         self.logwrite("Outline rectangle around %f,%f %f,%f\n"
@@ -1407,7 +1407,7 @@ class CountersheetEffect(inkex.Effect):
                 backlayer = self.create_backlayer(svg, what, 1)
 
         docwidth = self.getViewBoxWidth(svg)
-        dochight = self.getViewBoxHeight(svg)
+        docheight = self.getViewBoxHeight(svg)
 
         self.logwrite("user-units in 1 inch: %f\n" % self.svg.unittouu("1in"))
         self.logwrite("user-units in 1 px: %f\n" % self.svg.unittouu("1px"))
@@ -1423,7 +1423,7 @@ class CountersheetEffect(inkex.Effect):
             positions = [Rectangle(0.0,
                                    0.0,
                                    docwidth,
-                                   dochight)]
+                                   docheight)]
             margin = max(self.registrationmarkslen,
                          self.outlinedist)
             positions[0].x += margin
@@ -1534,7 +1534,7 @@ class CountersheetEffect(inkex.Effect):
                                     self.cslayers.append(backlayer.get('id'))
                                     backlayer = self.create_backlayer(svg, what, csn)
                                 if self.foldingline:
-                                    self.add_foldingline(layer, docwidth, dochight)
+                                    self.add_foldingline(layer, docwidth, docheight)
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
@@ -1557,7 +1557,7 @@ class CountersheetEffect(inkex.Effect):
                           docwidth, rects)
 
         if self.foldingline:
-            self.add_foldingline(layer, docwidth, dochight)
+            self.add_foldingline(layer, docwidth, docheight)
 
         if self.bleed:
             self.logwrite(" add_bleed_to %d\n" % len(counters))
