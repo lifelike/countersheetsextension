@@ -1401,8 +1401,8 @@ class CountersheetEffect(inkex.Effect):
                                    0.0,
                                    docwidth,
                                    self.getViewBoxHeight(svg))]
-            margin = max(self.registrationmarkslen,
-                         self.outlinedist) + self.registrationmarksdist
+            margin = max(self.registrationmarkslen + self.registrationmarksdist,
+                         self.outlinedist)
             positions[0].x += margin
             positions[0].y += margin
             positions[0].w -= margin * 2
