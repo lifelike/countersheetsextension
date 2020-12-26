@@ -406,6 +406,8 @@ class CountersheetEffect(inkex.Effect):
                                      default = "true")
         self.arg_parser.add_argument('-B', '--bleed', dest='bleed',
                                      default = "false")
+        self.arg_parser.add_argument('-1', '--onlyone', default = "false",
+                                     dest="onlyone")
         self.arg_parser.add_argument('-o', '--oneside', default = "false",
                                      dest="oneside")
         self.arg_parser.add_argument('-L', '--foldingline', default = "false",
@@ -1294,6 +1296,7 @@ class CountersheetEffect(inkex.Effect):
 
         self.textmarkup = self.options.textmarkup == "true"
         self.bleed = self.options.bleed == "true"
+        self.onlyone = self.options.onlyone == "true"
         self.oneside = self.options.oneside == "true"
         self.foldingline = self.options.foldingline == "true"
 
@@ -1394,7 +1397,8 @@ class CountersheetEffect(inkex.Effect):
         parser = CSVCounterDefinitionParser(
             self.logwrite, rects,
             self.defs,
-            os.path.dirname(datafile))
+            os.path.dirname(datafile),
+            self.onlyone)
         parser.parse(reader)
         csv_file.close()
         counters = parser.counters
@@ -1668,13 +1672,14 @@ class CountersheetEffect(inkex.Effect):
         pass
 
 class CSVCounterDefinitionParser:
-    def __init__(self, logwrite, rects, defs, datadir):
+    def __init__(self, logwrite, rects, defs, datadir, onlyone):
         self.logwrite = logwrite
         self.rects = rects
         self.defs = defs
         self.counters = []
         self.hasback = False
         self.datadir = datadir
+        self.onlyone = onlyone
 
     def parse(self, reader):
         factory = None
@@ -1716,7 +1721,7 @@ class CSVCounterDefinitionParser:
                 if len(self.counters) > 0:
                     self.counters[-1].endrow = True
                 return factory
-            else:
+            elif not self.onlyone:
                 nrstr = row[0]
                 if nrstr.endswith('+++'):
                     nr = self.must_parse_int(nrstr, -3)

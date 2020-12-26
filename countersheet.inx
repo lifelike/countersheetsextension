@@ -6,12 +6,12 @@
     <page name="page1" gui-text="Input">
       <param type="path" name="data" gui-text="Data File (CSV)"
              mode="file" filetypes="csv"/>
-
       <param type="path" name="imagedir" gui-text="Image Path"
              mode="folder"/>
-
       <param name="textmarkup" type="boolean"
         gui-text="Text Markup (*bold*, /italics/)">true</param>
+      <param name="onlyone" type="boolean"
+             gui-text="Only One of Each (Ignore First Column Numbers)">false</param>
     </page>
 
     <page name="page2" gui-text="Layout">

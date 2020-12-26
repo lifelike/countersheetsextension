@@ -83,6 +83,7 @@ tests = [
     ['textformat.csv', 'textformat.svg'],
     ['textspan.csv', 'textspan.svg'],
     ['dynamic.csv', 'texttokens.svg'],
+    ['dynamic.csv', 'texttokens.svg', {'-1' : 'true'}],
     ['prototype_cards_all.csv', 'prototype_cards.svg'],
     ['prototype_cards_ccg.csv', 'prototype_cards.svg'],
     ['svgcolors.csv', 'colors.svg'],
