@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -10,13 +8,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="prototype_cards.svg"
-   inkscape:version="0.92.1 r15371"
-   id="svg4819"
-   version="1.1"
-   viewBox="0 0 210 297"
+   width="210mm"
    height="297mm"
-   width="210mm">
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg4819"
+   inkscape:version="1.0.1 (1.0.1+r75)"
+   sodipodi:docname="prototype_cards.svg">
   <defs
      id="defs4813" />
   <sodipodi:namedview
@@ -25,21 +23,22 @@
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:window-height="720"
-     inkscape:window-width="1366"
+     inkscape:window-height="1151"
+     inkscape:window-width="1920"
      inkscape:snap-global="false"
      showgrid="false"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer3"
      inkscape:document-units="mm"
-     inkscape:cy="314.45061"
-     inkscape:cx="93.849004"
-     inkscape:zoom="0.24748737"
+     inkscape:cy="908.63207"
+     inkscape:cx="-7.6362654"
+     inkscape:zoom="0.35"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
-     id="base" />
+     id="base"
+     inkscape:document-rotation="0" />
   <metadata
      id="metadata4816">
     <rdf:RDF>
@@ -125,7 +124,8 @@
              width="194.18457"
              id="rect4161" /></flowRegion><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
-           id="flowPara4163">cardtext. This text is a multi-line text object. Inlined images does not work here, but text is automatically flowed (line-breaks are inserted for you as required).</flowPara></flowRoot>      <text
+           id="flowPara4163">cardtext. This text is a multi-line text object. Inlined images does not work here, but text is automatically flowed (line-breaks are inserted for you as required).</flowPara></flowRoot>
+      <text
          inkscape:label="#text4138"
          id="cardtitle"
          y="-41.517368"
@@ -381,7 +381,8 @@
            id="flowPara5577"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">imagecardtext. This card has an image that can be easily swapped out for other images by using a column cardimage in the spreadsheet.</flowPara><flowPara
            id="flowPara5728"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRoot>      <text
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRoot>
+      <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="-226.98279"
@@ -396,13 +397,13 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="35.324905"
-         height="35.324905"
-         preserveAspectRatio="none"
-         id="cardimage"
+         y="-42.989502"
          x="-244.84155"
-         y="-42.989502" />
+         id="cardimage"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -461,8 +462,8 @@
          sodipodi:role="line"
          x="-259.31067"
          y="60.80748"
-         style="stroke-width:0.26458332"
-         id="tspan5756" /><tspan
+         id="tspan5756"
+         style="stroke-width:0.26458332" /><tspan
          sodipodi:role="line"
          x="-259.31067"
          y="66.981094"
@@ -554,23 +555,23 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="-42.989502"
-         x="-171.07516"
-         id="cardimage1"
-         preserveAspectRatio="none"
-         height="35.324905"
-         width="35.324905"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
          inkscape:label="#image5725"
          width="35.324905"
          height="35.324905"
          preserveAspectRatio="none"
-         id="cardimage2"
+         id="cardimage1"
          x="-171.07516"
-         y="-8.9716444" />
+         y="-42.989502" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="-8.9716444"
+         x="-171.07516"
+         id="cardimage2"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
     </g>
     <text
        xml:space="preserve"
@@ -670,43 +671,43 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
+         y="-43.115368"
+         x="-103.03944"
+         id="image1of4"
+         preserveAspectRatio="none"
+         height="28.521334"
+         width="28.521334"
+         inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
          inkscape:label="#image5725"
          width="28.521334"
          height="28.521334"
          preserveAspectRatio="none"
-         id="image1of4"
+         id="image3of4"
          x="-103.03944"
+         y="-15.649347" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         inkscape:label="#image5725"
+         width="28.521334"
+         height="28.521334"
+         preserveAspectRatio="none"
+         id="image2of4"
+         x="-76.959076"
          y="-43.115368" />
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
          y="-15.649347"
-         x="-103.03944"
-         id="image3of4"
-         preserveAspectRatio="none"
-         height="28.521334"
-         width="28.521334"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         y="-43.115368"
          x="-76.959076"
-         id="image2of4"
-         preserveAspectRatio="none"
-         height="28.521334"
-         width="28.521334"
-         inkscape:label="#image5725" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="28.521334"
-         height="28.521334"
-         preserveAspectRatio="none"
          id="image4of4"
-         x="-76.959076"
-         y="-15.649347" />
+         preserveAspectRatio="none"
+         height="28.521334"
+         width="28.521334"
+         inkscape:label="#image5725" />
       <flowRoot
          inkscape:label="#flowRoot5856"
          transform="scale(0.26458333)"
@@ -719,7 +720,8 @@
              height="70"
              width="193.57143"
              id="rect5860" /></flowRegion><flowPara
-           id="flowPara5862">fourimagescardtext. There was room for a little text here.</flowPara></flowRoot>    </g>
+           id="flowPara5862">fourimagescardtext. There was room for a little text here.</flowPara></flowRoot>
+    </g>
     <text
        id="text5946"
        y="140.9118"
@@ -800,13 +802,13 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon1"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="164.3578"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon1"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext1"
@@ -821,16 +823,17 @@
              x="-1444.2858"
              y="626.09113"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Standard Symbols L';-inkscape-font-specification:'Standard Symbols L, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
-           id="flowPara6110">cardicontext1 with automatic line-breaks</flowPara></flowRoot>      <image
+           id="flowPara6110">cardicontext1 with automatic line-breaks</flowPara></flowRoot>
+      <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="180.85008"
-         x="-396.22412"
-         id="cardicon2"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon2"
+         x="-396.22412"
+         y="180.85008"
+         inkscape:label="#image6088" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,14.602402)"
@@ -845,16 +848,17 @@
              height="61.428547"
              width="156.4286"
              id="rect6130" /></flowRegion><flowPara
-           id="flowPara6134">cardicontext2 with automatic line-breaks</flowPara></flowRoot>      <image
+           id="flowPara6134">cardicontext2 with automatic line-breaks</flowPara></flowRoot>
+      <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="cardicon3"
-         x="-396.22412"
+         inkscape:label="#image6088"
          y="197.34238"
-         inkscape:label="#image6088" />
+         x="-396.22412"
+         id="cardicon3"
+         preserveAspectRatio="none"
+         height="13.628309"
+         width="13.628309" />
       <flowRoot
          xml:space="preserve"
          id="cardicontext3"
@@ -869,16 +873,17 @@
              x="-1444.2858"
              y="626.09113"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Standard Symbols L';-inkscape-font-specification:'Standard Symbols L, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
-           id="flowPara6158">cardicontext3 with automatic line-breaks</flowPara></flowRoot>      <image
+           id="flowPara6158">cardicontext3 with automatic line-breaks</flowPara></flowRoot>
+      <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="213.83466"
-         x="-396.22412"
-         id="cardicon4"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="cardicon4"
+         x="-396.22412"
+         y="213.83466"
+         inkscape:label="#image6088" />
       <flowRoot
          inkscape:label="#flowRoot6094"
          transform="matrix(0.26458333,0,0,0.26458333,0.75595237,47.586976)"
@@ -893,7 +898,8 @@
              height="61.428547"
              width="156.4286"
              id="rect6178" /></flowRegion><flowPara
-           id="flowPara6182">cardicontext4 with automatic line-breaks</flowPara></flowRoot>    </g>
+           id="flowPara6182">cardicontext4 with automatic line-breaks</flowPara></flowRoot>
+    </g>
     <text
        id="text6244"
        y="138.10425"
@@ -905,11 +911,11 @@
          x="-314.2659"
          id="tspan6242"
          sodipodi:role="line">imagelinecard</tspan><tspan
-         style="stroke-width:0.26458332"
          y="144.27786"
          x="-314.2659"
          sodipodi:role="line"
-         id="tspan6246" /></text>
+         id="tspan6246"
+         style="stroke-width:0.26458332" /></text>
     <g
        id="g8204">
       <rect
@@ -1005,23 +1011,23 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         inkscape:label="#image6088"
-         y="149.61673"
-         x="-316.84912"
-         id="lineicon"
-         preserveAspectRatio="none"
+         width="13.628309"
          height="13.628309"
-         width="13.628309" />
+         preserveAspectRatio="none"
+         id="lineicon"
+         x="-316.84912"
+         y="149.61673"
+         inkscape:label="#image6088" />
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="162.2735"
-         x="-305.75626"
-         id="lineimage"
-         preserveAspectRatio="none"
-         height="35.324905"
+         inkscape:label="#image5725"
          width="35.324905"
-         inkscape:label="#image5725" />
+         height="35.324905"
+         preserveAspectRatio="none"
+         id="lineimage"
+         x="-305.75626"
+         y="162.2735" />
     </g>
     <text
        xml:space="preserve"
@@ -1221,33 +1227,33 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4332.png"
          xlink:href="g4332.png"
-         width="13.628309"
-         height="13.628309"
-         preserveAspectRatio="none"
-         id="advcardicon1"
-         x="-240.49792"
-         y="149.61673"
-         inkscape:label="#image6088" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
-         xlink:href="g4274.png"
-         inkscape:label="#image5725"
-         width="35.324905"
-         height="35.324905"
-         preserveAspectRatio="none"
-         id="advcardimage"
-         x="-229.40506"
-         y="162.2735" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4546.png"
-         xlink:href="g4546.png"
          inkscape:label="#image6088"
-         y="213.22688"
-         x="-197.20026"
-         id="advcardicon2"
+         y="149.61673"
+         x="-240.49792"
+         id="advcardicon1"
          preserveAspectRatio="none"
          height="13.628309"
          width="13.628309" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
+         xlink:href="g4274.png"
+         y="162.2735"
+         x="-229.40506"
+         id="advcardimage"
+         preserveAspectRatio="none"
+         height="35.324905"
+         width="35.324905"
+         inkscape:label="#image5725" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4546.png"
+         xlink:href="g4546.png"
+         width="13.628309"
+         height="13.628309"
+         preserveAspectRatio="none"
+         id="advcardicon2"
+         x="-197.20026"
+         y="213.22688"
+         inkscape:label="#image6088" />
       <circle
          r="7.9375"
          cy="153.936"
@@ -1383,50 +1389,50 @@
            id="tspan6433"
            sodipodi:role="line">ccgcardtitle</tspan><tspan
            id="tspan6439"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93888903px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px"
            y="152.93442"
            x="-163.88422"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93888903px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px" /></text>
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         inkscape:label="#image6578"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgicon1"
+         y="146.37096"
          x="-108.53409"
-         y="146.37096" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
-         xlink:href="g4290.png"
-         inkscape:label="#image6581"
-         y="146.37096"
-         x="-112.49859"
-         id="ccgicon2"
+         id="ccgicon1"
          preserveAspectRatio="none"
          height="4.0543714"
-         width="4.0543714" />
+         width="4.0543714"
+         inkscape:label="#image6578" />
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         inkscape:label="#image6583"
          width="4.0543714"
          height="4.0543714"
          preserveAspectRatio="none"
-         id="ccgicon3"
-         x="-116.46307"
-         y="146.37096" />
+         id="ccgicon2"
+         x="-112.49859"
+         y="146.37096"
+         inkscape:label="#image6581" />
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         inkscape:label="#image6585"
          y="146.37096"
-         x="-120.42757"
-         id="ccgicon4"
+         x="-116.46307"
+         id="ccgicon3"
          preserveAspectRatio="none"
          height="4.0543714"
-         width="4.0543714" />
+         width="4.0543714"
+         inkscape:label="#image6583" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
+         xlink:href="g4290.png"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
+         id="ccgicon4"
+         x="-120.42757"
+         y="146.37096"
+         inkscape:label="#image6585" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.25825071px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6597"
@@ -1439,13 +1445,13 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="152.96933"
-         x="-164.10214"
-         id="ccgimage"
-         preserveAspectRatio="xMidyMid slice"
-         height="39.099735"
+         inkscape:label="#image5725"
          width="58.796597"
-         inkscape:label="#image5725" />
+         height="39.099735"
+         preserveAspectRatio="xMidyMid slice"
+         id="ccgimage"
+         x="-164.10214"
+         y="152.96933" />
       <rect
          style="opacity:1;vector-effect:none;fill:#fffff6;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect6599"
@@ -1470,48 +1476,48 @@
            sodipodi:role="line"
            x="-164.04077"
            y="232.94157"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px"
-           id="tspan6603" /></text>
+           id="tspan6603"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px" /></text>
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         inkscape:label="#image6607"
-         y="194.74673"
-         x="-108.53409"
+         width="4.0543714"
+         height="4.0543714"
+         preserveAspectRatio="none"
          id="ccgticon1"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
-         xlink:href="g4290.png"
-         inkscape:label="#image6609"
-         width="4.0543714"
-         height="4.0543714"
-         preserveAspectRatio="none"
-         id="ccgticon2"
-         x="-112.49859"
-         y="194.74673" />
-      <image
-         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
-         xlink:href="g4290.png"
-         inkscape:label="#image6611"
+         x="-108.53409"
          y="194.74673"
-         x="-116.46307"
-         id="ccgticon3"
-         preserveAspectRatio="none"
-         height="4.0543714"
-         width="4.0543714" />
+         inkscape:label="#image6607" />
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
          xlink:href="g4290.png"
-         inkscape:label="#image6613"
+         y="194.74673"
+         x="-112.49859"
+         id="ccgticon2"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714"
+         inkscape:label="#image6609" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
+         xlink:href="g4290.png"
          width="4.0543714"
          height="4.0543714"
          preserveAspectRatio="none"
-         id="ccgticon4"
+         id="ccgticon3"
+         x="-116.46307"
+         y="194.74673"
+         inkscape:label="#image6611" />
+      <image
+         sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4290.png"
+         xlink:href="g4290.png"
+         y="194.74673"
          x="-120.42757"
-         y="194.74673" />
+         id="ccgticon4"
+         preserveAspectRatio="none"
+         height="4.0543714"
+         width="4.0543714"
+         inkscape:label="#image6613" />
       <rect
          ry="0"
          rx="0"
@@ -1556,7 +1562,8 @@
              height="92.14286"
              width="219.28572"
              id="rect6633" /></flowRegion><flowPara
-           id="flowPara6635">ccgtext. Multi-line, so no inline images here.</flowPara></flowRoot>      <text
+           id="flowPara6635">ccgtext. Multi-line, so no inline images here.</flowPara></flowRoot>
+      <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="-163.88422"
@@ -1571,8 +1578,8 @@
            sodipodi:role="line"
            x="-163.88422"
            y="200.42825"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px"
-           id="tspan6641" /></text>
+           id="tspan6641"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.28222224px" /></text>
     </g>
     <g
        id="g8157">
@@ -1596,7 +1603,8 @@
              height="319.20819"
              width="226.27417"
              id="rect6651" /></flowRegion><flowPara
-           id="flowPara6657">This is just a card with text, nothing more. You can use some simple mark-up to do bold or italics text here, but other than that anything more interesting requires editing the template (or use some other prototype template).</flowPara></flowRoot>    </g>
+           id="flowPara6657">This is just a card with text, nothing more. You can use some simple mark-up to do bold or italics text here, but other than that anything more interesting requires editing the template (or use some other prototype template).</flowPara></flowRoot>
+    </g>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888855px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -1632,13 +1640,13 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/g4274.png"
          xlink:href="g4274.png"
-         y="363.05301"
-         x="-328.04578"
-         id="fullimage"
-         preserveAspectRatio="none"
-         height="88.900002"
+         inkscape:label="#image5725"
          width="63.5"
-         inkscape:label="#image5725" />
+         height="88.900002"
+         preserveAspectRatio="none"
+         id="fullimage"
+         x="-328.04578"
+         y="363.05301" />
     </g>
     <text
        xml:space="preserve"
@@ -1714,8 +1722,8 @@
          sodipodi:role="line"
          x="-326.33609"
          y="543.23132"
-         style="stroke-width:0.26458332"
-         id="tspan6741" /><tspan
+         id="tspan6741"
+         style="stroke-width:0.26458332" /><tspan
          sodipodi:role="line"
          x="-326.33609"
          y="549.40491"
@@ -1760,13 +1768,13 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/extcard.svg"
          xlink:href="extcard.svg"
-         inkscape:label="#image5725"
-         width="63.5"
-         height="88.900002"
-         preserveAspectRatio="none"
-         id="extimage"
+         y="368.66797"
          x="-240.2628"
-         y="368.66797" />
+         id="extimage"
+         preserveAspectRatio="none"
+         height="88.900002"
+         width="63.5"
+         inkscape:label="#image5725" />
       <path
          style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.16880417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:connector-curvature="0"
@@ -1860,8 +1868,8 @@
          sodipodi:role="line"
          x="-238.50298"
          y="528.44739"
-         style="stroke-width:0.26458332"
-         id="tspan7567" /><tspan
+         id="tspan7567"
+         style="stroke-width:0.26458332" /><tspan
          sodipodi:role="line"
          x="-238.50298"
          y="534.62103"
@@ -1961,10 +1969,10 @@
            id="tspan8353"
            sodipodi:role="line">cardtitle-a</tspan><tspan
            id="tspan8438"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px"
            y="390.38342"
            x="-138.53636"
-           sodipodi:role="line" /></text>
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px" /></text>
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888855px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -2112,15 +2120,5 @@
        height="254"
        x="7.9375"
        y="21.5" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="cs_background_front_4_2">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.00000008, 4.00000015;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 105,14.318453 V 282.68155"
-       id="path4846"
-       inkscape:connector-curvature="0" />
   </g>
 </svg>
