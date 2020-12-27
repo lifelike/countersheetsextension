@@ -27,11 +27,11 @@
      inkscape:window-width="1920"
      inkscape:snap-global="false"
      showgrid="false"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="svg4819"
      inkscape:document-units="mm"
-     inkscape:cy="908.63207"
-     inkscape:cx="-7.6362654"
-     inkscape:zoom="0.35"
+     inkscape:cy="651.79604"
+     inkscape:cx="314.16969"
+     inkscape:zoom="0.98994948"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -2106,19 +2106,5 @@
            y="426.63669"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px">cardtitle-b</tspan></text>
     </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="cs_layout_4_2"
-     sodipodi:insensitive="true"
-     style="display:none">
-    <rect
-       style="opacity:1;vector-effect:none;fill:#999999;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.69999999, 2.09999997;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect4844"
-       width="88.900002"
-       height="254"
-       x="7.9375"
-       y="21.5" />
   </g>
 </svg>

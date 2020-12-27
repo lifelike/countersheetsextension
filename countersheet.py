@@ -1432,9 +1432,12 @@ class CountersheetEffect(inkex.Effect):
         positions = self.readLayout(svg)
         if not positions or len(positions) < 1:
             haslayout = False
+            layoutwidth = docwidth
+            if self.oneside:
+                layoutwidth /= 2.0
             positions = [Rectangle(0.0,
                                    0.0,
-                                   docwidth,
+                                   layoutwidth,
                                    docheight)]
             margin = max(self.registrationmarkslen + self.registrationmarksdist,
                          self.outlinedist)
