@@ -1197,7 +1197,7 @@ class CountersheetEffect(inkex.Effect):
         return self.find_style("cs_foldstyle", DEFAULT_FOLDING_LINE_STYLE)
 
     def create_foldingline(self, docwidth, docheight):
-        margin = max(self.registrationmarkslen,
+        margin = max(self.registrationmarkslen + self.registrationmarksdist,
                      self.outlinedist)
         x1 = docwidth / 2
         y1 = margin
