@@ -504,8 +504,8 @@ class CountersheetEffect(inkex.Effect):
         return (rect.x + rect.w / 2.0,
                 rect.y + rect.h / 2.0)
 
-    def setMultilineText(self, element, name, lines):
-        self.logwrite("setting multiline text: %s\n" % lines)
+    def setMultilineFlowRoot(self, element, name, lines):
+        self.logwrite("setting multiline flowRoot: %s\n" % lines)
         self.deleteTextChildren(element)
         added_style = {}
         for line in lines:
@@ -515,6 +515,18 @@ class CountersheetEffect(inkex.Effect):
                                   added_style,
                                   inkex.Style.parse_str(element.get('style')))
             element.append(para)
+
+    def setMultilineText(self, element, name, lines):
+        self.logwrite("setting multiline text: %s\n" % lines)
+        self.deleteTextChildren(element)
+        added_style = {}
+        tspan = etree.Element(inkex.addNS('tspan', 'svg'))
+        joined_lines = "\n".join(lines)
+        self.setFormattedText(tspan, name,
+                              joined_lines, 'tspan',
+                              added_style,
+                              inkex.Style.parse_str(element.get('style')))
+        element.append(tspan)
 
     def deleteTextChildren(self, parent):
         for c in parent.getchildren():
@@ -878,9 +890,11 @@ class CountersheetEffect(inkex.Effect):
             if subst is None:
                 subst = ""
             if fnmatch.fnmatchcase(textid, glob):
-                if (t.tag == inkex.addNS('flowRoot','svg')
-                    and subst.find("\\n") >= 0):
-                    self.setMultilineText(t, textid, subst.split("\\n"))
+                if subst.find("\\n") >= 0:
+                    if t.tag == inkex.addNS('flowRoot','svg'):
+                        self.setMultilineFlowRoot(t, textid, subst.split("\\n"))
+                    if t.tag == inkex.addNS('text','svg'):
+                        self.setMultilineText(t, textid, subst.split("\\n"))
                 else:
                     if not self.setFirstTextChild(t, textid, subst):
                         # Could not find anything to replace, so just delete
@@ -2164,7 +2178,8 @@ def find_top_level_group_for(element):
 IGNORE_PATTERNS = ["did not resolve to a valid image file",
                        ": dbind-WARNING **",
                        ": WARNING **",
-                       "SPDocument::doUnref(): invalid ref count!"]
+                       "SPDocument::doUnref(): invalid ref count!",
+                       "Invalid glyph found, continuing..."]
 def print_filtered_stderr(err):
     for errline in err.splitlines():
         ignore_line = False
