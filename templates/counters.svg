@@ -14,7 +14,7 @@
    viewBox="0 0 744.09448819 1052.3622047"
    id="svg18310"
    version="1.1"
-   inkscape:version="1.0.1 (1.0.1+r73)"
+   inkscape:version="1.0.1 (1.0.1+r75)"
    sodipodi:docname="counters.svg">
   <sodipodi:namedview
      inkscape:snap-bbox-edge-midpoints="false"
@@ -26,14 +26,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="-595.35617"
-     inkscape:cy="1110.5612"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="-2639.8611"
+     inkscape:cy="1284.9357"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1031"
+     inkscape:window-height="1151"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -7959,14 +7959,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="431.4986"
-         x="-2509.1555"
-         id="m-i-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-i-i1"
+         x="-2509.1555"
+         y="431.4986" />
     </g>
     <g
        id="g6047"
@@ -7982,14 +7982,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it-i1"
+         y="498.52985"
          x="-2509.1555"
-         y="498.52985" />
+         id="m-it-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it-t1"
@@ -8016,14 +8016,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="563.4953"
-         x="-2509.1555"
-         id="m-it2-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it2-i1"
+         x="-2509.1555"
+         y="563.4953" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:30px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
@@ -8050,14 +8050,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="629.78656"
-         x="-2509.1555"
-         id="m-it-corners-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-corners-i1"
+         x="-2509.1555"
+         y="629.78656" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
@@ -8117,14 +8117,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it-2lines-i1"
+         y="701.3811"
          x="-2509.1555"
-         y="701.3811" />
+         id="m-it-2lines-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it-2lines-t2"
@@ -8162,14 +8162,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="766.53735"
-         x="-2509.1555"
-         id="m-it-updown-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-updown-i1"
+         x="-2509.1555"
+         y="766.53735" />
       <text
          transform="scale(-1)"
          xml:space="preserve"
@@ -8208,14 +8208,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it-edges-i1"
+         y="835.91235"
          x="-2509.1555"
-         y="835.91235" />
+         id="m-it-edges-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it-edges-t3"
@@ -8278,14 +8278,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="914.79895"
-         x="-2509.1555"
-         id="m-it-edges2-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-edges2-i1"
+         x="-2509.1555"
+         y="914.79895" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
@@ -8348,14 +8348,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="987.75934"
-         x="-2509.1555"
-         id="m-it-diag-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-diag-i1"
+         x="-2509.1555"
+         y="987.75934" />
       <text
          transform="rotate(-45)"
          xml:space="preserve"
@@ -8708,14 +8708,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="1063.3314"
-         x="-2509.1555"
-         id="m-it-3lines-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-3lines-i1"
+         x="-2509.1555"
+         y="1063.3314" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.00000003px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
@@ -8809,14 +8809,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="701.3811"
-         x="-2509.1555"
-         id="m-it-downup-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-downup-i1"
+         x="-2509.1555"
+         y="701.3811" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.00000003px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
@@ -8890,48 +8890,32 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="1204.4984"
-         x="-2509.1555"
-         id="m-it-circle-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-circle-i1"
+         x="-2509.1555"
+         y="1204.4984" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.00000003px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-variant-east-asian:normal;"
          id="m-it-circle-t1"
          inkscape:label="#text18860"><textPath
            id="textPath18588"
            startOffset="50%"
            xlink:href="#path18586"><tspan
-             style="-inkscape-font-specification:'sans-serif, Bold';font-family:sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:10.00000003px;text-anchor:middle;text-align:center;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;stroke:none;"
+             style="-inkscape-font-specification:'sans-serif, Bold';font-family:sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:10.00000003px;text-anchor:middle;text-align:center;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;stroke:none;font-variant-east-asian:normal;"
              id="tspan18576">TEXT IN A CIRCLE</tspan></textPath></text>
-      <path
-         transform="rotate(-105)"
-         d="m -532.44043,-2715.9311 a 16.040272,16.04047 0 0 1 -15.62102,16.4049 16.040272,16.04047 0 0 1 -16.44866,-15.5749 16.040272,16.04047 0 0 1 15.52829,-16.4927 16.040272,16.04047 0 0 1 16.5362,15.4819"
-         sodipodi:open="true"
-         sodipodi:end="6.2488547"
-         sodipodi:start="6.2601295"
-         sodipodi:ry="16.04047"
-         sodipodi:rx="16.040272"
-         sodipodi:cy="-2715.5613"
-         sodipodi:cx="-548.47644"
-         sodipodi:type="arc"
+      <ellipse
+         transform="rotate(-149.55023)"
          id="path18586"
-         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text
-         x="70.931648"
-         inkscape:label="#text18860"
-         id="text18599"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         xml:space="preserve"><textPath
-           xlink:href="#path18586"
-           startOffset="50%"
-           id="textPath18597"><tspan
-             id="tspan18595"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke:none">TEXT IN A CIRCLE</tspan></textPath></text>
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         cx="1514.1956"
+         cy="-2319.981"
+         rx="16.040272"
+         ry="16.04047" />
     </g>
     <g
        id="g18632"
@@ -8944,16 +8928,6 @@
          width="56.25"
          id="m-t-circle"
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#f2f2f2;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.91176471;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
-      <text
-         inkscape:label="#text18860"
-         id="text18622"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         xml:space="preserve"><textPath
-           xlink:href="#path18586"
-           startOffset="50%"
-           id="textPath18620"><tspan
-             id="tspan18618"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke:none">TEXT IN A CIRCLE</tspan></textPath></text>
       <path
          style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="path18624"
@@ -8972,7 +8946,8 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="m-t-circle-t1"
          inkscape:label="#text18860"
-         x="70.931648"><textPath
+         x="56.634773"
+         transform="translate(0.04482842)"><textPath
            id="textPath18628"
            startOffset="50%"
            xlink:href="#path18586"><tspan
@@ -8993,14 +8968,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it3-i1"
+         y="563.4953"
          x="-2509.1555"
-         y="563.4953" />
+         id="m-it3-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it3-t1"
@@ -9050,14 +9025,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="498.52985"
-         x="-2509.1555"
-         id="m-it-up-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-up-i1"
+         x="-2509.1555"
+         y="498.52985" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -9084,14 +9059,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it-down-i1"
+         y="498.52985"
          x="-2509.1555"
-         y="498.52985" />
+         id="m-it-down-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it-down-t1"
@@ -9117,14 +9092,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="1473.7722"
-         x="-2509.1555"
-         id="m-it-2lines2-i1"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="m-it-2lines2-i1"
+         x="-2509.1555"
+         y="1473.7722" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.46875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -9194,14 +9169,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:3.16799998"
-         width="56.25"
-         height="56.25"
-         preserveAspectRatio="none"
-         id="m-it-3lines2-i1"
+         y="1545.0222"
          x="-2509.1555"
-         y="1545.0222" />
+         id="m-it-3lines2-i1"
+         preserveAspectRatio="none"
+         height="56.25"
+         width="56.25"
+         style="stroke-width:3.16799998"
+         inkscape:label="#image25160" />
       <text
          inkscape:label="#text18860"
          id="m-it-3lines2-t2"
@@ -9298,14 +9273,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         y="73.296692"
-         x="-1275.8652"
-         id="sym-image"
-         preserveAspectRatio="none"
-         height="56.25"
-         width="56.25"
+         inkscape:label="#image25160"
          style="stroke-width:3.16799998"
-         inkscape:label="#image25160" />
+         width="56.25"
+         height="56.25"
+         preserveAspectRatio="none"
+         id="sym-image"
+         x="-1275.8652"
+         y="73.296692" />
     </g>
     <text
        xml:space="preserve"
@@ -9483,14 +9458,14 @@
       <image
          sodipodi:absref="/home/pelle/src/countersheetsextension/templates/ex.png"
          xlink:href="ex.png"
-         inkscape:label="#image25160"
-         style="stroke-width:7.19377708"
-         width="24.771408"
-         height="24.771408"
-         preserveAspectRatio="none"
-         id="sym-image-small"
+         y="-35.49802"
          x="-1206.3842"
-         y="-35.49802" />
+         id="sym-image-small"
+         preserveAspectRatio="none"
+         height="24.771408"
+         width="24.771408"
+         style="stroke-width:7.19377708"
+         inkscape:label="#image25160" />
     </g>
     <text
        id="image-small-text"
