@@ -343,8 +343,8 @@ class CountersheetEffect(inkex.Effect):
         self.arg_parser.add_argument('-,', '--name')
         self.arg_parser.add_argument('-l', '--log',
                                      type = str, dest = 'logfile')
-        self.arg_parser.add_argument('-n', '--what',
-                                     type = str, dest = 'what',
+        self.arg_parser.add_argument('-n', '--suffix',
+                                     type = str, dest = 'suffix',
                                      default = '',
                                      help = 'Name')
         self.arg_parser.add_argument('-N', '--sheets-bitmap-name', dest='bitmapname',
@@ -731,20 +731,26 @@ class CountersheetEffect(inkex.Effect):
                     element.remove(c)
         return replaced
 
-    def addLayer(self, svg, what, nr, extra=""):
+    def addLayer(self, svg, suffix, nr, extra=""):
+        suffixlabel = ""
+        suffixid = ""
+        extralabel = ""
+        extraid = ""
+
+        if len(suffix) > 0:
+            suffixlabel = " %s" % suffix
+            suffixid = "_%s" % suffix
         if len(extra) > 0:
             extralabel = " (%s)" % extra
             extraid = "_%s" % extra
-        else:
-            extralabel = ""
-            extraid = ""
-        llabel = 'Countersheet %s %d%s' % (what, nr, extralabel)
-        lid = 'cs_layer_%04d%s' % (nr, extraid)
 
-        if self.find_layer(svg, llabel) is not None:
+        llabel = 'Countersheet%s %d%s' % (suffixlabel, nr, extralabel)
+        lid = 'cs_layer%s_%04d%s' % (suffixid, nr, extraid)
+
+        if self.find_layer(svg, llabel, "") is not None:
             sys.exit("Image already contains a layer '%s'. "
                      "Remove that layer before running extension again. "
-                     "Or set a different Name when running the extension. "
+                     "Or set a different \"Suffix\" when running the extension. "
                      "Or just rename the existing layer." % llabel)
 
         layer = etree.Element(inkex.addNS('g', 'svg'))
@@ -895,7 +901,7 @@ class CountersheetEffect(inkex.Effect):
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
-    def find_layer(self, svg, layer_name):
+    def find_layer(self, svg, layer_name, suffix):
         """Find a layer with given label in the SVG.
 
         Returns None if there is none, so always
@@ -903,16 +909,23 @@ class CountersheetEffect(inkex.Effect):
         about a SVG not containing a specific layer
         so not going to throw an exception."""
 
-        for g in svg.xpath('//svg:g', namespaces=NSS):
-            if (g.get(inkex.addNS('groupmode', 'inkscape')) == 'layer'
-                and (g.get(inkex.addNS('label', 'inkscape'))
-                     == layer_name)):
-                return g
+        base_layer = None
 
-    def readLayout(self, svg):
-        g = self.find_layer(svg, "cs_layout")
+        for g in svg.xpath('//svg:g', namespaces=NSS):
+            if g.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
+                lname = g.get(inkex.addNS('label', 'inkscape'))
+                if (lname == layer_name+"_"+ suffix
+                        or lname == layer_name+" "+ suffix):
+                    return g
+                if lname == layer_name:
+                    base_layer = g
+
+        return base_layer
+
+    def readLayout(self, svg, suffix):
+        g = self.find_layer(svg, "cs_layout", suffix)
         if g is None:
-            g = self.find_layer(svg, "countersheet_layout")
+            g = self.find_layer(svg, "countersheet_layout", suffix)
         if g is not None:
             res = []
             self.logwrite("Found layout layer!\n")
@@ -1197,7 +1210,7 @@ class CountersheetEffect(inkex.Effect):
         return self.find_style("cs_foldstyle", DEFAULT_FOLDING_LINE_STYLE)
 
     def create_foldingline(self, docwidth, docheight):
-        margin = max(self.registrationmarkslen,
+        margin = max(self.registrationmarkslen + self.registrationmarksdist,
                      self.outlinedist)
         x1 = docwidth / 2
         y1 = margin
@@ -1285,8 +1298,8 @@ class CountersheetEffect(inkex.Effect):
     def effect(self):
         global PS
 
-        # Get script "--what" option value.
-        what = self.options.what
+        # Get script "--suffix" option value.
+        suffix = self.options.suffix
 
         doc = self.document
 
@@ -1408,7 +1421,7 @@ class CountersheetEffect(inkex.Effect):
         backlayers = []
 
         # Create a new layer.
-        layer = self.addLayer(svg, what, 1)
+        layer = self.addLayer(svg, suffix, 1)
 
         backlayer = None
 
@@ -1416,7 +1429,7 @@ class CountersheetEffect(inkex.Effect):
             if self.oneside:
                 backlayer = layer
             else:
-                backlayer = self.create_backlayer(svg, what, 1)
+                backlayer = self.create_backlayer(svg, suffix, 1)
 
         docwidth = self.getViewBoxWidth(svg)
         docheight = self.getViewBoxHeight(svg)
@@ -1429,7 +1442,7 @@ class CountersheetEffect(inkex.Effect):
                       % (self.xscale, self.yscale))
 
         haslayout = True
-        positions = self.readLayout(svg)
+        positions = self.readLayout(svg, suffix)
         if not positions or len(positions) < 1:
             haslayout = False
             layoutwidth = docwidth
@@ -1547,13 +1560,13 @@ class CountersheetEffect(inkex.Effect):
                                     svg.append(backlayer)
                                     backlayers.append((backlayer, csn-1))
                                     self.cslayers.append(backlayer.get('id'))
-                                    backlayer = self.create_backlayer(svg, what, csn)
+                                    backlayer = self.create_backlayer(svg, suffix, csn)
                                 if self.foldingline:
                                     self.add_foldingline(layer, docwidth, docheight)
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
-                            layer = self.addLayer(svg, what, csn)
+                            layer = self.addLayer(svg, suffix, csn)
                             box = 0
                             if self.oneside:
                                 backlayer = layer
@@ -1624,10 +1637,10 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("nrsheets: %d\n" % nrsheets)
         self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
         self.add_layer_backgrounds(frontlayers,
-                                   self.find_layer(svg, "cs_background_front"),
+                                   self.find_layer(svg, "cs_background_front", suffix),
                                    nrsheets)
         self.add_layer_backgrounds(backlayers,
-                                   self.find_layer(svg, "cs_background_back"),
+                                   self.find_layer(svg, "cs_background_back", suffix),
                                    nrsheets)
 
         exportedbitmaps = self.exportIDBitmaps()
@@ -1653,8 +1666,8 @@ class CountersheetEffect(inkex.Effect):
             self.set_style(background, 'display', None)
             target.insert(0, background)
 
-    def create_backlayer(self, svg, what, csn):
-        backlayer = self.addLayer(svg, what,
+    def create_backlayer(self, svg, suffix, csn):
+        backlayer = self.addLayer(svg, suffix,
                       csn, "back")
         if self.backoffsetx != 0 or self.backoffsety != 0:
             self.translate_element(backlayer,
