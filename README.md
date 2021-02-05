@@ -70,7 +70,7 @@ for recent versions of the countersheetsextension can be found
 License
 --------
 
-Copyright (C) 2008-2020 Pelle Nilsson et al
+Copyright (C) 2008-2021 Pelle Nilsson et al
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
