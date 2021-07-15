@@ -1690,7 +1690,10 @@ class CountersheetEffect(inkex.Effect):
         return backlayer
 
     def make_image_href(self, filename):
-        if os.path.isabs(filename):
+
+        if filename.startswith("data:"):
+            return filename
+        elif os.path.isabs(filename):
             return filename
         else:
             return os.path.join(self.imagedir, filename)
