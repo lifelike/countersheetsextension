@@ -1256,9 +1256,6 @@ class CountersheetEffect(inkex.Effect):
         value = self.svg.unittouu(argvalue)
         if not allow_negative and value < 0:
             sys.exit("Negative %s marks makes no sense." % name)
-
-        self.logwrite("%s: %f\n"
-                      % (name, value))
         return value
 
     def calculateScale(self, svg):
@@ -1705,7 +1702,7 @@ class CountersheetEffect(inkex.Effect):
         pass
 
 class CSVCounterDefinitionParser:
-    def __init__(self, logwrite, rects, defs, datadir, onlyone):
+    def __init__(self, logwrite, rects, defs, datadir, onlyone=False):
         self.logwrite = logwrite
         self.rects = rects
         self.defs = defs
