@@ -466,7 +466,7 @@ class CountersheetEffect(inkex.Effect):
             element.set('transform', translate)
 
     def rotate_element(self, element, degrees, width, height):
-        if degrees == 0 or degrees == 180:
+        if degrees == 0:
             return
         rotate = "rotate(%f,%f,%f)" % (degrees,
                                           width / 2.0,
