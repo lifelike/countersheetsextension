@@ -1690,7 +1690,7 @@ class CountersheetEffect(inkex.Effect):
 
         if filename.startswith("data:"):
             return filename
-        elif os.path.isabs(filename):
+        elif os.path.isabs(filename) or filename.startswith("file://"):
             return filename
         else:
             return os.path.join(self.imagedir, filename)
