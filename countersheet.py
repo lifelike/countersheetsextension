@@ -506,6 +506,21 @@ class CountersheetEffect(inkex.Effect):
 
     def setMultilineFlowRoot(self, element, name, lines):
         self.logwrite("setting multiline flowRoot: %s\n" % lines)
+        for c in element.getchildren():
+            if c.tag == inkex.addNS('flowPara','svg'):
+                style = c.get('style')
+                if style is not None:
+                    self.logwrite(" found flowPara style: " + style)
+                    element_style = element.get('style')
+                    if element_style:
+                        combstyle = dict(inkex.Style.parse_str(element_style))
+                    else:
+                        combstyle = {}
+                    combstyle.update(inkex.Style.parse_str(style))
+                    element.set('style', str(inkex.Style(combstyle)))
+                    break
+                else:
+                    self.logwrite(" found flowPara without style")
         self.deleteTextChildren(element)
         added_style = {}
         for line in lines:

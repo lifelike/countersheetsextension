@@ -105,6 +105,7 @@ tests = [
     ['standees.csv', 'standees.svg', {'-R' : 'true', '-O' : '0'}],
     ['image_counters.csv', 'template-counters.svg'],
     ['bomsquare.csv', 'square.svg'],
+    ['centercard.csv', 'prototype_cards.svg'],
 ]
 
 copyfiles = (glob.glob(os.path.join(inputdir, "*.png"))

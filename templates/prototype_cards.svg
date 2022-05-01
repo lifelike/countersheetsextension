@@ -13,7 +13,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg4819"
-   inkscape:version="1.0.1 (1.0.1+r75)"
+   inkscape:version="1.0.2 (1.0.2+r75+1)"
    sodipodi:docname="prototype_cards.svg">
   <defs
      id="defs4813" />
@@ -23,15 +23,15 @@
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:window-height="1151"
-     inkscape:window-width="1920"
+     inkscape:window-height="1198"
+     inkscape:window-width="1918"
      inkscape:snap-global="false"
      showgrid="false"
-     inkscape:current-layer="svg4819"
+     inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="651.79604"
-     inkscape:cx="314.16969"
-     inkscape:zoom="0.98994948"
+     inkscape:cy="1781.2656"
+     inkscape:cx="67.721862"
+     inkscape:zoom="0.175"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -87,10 +87,9 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,1e-5)">
+     id="layer1">
     <g
-       id="g8341">
+       id="g1244">
       <rect
          inkscape:label="#rect7520"
          y="-55.916561"
@@ -98,41 +97,40 @@
          height="88.900002"
          width="63.5"
          id="card"
-         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.61433947px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         style="vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.614339px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <path
          d="m -400.32461,-54.138562 h 54.51475 q 3.2385,0 3.2385,4.489444 v 76.365106 q 0,4.48945 -3.2385,4.48945 h -54.51475 q -3.20675,0 -3.20675,-4.48945 v -76.365106 q 0,-4.489444 3.20675,-4.489444 m 0,1.778 q -1.93675,0 -1.93675,2.711444 V 4.7576887 l 1.11125,1.555747 -1.11125,1.5113 v 4.4005563 l 1.778,2.489196 -1.778,2.4892 v 9.5123 q 0,2.71145 1.93675,2.71145 h 5.588 l 1.397,-1.9558 1.397,1.9558 h 46.13275 q 1.9685,0 1.9685,-2.71145 v -5.0673 l -2.6035,-3.6449 2.6035,-3.68935 v -49.028352 l -1.9685,-2.7559 1.9685,-2.800348 v -9.378956 q 0,-2.711444 -1.9685,-2.711444 h -24.47925 l -1.80975,2.5781 -1.8415,-2.5781 h -26.38425"
          id="path7614"
          inkscape:connector-curvature="0"
-         style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.16880417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.168804;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          d="m -400.32462,-52.36056 h 26.38425 l 1.8415,2.5781 1.80975,-2.5781 h 24.47925 q 1.9685,0 1.9685,2.711444 v 9.378956 l -1.9685,2.800348 1.9685,2.7559 V 14.31444 l -2.6035,3.68935 2.6035,3.6449 v 5.0673 q 0,2.71145 -1.9685,2.71145 h -46.13275 l -1.397,-1.9558 -1.397,1.9558 h -5.588 q -1.93675,0 -1.93675,-2.71145 v -9.5123 l 1.778,-2.4892 -1.778,-2.489195 V 7.8247391 l 1.11125,-1.5113 -1.11125,-1.555747 V -49.649116 q 0,-2.711444 1.93675,-2.711444"
          id="path7616"
          inkscape:connector-curvature="0"
-         style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.75134218" />
+         style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.751342" />
       <flowRoot
          inkscape:label="#flowRoot4142"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:100%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          id="cardtext"
          xml:space="preserve"
          transform="matrix(0.28222223,0,0,0.28222223,-265.22348,-46.48852)"><flowRegion
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;"
            id="flowRegion4159"><rect
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;"
              y="47.780663"
              x="-478.98862"
              height="199.36284"
              width="194.18457"
              id="rect4161" /></flowRegion><flowPara
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;"
            id="flowPara4163">cardtext. This text is a multi-line text object. Inlined images does not work here, but text is automatically flowed (line-breaks are inserted for you as required).</flowPara></flowRoot>
       <text
          inkscape:label="#text4138"
          id="cardtitle"
          y="-41.517368"
          x="-373.63754"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.28222224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.282222px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.282222px"
            y="-41.517368"
            x="-373.63754"
            id="tspan4155"
@@ -2106,5 +2104,91 @@
            y="426.63669"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.28222224px">cardtitle-b</tspan></text>
     </g>
+    <g
+       id="g1244-1"
+       transform="translate(414.50192,404.4836)">
+      <rect
+         inkscape:label="#rect7520"
+         y="-55.916561"
+         x="-404.80136"
+         height="88.900002"
+         width="63.5"
+         id="centercard"
+         style="vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.614339px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         d="m -400.32461,-54.138562 h 54.51475 q 3.2385,0 3.2385,4.489444 v 76.365106 q 0,4.48945 -3.2385,4.48945 h -54.51475 q -3.20675,0 -3.20675,-4.48945 v -76.365106 q 0,-4.489444 3.20675,-4.489444 m 0,1.778 q -1.93675,0 -1.93675,2.711444 V 4.7576887 l 1.11125,1.555747 -1.11125,1.5113 v 4.4005563 l 1.778,2.489196 -1.778,2.4892 v 9.5123 q 0,2.71145 1.93675,2.71145 h 5.588 l 1.397,-1.9558 1.397,1.9558 h 46.13275 q 1.9685,0 1.9685,-2.71145 v -5.0673 l -2.6035,-3.6449 2.6035,-3.68935 v -49.028352 l -1.9685,-2.7559 1.9685,-2.800348 v -9.378956 q 0,-2.711444 -1.9685,-2.711444 h -24.47925 l -1.80975,2.5781 -1.8415,-2.5781 h -26.38425"
+         id="path7614-9"
+         inkscape:connector-curvature="0"
+         style="fill:#fefcf9;fill-opacity:1;stroke:#aaaaaa;stroke-width:0.168804;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         d="m -400.32462,-52.36056 h 26.38425 l 1.8415,2.5781 1.80975,-2.5781 h 24.47925 q 1.9685,0 1.9685,2.711444 v 9.378956 l -1.9685,2.800348 1.9685,2.7559 V 14.31444 l -2.6035,3.68935 2.6035,3.6449 v 5.0673 q 0,2.71145 -1.9685,2.71145 h -46.13275 l -1.397,-1.9558 -1.397,1.9558 h -5.588 q -1.93675,0 -1.93675,-2.71145 v -9.5123 l 1.778,-2.4892 -1.778,-2.489195 V 7.8247391 l 1.11125,-1.5113 -1.11125,-1.555747 V -49.649116 q 0,-2.711444 1.93675,-2.711444"
+         id="path7616-4"
+         inkscape:connector-curvature="0"
+         style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.751342" />
+      <flowRoot
+         inkscape:label="#flowRoot4142"
+         id="ccardtext"
+         xml:space="preserve"
+         transform="matrix(0.28222223,0,0,0.28222223,-265.22348,-46.48852)"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle"
+           id="flowRegion4159-6"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:125%;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;"
+             y="47.780663"
+             x="-478.98862"
+             height="199.36284"
+             width="194.18457"
+             id="rect4161-2" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle"
+           id="flowPara2317">ccardtext. This text is a multi-line text object. Inlined images does not work here, but text is automatically flowed (line-breaks are inserted for you as required). The text on this template is centered. Not only the title.</flowPara></flowRoot>
+      <text
+         inkscape:label="#text4138"
+         id="ccardtitle"
+         y="-41.517368"
+         x="-373.63754"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;line-height:0%;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.282222px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.282222px"
+           y="-41.517368"
+           x="-373.63754"
+           id="tspan4155-1"
+           sodipodi:role="line">ccardtitle</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="15.748202"
+       y="342.44882"
+       id="text5734-7"><tspan
+         sodipodi:role="line"
+         id="tspan5732-7"
+         x="15.748202"
+         y="342.44882"
+         style="stroke-width:0.264583">centercard</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:'Carlito, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="11.592069"
+       y="447.68402"
+       id="text6254-0"><tspan
+         sodipodi:role="line"
+         x="11.592069"
+         y="447.68402"
+         style="stroke-width:0.264583"
+         id="tspan6264-5">This is just like the simplest</tspan><tspan
+         sodipodi:role="line"
+         x="11.592069"
+         y="453.85764"
+         style="stroke-width:0.264583"
+         id="tspan2385">card template (the one called</tspan><tspan
+         sodipodi:role="line"
+         x="11.592069"
+         y="460.03125"
+         style="stroke-width:0.264583"
+         id="tspan2387">just &quot;card&quot;) except all of the</tspan><tspan
+         sodipodi:role="line"
+         x="11.592069"
+         y="466.20486"
+         style="stroke-width:0.264583"
+         id="tspan2389">text is center-aligned.</tspan></text>
   </g>
 </svg>

@@ -61,3 +61,6 @@ twocardparts,cardtitle-a,cardline-a1,cardline-a2,cardline-a3,cardline-a4,cardlin
 ,Icons,Since text is done,in separate lines,it is possible,to inline icons {g4290.png}.,Last line of text.,Icons Again,Since text is done,in separate lines,it is possible,to inline icons {g4452.png}.,
 ,Part A,Text a.,,,,,Part B,Text b.,,,,,
 
+centercard,ccardtitle,ccardtext
+,A Title,Text in one line
+,Other Title,Text in\ntwo lines
