@@ -1,9 +1,0 @@
-When there is a lot
-of text to put on
-a card it can be
-convenient to have
-the text in an
-external text-file
-instead of in
-the spreadsheet data.
-Also with åäö.

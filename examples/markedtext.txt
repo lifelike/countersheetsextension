@@ -1,3 +1,0 @@
-Testing *includefile* containing some /markup/ for text styles.
-Combined with *new-lines*
-as /well/.
