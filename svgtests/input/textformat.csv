@@ -11,6 +11,7 @@ text,example
 ,** empty ** bold **
 ,*bold text with image: {g4452.png}*
 ,/italics text with image: {g4452.png}/
+,"*bold* and a ⁄ (unicode U+2044 FRACTION SLASH) not formatted"
 
 seriftext,example-serif
 ,*serif bold text* normal text
