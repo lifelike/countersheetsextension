@@ -347,7 +347,8 @@ class CountersheetEffect(inkex.Effect):
                                      type = str, dest = 'suffix',
                                      default = '',
                                      help = 'Name')
-        self.arg_parser.add_argument('-N', '--sheets-bitmap-name', dest='bitmapname',
+        self.arg_parser.add_argument('-N', '--sheets-bitmap-name',
+                                     dest='bitmapname',
                                      default = '') # undocumented, for svgtests
         self.arg_parser.add_argument('-d', '--data',
                                      type = str, dest = 'datafile',
@@ -418,7 +419,8 @@ class CountersheetEffect(inkex.Effect):
                                      dest="backoffsety")
 
         self.translatere = re.compile("translate[(]([-0-9.]+),([-0-9.]+)[)]")
-        self.matrixre = re.compile("(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
+        self.matrixre = re.compile(
+            "(matrix[(](?:[-0-9.]+,){4})([-0-9.]+),([-0-9.]+)[)]")
         self.placeholders = {}
         self.nr_styles_added = 0
 
@@ -645,7 +647,7 @@ class CountersheetEffect(inkex.Effect):
                                         nr)
         span.set('id', spanid)
         # span.text = "\u2b1b"
-        span.text = "X" # FIXME, there is something wrong with unicode rendering in Inkscape 1.0?
+        span.text = "X" # FIXME, something wrong with unicode in Inkscape 1.0?
         span.set('style', 'font-size: 200%;fill-opacity:0;'
                  'font-style:normal;font-weight:normal;'
                  'font-variant:normal;font-family:sans-serif;')
@@ -732,7 +734,8 @@ class CountersheetEffect(inkex.Effect):
             self.deleteTextChildren(element)
             self.setFormattedText(element, name, text,
                                   'tspan',
-                                  {}, inkex.Style.parse_str(element.get('style')))
+                                  {},
+                                  inkex.Style.parse_str(element.get('style')))
             return True
         elif ((element.tag == inkex.addNS('flowPara', 'svg')
                or element.tag == inkex.addNS('flowLine', 'svg')
@@ -744,7 +747,8 @@ class CountersheetEffect(inkex.Effect):
             self.deleteTextChildren(element)
             self.setFormattedText(element, name, text,
                                   'flowSpan',
-                                  {}, inkex.Style.parse_str(element.get('style')))
+                                  {},
+                                  inkex.Style.parse_str(element.get('style')))
             return True
         replaced = False
         for c in element.getchildren():
@@ -777,7 +781,8 @@ class CountersheetEffect(inkex.Effect):
         if self.find_layer(svg, llabel, "") is not None:
             sys.exit("Image already contains a layer '%s'. "
                      "Remove that layer before running extension again. "
-                     "Or set a different \"Suffix\" when running the extension. "
+                     "Or set a different \"Suffix\" when "
+                     "running the extension. "
                      "Or just rename the existing layer." % llabel)
 
         layer = etree.Element(inkex.addNS('g', 'svg'))
@@ -854,8 +859,11 @@ class CountersheetEffect(inkex.Effect):
                         else:
                             i.getparent().remove(i)
                     elif is_valid_name_to_replace(glob) and image is not None:
-                        absref = i.get(inkex.addNS("absref", "sodipodi"), image)
-                        href = self.make_image_href(i.get(inkex.addNS("href", "xlink"), image))
+                        absref = i.get(inkex.addNS("absref", "sodipodi"),
+                                       image)
+                        href = self.make_image_href(i.get(inkex.addNS("href",
+                                                                      "xlink"),
+                                                          image))
                         i.set(inkex.addNS("absref", "sodipodi"),
                               absref.replace("%%%s%%" % glob, image))
                         i.set(inkex.addNS("href", "xlink"),
@@ -890,9 +898,11 @@ class CountersheetEffect(inkex.Effect):
                     if eeparent is not None:
                         ee.getparent().remove(ee)
             self.replaceattrs(clone.iterdescendants(), c.attrs)
-            converter = DocumentTopLeftCoordinateConverter( source_layer )
-            ( source_layer_adjusted_x, source_layer_adjusted_y) = converter.SVG_to_dtl( ( -x, -y ) )
-            self.translate_element(clone, source_layer_adjusted_x, source_layer_adjusted_y)
+            converter = DocumentTopLeftCoordinateConverter(source_layer)
+            (source_layer_adjusted_x,
+             source_layer_adjusted_y) = converter.SVG_to_dtl( (-x, -y))
+            self.translate_element(clone, source_layer_adjusted_x,
+                                   source_layer_adjusted_y)
             self.logwrite("cloning %s\n" % clone.get("id"))
             clonegroup.append(clone)
         self.translate_element(clonegroup, colx, rowy)
@@ -913,7 +923,8 @@ class CountersheetEffect(inkex.Effect):
             if fnmatch.fnmatchcase(textid, glob):
                 if subst.find("\\n") >= 0:
                     if t.tag == inkex.addNS('flowRoot','svg'):
-                        self.setMultilineFlowRoot(t, textid, subst.split("\\n"))
+                        self.setMultilineFlowRoot(t, textid,
+                                                  subst.split("\\n"))
                     if t.tag == inkex.addNS('text','svg'):
                         self.setMultilineText(t, textid, subst.split("\\n"))
                 else:
@@ -926,7 +937,8 @@ class CountersheetEffect(inkex.Effect):
                             childtype = 'flowSpan'
                         self.setFormattedText(t, textid, subst,
                                               childtype, {},
-                                              inkex.Style.parse_str(t.get('style')))
+                                              inkex.Style.parse_str(t.get(
+                                                  'style')))
                 if c.id:
                     t.set("id", textid + "_" + c.id)
 
@@ -1077,8 +1089,9 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("set_style_on_elements %r %s=%s\n"
                       % (element_ids, part, value))
         for element_id in element_ids:
-            matching_elements = self.document.xpath("//*[@id='%s']" % element_id,
-                                                    namespaces=NSS)
+            matching_elements = self.document.xpath(
+                "//*[@id='%s']" % element_id,
+                namespaces=NSS)
             if not matching_elements:
                 return
             self.set_style(matching_elements[0],
@@ -1144,7 +1157,8 @@ class CountersheetEffect(inkex.Effect):
     def create_registrationline(self, x1, y1, x2, y2):
         self.logwrite("create_registrationline %f,%f %f,%f\n"
                       % (x1, y1, x2, y2))
-        return self.create_line(x1, y1, x2, y2, self.find_registration_line_style())
+        return self.create_line(x1, y1, x2, y2,
+                                self.find_registration_line_style())
 
     def find_style(self, styleid, failback):
         style_elements = self.document.xpath("//*[@id='%s']" % styleid,
@@ -1181,7 +1195,8 @@ class CountersheetEffect(inkex.Effect):
             self.add_registration_line_both_sides(position.x + x,
                                                   position.y - linestart,
                                                   position.x + x,
-                                                  position.y - linelen - linestart,
+                                                  position.y - linelen
+                                                  - linestart,
                                                   layer,
                                                   backlayer,
                                                   docwidth)
@@ -1191,7 +1206,8 @@ class CountersheetEffect(inkex.Effect):
             self.logwrite("registrationmark y: %f\n" % y)
             self.add_registration_line_both_sides(position.x - linestart,
                                                   position.y + y,
-                                                  position.x - linelen - linestart,
+                                                  position.x - linelen
+                                                  - linestart,
                                                   position.y + y,
                                                   layer,
                                                   backlayer,
@@ -1289,7 +1305,9 @@ class CountersheetEffect(inkex.Effect):
             viewbox = svg.get('viewBox')
             if viewbox:
                 self.logwrite("viewBox: %s\n" % viewbox)
-                (viewx, viewy, vieww, viewh) = list(map(float, re.sub(' +|, +|,',' ', viewbox).strip().split(' ', 4)))
+                (viewx, viewy, vieww, viewh) = list(
+                    map(float, re.sub(' +|, +|,',' ',
+                                      viewbox).strip().split(' ', 4)))
                 svgwidth = svg.get('width')
                 svgheight = svg.get('height')
                 svguuwidth = self.svg.unittouu(svgwidth)
@@ -1298,26 +1316,30 @@ class CountersheetEffect(inkex.Effect):
                               % (svgwidth, svgheight))
                 self.logwrite("SVG size in user-units: %fx%f\n"
                               % (svguuwidth, svguuheight))
-                xscale = self.svg.unittouu(svg.get('width')) / vieww / self.svg.unittouu("1px")
-                yscale = self.svg.unittouu(svg.get('height')) / viewh / self.svg.unittouu("1px")
+                xscale = (self.svg.unittouu(svg.get('width'))
+                          / vieww / self.svg.unittouu("1px"))
+                yscale = (self.svg.unittouu(svg.get('height'))
+                          / viewh / self.svg.unittouu("1px"))
                 self.xscale = xscale
                 self.yscale = yscale
         except Exception as e:
-            self.logwrite("Failed to calculate document scale:\n%s\n" % repr(e))
+            self.logwrite("Failed to calculate document scale:\n%s\n"
+                          % repr(e))
 
     def getDocumentViewBoxValue(self, svg, n, fallback):
         try:
             return float(svg.get('viewBox').split(' ')[n])
         except:
-            return self.svg.unittouu(svg.get(fallback)) # let it crash if this fails
+            return self.svg.unittouu(svg.get(
+                fallback)) # let it crash if this fails
 
-    # Because getDocumentWidth in inkex fails because it makes assumptions about
-    # user-units. Trusting the viewBox instead for now.
+    # Because getDocumentWidth in inkex fails because it makes assumptions
+    # about user-units. Trusting the viewBox instead for now.
     def getViewBoxWidth(self, svg):
         return self.getDocumentViewBoxValue(svg, 2, "width")
 
-    # Because getDocumentHeight in inkex fails because it makes assumptions about
-    # user-units. Trusting the viewBox instead for now.
+    # Because getDocumentHeight in inkex fails because it makes assumptions
+    # about user-units. Trusting the viewBox instead for now.
     def getViewBoxHeight(self, svg):
         return self.getDocumentViewBoxValue(svg, 3, "height")
 
@@ -1358,8 +1380,8 @@ class CountersheetEffect(inkex.Effect):
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
                                       == "true")
-        self.registrationmarksbothsides = (self.options.registrationmarksbothsides
-                                           == "true")
+        self.registrationmarksbothsides = (
+            self.options.registrationmarksbothsides == "true")
 
         self.logwrite("full registration marks: %r\n"
                       % self.fullregistrationmarks)
@@ -1483,7 +1505,8 @@ class CountersheetEffect(inkex.Effect):
                                    0.0,
                                    layoutwidth,
                                    docheight)]
-            margin = max(self.registrationmarkslen + self.registrationmarksdist,
+            margin = max(self.registrationmarkslen
+                         + self.registrationmarksdist,
                          self.outlinedist)
             positions[0].x += margin
             positions[0].y += margin
@@ -1570,8 +1593,10 @@ class CountersheetEffect(inkex.Effect):
                         xregistrationmarks = set([0])
                         yregistrationmarks = set([0])
                         box = box + 1
-                        self.logwrite(" now at box %d of %d\n" % (box, len(positions)))
-                        self.logwrite(" i: %d    len(counters): %d\n" % (i, len(counters)))
+                        self.logwrite(" now at box %d of %d\n"
+                                      % (box, len(positions)))
+                        self.logwrite(" i: %d    len(counters): %d\n"
+                                      % (i, len(counters)))
                         row = 0
                         rowy = 0
                         nextrowy = 0
@@ -1591,9 +1616,12 @@ class CountersheetEffect(inkex.Effect):
                                     svg.append(backlayer)
                                     backlayers.append((backlayer, csn-1))
                                     self.cslayers.append(backlayer.get('id'))
-                                    backlayer = self.create_backlayer(svg, suffix, csn)
+                                    backlayer = self.create_backlayer(svg,
+                                                                      suffix,
+                                                                      csn)
                                 if self.foldingline:
-                                    self.add_foldingline(layer, docwidth, docheight)
+                                    self.add_foldingline(layer, docwidth,
+                                                         docheight)
                             svg.append(layer)
                             frontlayers.append((layer, csn-1))
                             self.cslayers.append(layer.get('id'))
@@ -1636,7 +1664,8 @@ class CountersheetEffect(inkex.Effect):
 
         if len(self.placeholders) > 0:
             tmpfile = self.make_temporary_svg()
-            self.logwrite("Placeholders replace temporary file: %s\n" % tmpfile)
+            self.logwrite("Placeholders replace temporary file: %s\n"
+                          % tmpfile)
             geometry = self.queryAll(tmpfile)
             for spanid, info in self.placeholders.items():
                 if not spanid in geometry:
@@ -1644,14 +1673,18 @@ class CountersheetEffect(inkex.Effect):
                                   % spanid)
                     continue
                 position = geometry[spanid]
-                self.logwrite('placeholder position: {},{} {}x{}'.format(position.x, position.y, position.w, position.h))
+                self.logwrite('placeholder position: {},{} {}x{}'
+                              .format(position.x, position.y,
+                                      position.w, position.h))
                 image = etree.Element(inkex.addNS('image', 'svg'))
                 href = self.make_image_href(info["filename"])
                 image.set(inkex.addNS("absref", "sodipodi"), href)
                 image.set(inkex.addNS("href", "xlink"), href)
                 dim_diff = position.h - position.w
                 dx = position.x
-                dy = position.y + position.h * DEFAULT_INLINE_IMAGE_YSHIFT + dim_diff / 2
+                dy = (position.y
+                      + position.h * DEFAULT_INLINE_IMAGE_YSHIFT
+                      + dim_diff / 2)
                 image.set('width', str(position.w))
                 image.set('height', str(position.h - dim_diff))
                 group = find_top_level_group_for(info["parent"])
@@ -1660,7 +1693,8 @@ class CountersheetEffect(inkex.Effect):
                 if translate:
                     dx -= float(translate.group(1))
                     dy -= float(translate.group(2))
-                    self.logwrite('placeholder translate: {},{}\n'.format(dx, dy))
+                    self.logwrite('placeholder translate: {},{}\n'
+                                  .format(dx, dy))
                 self.translate_element(image, dx, dy)
                 group.append(image)
         #os.remove(tmpfile)
@@ -1668,10 +1702,12 @@ class CountersheetEffect(inkex.Effect):
         self.logwrite("nrsheets: %d\n" % nrsheets)
         self.logwrite("layers in self.cslayers: %d\n" % len(self.cslayers))
         self.add_layer_backgrounds(frontlayers,
-                                   self.find_layer(svg, "cs_background_front", suffix),
+                                   self.find_layer(svg, "cs_background_front",
+                                                   suffix),
                                    nrsheets)
         self.add_layer_backgrounds(backlayers,
-                                   self.find_layer(svg, "cs_background_back", suffix),
+                                   self.find_layer(svg, "cs_background_back",
+                                                   suffix),
                                    nrsheets)
 
         exportedbitmaps = self.exportIDBitmaps()
@@ -2072,19 +2108,22 @@ class IDLayout:
 
 class DocumentTopLeftCoordinateConverter:
     '''
-    Converts SVG coordinates from/to coordinates with origin at the top-left of the document.
-    These coordinates can get out of sync when the page size is changed.
+    Converts SVG coordinates from/to coordinates with origin at the top-left of
+    the document. These coordinates can get out of sync when the page size is
+    changed.
 
-    The class computes any offset at time of initialization. If an instance of the class is changed
-    then the page size is changed, the results of calculation will be wrong. Construct and discard
-    instances of this class as needed; do not keep instances for long times.
+    The class computes any offset at time of initialization. If an instance of
+    the class is changed then the page size is changed, the results of
+    calculation will be wrong. Construct and discard instances of this class as
+    needed; do not keep instances for long times.
 
-    Different layers in the svg document can have different offsets. Create a separate converter for every
-    layer you are working with.
+    Different layers in the svg document can have different offsets. Create a
+    separate converter for every layer you are working with.
 
-    This class only works with simple translation transforms of the layer group element. I am hoping that
-    those are the only transforms that are ever applied to layer group elements. If any other type of
-    transform is applied to a layer group element, hilarity will ensue.
+    This class only works with simple translation transforms of the layer group
+    element. I am hoping that those are the only transforms that are ever
+    applied to layer group elements. If any other type of transform is applied
+    to a layer group element, hilarity will ensue.
     '''
 
     def __init__(self, layerElement):
@@ -2104,15 +2143,19 @@ class DocumentTopLeftCoordinateConverter:
 
     def dtl_to_SVG(self, dtl_point ):
         '''
-        :param point: 2-tuple (pair) of numerics (x,y) in document-top-left-coordinates (pixels)
+        :param point: 2-tuple (pair) of numerics (x,y)
+           in document-top-left-coordinates (pixels)
         :type arg1: 2-tuple (pair) of numerics
-        :return: returns 2-tuple of floats with values in SVG coordinates (pixels)
+        :return: returns 2-tuple of floats with values
+           in SVG coordinates (pixels)
         :rtype: 2-tuple
         '''
-        return ( dtl_point[ 0 ] - self._transformX, dtl_point[ 1 ] - self._transformY )
+        return (dtl_point[0] - self._transformX, dtl_point[1]
+                - self._transformY)
 
     def SVG_to_dtl( self, svg_point ):
-        return ( svg_point[ 0 ] + self._transformX, svg_point[ 1 ] + self._transformY )
+        return (svg_point[0] + self._transformX, svg_point[1]
+                + self._transformY)
 
 
 def find_stylepart(oldv, pname):
@@ -2237,13 +2280,15 @@ def get_layer(element, sourceElementId=None):
     '''
         finds the layer that the svg element is under
 
-        Should be called without the sourceElementId. The routine fills that in.
+        Should be called without the sourceElementId.
+        The routine fills that in.
         '''
     if sourceElementId is None:
         sourceElementId = element.get("id")
     top_level_group = find_top_level_group_for(element)
     if top_level_group is None:
-        raise ValueError("Unable to find layer for element [" + sourceElementId + "]")
+        raise ValueError("Unable to find layer for element ["
+                         + sourceElementId + "]")
     else:
         return top_level_group.getparent()
 
