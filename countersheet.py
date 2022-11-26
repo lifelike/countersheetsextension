@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2008-2021 Pelle Nilsson and contributors
+# Copyright 2008-2022 Pelle Nilsson and contributors
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -1347,8 +1347,13 @@ class CountersheetEffect(inkex.Effect):
 
         self.logwrite("has folding line: %r\n" % self.foldingline)
 
-        self.logwrite("svg.width: %s\n" % self.svg.width)
-        self.logwrite("svg.height: %s\n" % self.svg.height)
+        # TODO: Printing SVG size for debugging purposes could be useful
+        #   but the svg.width and svg.height attribute are deprecated
+        #   in Inkscape 1.2.
+        #   The following two lines caused ugly warnings (issue #90).
+        # self.logwrite("svg.width: %s\n" % self.svg.width)
+        # self.logwrite("svg.height: %s\n" % self.svg.height)
+
         self.logwrite("svg.unit: %s\n" % self.svg.unit)
 
         self.fullregistrationmarks = (self.options.fullregistrationmarks
