@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5072"
+   inkscape:version="1.0.2 (1.0.2+r75+1)"
+   sodipodi:docname="clone-colors.svg">
+  <defs
+     id="defs5066" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-641.60449"
+     inkscape:cy="392.67914"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1598"
+     inkscape:window-height="1198"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata5069">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -161.59689,51.81374 0.72194,-6.673591 6.04346,5.078122 14.77386,-0.509964 9.60739,6.878757 -12.97725,-0.801809 -14.14928,5.895866 3.66711,-5.806302 -7.62871,-1.125546 z"
+       id="plane" />
+    <path
+       style="stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -163.41748,78.312424 0.31298,-4.685649 3.84757,-0.106857 1.73366,-5.531683 9.39319,0.275132 5.66235,2.750973 5.5927,0.509051 0.97253,5.540891 h -3.65464 l -1.81114,2.177307 -3.58702,-0.04974 -1.96542,-2.037869 -7.33656,0.267269 -1.50551,2.577926 -2.89941,0.198079 -1.72853,-2.983579 z"
+       id="car"
+       sodipodi:nodetypes="ccccccccccccccccc" />
+    <g
+       id="g5647">
+      <rect
+         style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000"
+         id="counter"
+         width="45.248333"
+         height="34.081451"
+         x="-166.78857"
+         y="91.494629" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#car"
+         id="symbol"
+         transform="translate(5.3635177,35.687814)"
+         width="100%"
+         height="100%" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="210mm" height="297mm" viewBox="0 0 210 297" version="1.1" id="svg5072" inkscape:version="1.0.2 (1.0.2+r75+1)" sodipodi:docname="clone-colors.svg">
+  <defs id="defs5066"/>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1.4" inkscape:cx="-641.60449" inkscape:cy="392.67914" inkscape:document-units="mm" inkscape:current-layer="layer1" inkscape:document-rotation="0" showgrid="false" inkscape:window-width="1598" inkscape:window-height="1198" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" inkscape:snap-global="false"/>
+  <metadata id="metadata5069">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
+    <path style="stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m -161.59689,51.81374 0.72194,-6.673591 6.04346,5.078122 14.77386,-0.509964 9.60739,6.878757 -12.97725,-0.801809 -14.14928,5.895866 3.66711,-5.806302 -7.62871,-1.125546 z" id="plane"/>
+    <path style="stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m -163.41748,78.312424 0.31298,-4.685649 3.84757,-0.106857 1.73366,-5.531683 9.39319,0.275132 5.66235,2.750973 5.5927,0.509051 0.97253,5.540891 h -3.65464 l -1.81114,2.177307 -3.58702,-0.04974 -1.96542,-2.037869 -7.33656,0.267269 -1.50551,2.577926 -2.89941,0.198079 -1.72853,-2.983579 z" id="car" sodipodi:nodetypes="ccccccccccccccccc"/>
+    <g id="g5647">
+      <rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <use x="0" y="0" xlink:href="#car" id="symbol" transform="translate(5.3635177,35.687814)" width="100%" height="100%"/>
+    </g>
+  </g>
+<svg:g inkscape:label="Countersheet 1" id="cs_layer_0001" inkscape:groupmode="layer" style=""><svg:g transform="translate(3.527778,3.527778)"><svg:g id="g5647" transform="translate(166.789, -91.4945)">
+      <svg:rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <svg:use x="0" y="0" xlink:href="#car" id="symbol" transform="translate(5.36352, 35.6878)" width="100%" height="100%" style="fill:red"/>
+    </svg:g>
+  </svg:g><svg:g transform="translate(48.776026,3.527778)"><svg:g id="g5647" transform="translate(166.789, -91.4945)">
+      <svg:rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <svg:use x="0" y="0" xlink:href="#car" id="symbol" transform="translate(5.36352, 35.6878)" width="100%" height="100%" style="fill:blue"/>
+    </svg:g>
+  </svg:g><svg:g transform="translate(94.024274,3.527778)"><svg:g id="g5647" transform="translate(166.789, -91.4945)">
+      <svg:rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <svg:use x="0" y="0" xlink:href="#plane" id="symbol" transform="translate(1.5735, 56.3603)" width="100%" height="100%" style="fill:red"/>
+    </svg:g>
+  </svg:g><svg:g transform="translate(139.272522,3.527778)"><svg:g id="g5647" transform="translate(166.789, -91.4945)">
+      <svg:rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <svg:use x="0" y="0" xlink:href="#plane" id="symbol" transform="translate(1.5735, 56.3603)" width="100%" height="100%" style="fill:blue"/>
+    </svg:g>
+  </svg:g><svg:g transform="translate(3.527778,37.609286)"><svg:g id="g5647" transform="translate(166.789, -91.4945)">
+      <svg:rect style="fill:#b3b3b3;stroke:none;stroke-width:0.165;stop-color:#000000" id="counter" width="45.248333" height="34.081451" x="-166.78857" y="91.494629"/>
+      <svg:use x="0" y="0" xlink:href="#plane" id="symbol" transform="translate(1.5735, 56.3603)" width="100%" height="100%" style="fill:green"/>
+    </svg:g>
+  </svg:g><line x1="3.5277777777777777" y1="3.5277777777777777" x2="3.5277777777777777" y2="0.0" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="139.27252152777777" y1="3.5277777777777777" x2="139.27252152777777" y2="0.0" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="48.77602569444444" y1="3.5277777777777777" x2="48.77602569444444" y2="0.0" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="184.52076944444443" y1="3.5277777777777777" x2="184.52076944444443" y2="0.0" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="94.0242736111111" y1="3.5277777777777777" x2="94.0242736111111" y2="0.0" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="3.5277777777777777" y1="3.5277777777777777" x2="0.0" y2="3.5277777777777777" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="3.5277777777777777" y1="37.60928611111112" x2="0.0" y2="37.60928611111112" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="3.5277777777777777" y1="71.69079444444445" x2="0.0" y2="71.69079444444445" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="3.5277777777777777" y1="71.69079444444445" x2="3.5277777777777777" y2="75.21857222222222" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="139.27252152777777" y1="71.69079444444445" x2="139.27252152777777" y2="75.21857222222222" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="48.77602569444444" y1="71.69079444444445" x2="48.77602569444444" y2="75.21857222222222" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="184.52076944444443" y1="71.69079444444445" x2="184.52076944444443" y2="75.21857222222222" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="94.0242736111111" y1="71.69079444444445" x2="94.0242736111111" y2="75.21857222222222" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="184.52076944444443" y1="3.5277777777777777" x2="188.0485472222222" y2="3.5277777777777777" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="184.52076944444443" y1="37.60928611111112" x2="188.0485472222222" y2="37.60928611111112" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="184.52076944444443" y1="71.69079444444445" x2="188.0485472222222" y2="71.69079444444445" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="1.0583333333333336" y1="1.0583333333333336" x2="186.99021388888886" y2="1.0583333333333336" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="1.0583333333333336" y1="1.0583333333333336" x2="1.0583333333333336" y2="74.1602388888889" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="1.0583333333333336" y1="74.1602388888889" x2="186.99021388888886" y2="74.1602388888889" style="stroke:#aaa" stroke-width="0.1411097"/><line x1="186.99021388888886" y1="1.0583333333333336" x2="186.99021388888886" y2="74.1602388888889" style="stroke:#aaa" stroke-width="0.1411097"/></svg:g></svg>
