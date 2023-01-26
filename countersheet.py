@@ -4,7 +4,7 @@
 # black --line-length 79 countersheet.py
 # (https://github.com/psf/black)
 
-# Copyright 2008-2022 Pelle Nilsson and contributors
+# Copyright 2008-2023 Pelle Nilsson and contributors
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -21,6 +21,7 @@
 
 import inkex
 from inkex import NSS
+from inkex.base import SvgOutputMixin
 import csv
 import fnmatch
 import re
@@ -34,12 +35,6 @@ from tempfile import mkstemp
 import subprocess
 
 NSS["cs"] = "http://www.hexandcounter.org/countersheetsextension/"
-
-# Trying to make inserted inlined images show up slightly
-# more well-aligned with the surrounding text by shifting
-# them slightly downwards. This will fail for non-horizontal
-# text. Hopefully sometihing better can be implemented.
-DEFAULT_INLINE_IMAGE_YSHIFT = 0.2
 
 # A bit of a hack because of rounding errors sometimes
 # making boxes not fill up properly.
@@ -372,7 +367,7 @@ class Rectangle:
         self.h = h
 
 
-class CountersheetEffect(inkex.Effect):
+class CountersheetEffect(inkex.Effect, SvgOutputMixin):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.log = False
@@ -475,6 +470,27 @@ class CountersheetEffect(inkex.Effect):
         )
         self.arg_parser.add_argument(
             "-S", "--spacing", type=str, dest="spacing", default="0"
+        )
+        self.arg_parser.add_argument(
+            "-i",
+            "--inlineimagesizepercent",
+            type=int,
+            dest="inlineimagesizepercent",
+            default="200",
+        )
+        self.arg_parser.add_argument(
+            "-P",
+            "--inlineimageplaceholder",
+            type=str,
+            dest="inlineimageplaceholder",
+            default="X",
+        )
+        self.arg_parser.add_argument(
+            "-s",
+            "--inlineimageoffset",
+            type=float,
+            dest="inlineimageoffset",
+            default="0.20",
         )
         self.arg_parser.add_argument(
             "-m", "--textmarkup", dest="textmarkup", default="true"
@@ -759,13 +775,19 @@ class CountersheetEffect(inkex.Effect):
         if spantag != "tspan":
             sys.exit(
                 "Failed to insert inlined image %s "
-                "in a %s element. Unfortunately only "
+                "in a %s element (size: %d%%). Unfortunately only "
                 "one-line text elements can have inlined "
                 "images for boring technical reasons. "
                 "Perhaps in a future version of Inkscape "
                 "it will be possible to add support for "
                 "inlined images in (flowing) multi-line "
-                "text elements." % (filename, spantag)
+                "text elements."
+                % (
+                    filename,
+                    spantag,
+                    self.options.inlineimagesizepercent,
+                    self.options.inlineimageplaceholder,
+                )
             )
         span = etree.Element(inkex.addNS(spantag, "svg"))
         if "image" in added_style:
@@ -774,13 +796,13 @@ class CountersheetEffect(inkex.Effect):
             nr = 1
         spanid = "%s-%d-cs-image-%s" % (name, len(self.placeholders), nr)
         span.set("id", spanid)
-        # span.text = "\u2b1b"
-        span.text = "X"  # FIXME, something wrong with unicode in Inkscape 1.0?
+        span.text = self.options.inlineimageplaceholder
         span.set(
             "style",
-            "font-size: 200%;fill-opacity:0;"
+            "font-size: %d%%;fill-opacity:0;"
             "font-style:normal;font-weight:normal;"
-            "font-variant:normal;font-family:sans-serif;",
+            "font-variant:normal;font-family:sans-serif;"
+            % self.options.inlineimagesizepercent,
         )
 
         self.logwrite("inline image placeholder: %s %s\n" % (spanid, filename))
@@ -1220,7 +1242,7 @@ class CountersheetEffect(inkex.Effect):
             exportdir = os.path.abspath(exportdir)
         tmpfile = mkstemp(".svg", "tmp", exportdir, True)
         tmpfileobject = os.fdopen(tmpfile[0], "wb")
-        self.document.write(tmpfileobject)
+        self.save(tmpfileobject)
         tmpfileobject.close()
         return tmpfile[1]
 
@@ -1944,7 +1966,7 @@ class CountersheetEffect(inkex.Effect):
                 dx = position.x
                 dy = (
                     position.y
-                    + position.h * DEFAULT_INLINE_IMAGE_YSHIFT
+                    + position.h * self.options.inlineimageoffset
                     + dim_diff / 2
                 )
                 image.set("width", str(position.w))

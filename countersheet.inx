@@ -56,6 +56,13 @@
         gui-text="Bleed">false</param>
       <param name="spacing" type="string"
         gui-text="Spacing">0mm</param>
+      <param name="inlineimagesizepercent" type="int" min="1" max="1000"
+             gui-text="Inline Images Size (%)">200</param>
+      <param name="inlineimageplaceholder" type="string"
+             gui-text="Inline Image Placeholder">X</param>
+      <param name="inlineimageoffset" type="float"
+             min="-1.0" max="1.0" precision="2"
+             gui-text="Inline Image Offset">0.20</param>
     </page>
 
     <page name="page4" gui-text="Output">

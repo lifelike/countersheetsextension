@@ -81,6 +81,13 @@ tests = [
     ['backgrounds.csv', 'backgrounds.svg'],
     ['backgrounds.csv', 'backgrounds.svg', {'-o' :  'true'}],
     ['textformat.csv', 'textformat.svg'],
+    ['textformat.csv', 'textformat.svg', {'-i' : '50'}],
+    ['textformat.csv', 'textformat.svg', {'-i' : '100'}],
+    ['textformat.csv', 'textformat.svg', {'-i' : '400'}],
+    ['textformat.csv', 'textformat.svg', {'-i' : '100',
+                                          '-P' : 'nn'}],
+    ['textformat.csv', 'textformat.svg', {'-s' : '1.0'}],
+    ['textformat.csv', 'textformat.svg', {'-s' : ' -1.0'}],
     ['textspan.csv', 'textspan.svg'],
     ['dynamic.csv', 'texttokens.svg'],
     ['dynamic.csv', 'texttokens.svg', {'-1' : 'true'}],
@@ -136,7 +143,7 @@ for test in tests:
         if not matches:
             skipped += 1
             continue
-    svgoutbasename = basedatafile + '-' + basesvginfile + namefrom(extraargs)
+    svgoutbasename = basedatafile + '-' + basesvginfile + namefrom(extraargs).replace(' ', '')
     svgoutfile = os.path.join(outputdir, svgoutbasename)
     datafile = os.path.join(inputdir, basedatafile)
     svginfile = os.path.join(inputdir, basesvginfile)
