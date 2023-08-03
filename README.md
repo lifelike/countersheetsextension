@@ -34,7 +34,8 @@ Features
 Installation
 ------------
 
-You need Inkscape 1.0 or later installed. If you are using an older
+You need Inkscape 1.1.1 installed. Later versions may or may not work too, but
+are not officially supported. If you are using an older
 version of Inkscape get one of the older versions of this
 extension instead (like [this one](https://github.com/lifelike/countersheetsextension/releases/tag/2.2hex1)).
 
@@ -70,7 +71,7 @@ for recent versions of the countersheetsextension can be found
 License
 --------
 
-Copyright (C) 2008-2022 Pelle Nilsson et al
+Copyright (C) 2008-2023 Pelle Nilsson et al
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
