@@ -1,7 +1,7 @@
-counter,symbol,symbol[style:fill]
-,car,red
-,car,blue
-,plane,red
-,plane,blue
-,plane,green
+counter,symbol,symbol[style:fill],ID
+,car,red,redcar
+,car,blue,bluecar
+,plane,red,redplane
+,plane,blue,blueplane
+,plane,green,greenplane
 
