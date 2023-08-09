@@ -16,7 +16,7 @@ def namefrom(args):
         argslist = []
         for a in args.items():
             argslist.extend(a)
-        return "_".join([a.replace("-", "") for a in argslist]) + ".svg"
+        return "_".join(argslist) + ".svg"
     else:
         return ""
 
@@ -183,6 +183,7 @@ for test in tests:
 
     expectedfile = os.path.join(expecteddir, svgoutbasename)
     outputsvg = open(svgoutfile).read()
+    print("diff %s %s" % (svgoutfile, expectedfile))
     expectedsvg = open(expectedfile).read()
     if outputsvg == expectedsvg:
         successes += 1

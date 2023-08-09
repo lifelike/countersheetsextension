@@ -34,7 +34,7 @@ Features
 Installation
 ------------
 
-You need Inkscape 1.1.1 installed. Later versions may or may not work too, but
+You need Inkscape 1.1.1 installed. Other versions may or may not work, but
 are not officially supported. If you are using an older
 version of Inkscape get one of the older versions of this
 extension instead (like [this one](https://github.com/lifelike/countersheetsextension/releases/tag/2.2hex1)).
