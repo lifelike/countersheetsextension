@@ -22,6 +22,7 @@
 import inkex
 from inkex import NSS
 from inkex.base import SvgOutputMixin
+from inkex.command import inkscape
 import csv
 import fnmatch
 import re
@@ -1200,8 +1201,7 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
         tmpfilefile = os.fdopen(tmpfile[0], "w")
         tmpfilefile.write(filecontents)
         tmpfilefile.close()
-        cmd = 'inkscape --query-all "%s"' % tmpfile[1]
-        out, err = popen3(cmd)
+        out = inkscape(tmpfile[1], "--query-all")
         reader = csv.reader(out.splitlines())
         for line in reader:
             if len(line) == 5:
@@ -1217,15 +1217,14 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
                     " %s %f,%f %fx%f\n" % (element_id, r.x, r.y, r.w, r.h)
                 )
                 geometry[element_id] = r
-        print_filtered_stderr(err)
         os.remove(tmpfile[1])
         return geometry
 
     def exportBitmaps(self, ids, width, height, dpi=0):
         if dpi > 0:
-            exportsize = "-d %d" % dpi
+            exportsize = ['-d', dpi]
         else:
-            exportsize = "-w %d -h %d" % (width, height)
+            exportsize = ['-w', width, '-h', heidht]
         self.export_using_inkscape(
             ids, exportsize, self.options.bitmapdir, "png"
         )
@@ -1266,18 +1265,13 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
             ):
                 continue
             if noidexportworkaround:
-                idflag = ""
+                idflag = []
             else:
-                idflag = "-i %s" % id
-            cmd = 'inkscape %s -j -o "%s" %s "%s"' % (
-                idflag,
-                self.getbitmapfilename(id, exportdir, extension),  # FIXME
-                size_flags,
-                tmpfilename,
-            )
-            self.logwrite(cmd + "\n")
-            _out, err = popen3(cmd)
-            print_filtered_stderr(err)
+                idflag = ['-i', id]
+            args = (['-j'] + idflag
+                    + ['-o', self.getbitmapfilename(id, exportdir, extension), #FIXME
+                    ] + size_flags)
+            inkscape(tmpfilename, *args);
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
@@ -1326,7 +1320,7 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
                 self.showlayers([layer])
                 self.export_using_inkscape(
                     [layer],
-                    "-d %d" % PDF_DPI,
+                    ['-d', PDF_DPI],
                     self.options.pdfdir,
                     "pdf",
                     True,
@@ -2570,18 +2564,6 @@ IGNORE_PATTERNS = [
     "SPDocument::doUnref(): invalid ref count!",
     "Invalid glyph found, continuing...",
 ]
-
-
-def print_filtered_stderr(err):
-    for errline in err.splitlines():
-        ignore_line = False
-        for p in IGNORE_PATTERNS:
-            if errline.find(p) >= 0:
-                ignore_line = True
-                break
-        if not ignore_line and len(errline.strip()) > 0:
-            print(errline, file=sys.stderr)
-
 
 def is_layer(element):
     try:
