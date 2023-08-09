@@ -1220,15 +1220,6 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
         os.remove(tmpfile[1])
         return geometry
 
-    def exportBitmaps(self, ids, width, height, dpi=0):
-        if dpi > 0:
-            exportsize = ['-d', dpi]
-        else:
-            exportsize = ['-w', width, '-h', height]
-        self.export_using_inkscape(
-            ids, exportsize, self.options.bitmapdir, "png"
-        )
-
     def make_temporary_svg(self, exportdir=None):
         """Renders SVG DOM as it currently looks like
         in the extension with modifications made (or not)
@@ -1267,11 +1258,17 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
             if noidexportworkaround:
                 idflag = []
             else:
-                idflag = ['-i', id]
-            args = (['-j'] + idflag
-                    + ['-o', self.getbitmapfilename(id, exportdir, extension), #FIXME
-                    ] + size_flags)
-            inkscape(tmpfilename, *args);
+                idflag = ["-i", id]
+            args = (
+                ["-j"]
+                + idflag
+                + [
+                    "-o",
+                    self.getbitmapfilename(id, exportdir, extension),  # FIXME
+                ]
+                + size_flags
+            )
+            inkscape(tmpfilename, *args)
         os.remove(tmpfilename)
 
     def getbitmapfilename(self, id, directory, extension):
@@ -1320,7 +1317,7 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
                 self.showlayers([layer])
                 self.export_using_inkscape(
                     [layer],
-                    ['-d', PDF_DPI],
+                    ["-d", PDF_DPI],
                     self.options.pdfdir,
                     "pdf",
                     True,
@@ -1334,8 +1331,11 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
             and self.options.bitmapdir
             and len(self.options.bitmapdir)
         ):
-            self.exportBitmaps(
-                self.cslayers, 0, 0, self.options.bitmapsheetsdpi
+            self.export_using_inkscape(
+                self.cslayers,
+                ["-d", self.options.bitmapsheetsdpi],
+                self.options.bitmapdir,
+                "png",
             )
 
     def exportIDBitmaps(self):
@@ -1348,10 +1348,16 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
         ):
             if self.bleed:
                 self.bleedmaker.hideall()
-            self.exportBitmaps(
+            self.export_using_inkscape(
                 self.exportids,
-                self.options.bitmapwidth,
-                self.options.bitmapheight,
+                [
+                    "-w",
+                    self.options.bitmapwidth,
+                    "-h",
+                    self.options.bitmapheight,
+                ],
+                self.options.bitmapdir,
+                "png",
             )
             if self.bleed:
                 self.bleedmaker.showall()
@@ -2564,6 +2570,7 @@ IGNORE_PATTERNS = [
     "SPDocument::doUnref(): invalid ref count!",
     "Invalid glyph found, continuing...",
 ]
+
 
 def is_layer(element):
     try:
