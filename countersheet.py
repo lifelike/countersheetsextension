@@ -1224,7 +1224,7 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
         if dpi > 0:
             exportsize = ['-d', dpi]
         else:
-            exportsize = ['-w', width, '-h', heidht]
+            exportsize = ['-w', width, '-h', height]
         self.export_using_inkscape(
             ids, exportsize, self.options.bitmapdir, "png"
         )
