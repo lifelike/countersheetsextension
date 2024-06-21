@@ -582,9 +582,11 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
 
     def translate_use_element(self, use, old_ref, new_ref):
         self.logwrite("translate_use_element %s %s\n" % (old_ref, new_ref))
-        old_element = self.document.xpath(
-            "//*[@id='%s']" % old_ref, namespaces=NSS
-        )[0]
+        old_elements = self.document.xpath(
+            "//*[@id='%s']" % old_ref, namespaces=NSS)
+        if len(old_elements) < 1:
+            sys.exit("Failed to find old clone target: %s" % old_ref)
+        old_element = old_elements[0]
         new_elements = self.document.xpath(
             "//*[@id='%s']" % new_ref, namespaces=NSS
         )
