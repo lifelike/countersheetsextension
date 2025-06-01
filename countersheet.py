@@ -87,6 +87,9 @@ class Counter:
     def can_add_another(self):
         return self.repeat.can_add_another()
 
+    def must_add_another(self):
+        return self.repeat.must_add_another()
+
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         self.repeat.added_one(last_on_row, last_in_box, last_on_sheet)
 
@@ -154,6 +157,9 @@ class DummyRepeat:
     def can_add_another(self):
         return False
 
+    def must_add_another(self):
+        return False
+
     def added_one(self, last_on_row, last_in_box, last_on_sheet):
         pass
 
@@ -165,6 +171,9 @@ class Repeat:
 
     def can_add_another(self):
         return self.nr > 0 or self.keep_going
+
+    def must_add_another(self):
+        return self.nr > 1
 
 
 class RepeatExact(Repeat):
@@ -1836,8 +1845,8 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
                     yregistrationmarks.add(rowy + height)
                 if (
                     colx + width > positions[box].w + BOX_MARGIN
-                    or c.endbox
-                    or c.endrow
+                    or (c.endbox and not c.must_add_another())
+                    or (c.endrow and not c.must_add_another())
                 ):
                     last_on_row = True
                     col = 0
