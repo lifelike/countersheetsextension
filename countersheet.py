@@ -1063,7 +1063,7 @@ class CountersheetEffect(inkex.Effect, SvgOutputMixin):
                     continue
                 for glob, new_ref in c.subst.items():
                     if fnmatch.fnmatchcase(useid, glob):
-                        if len(new_ref) > 0:
+                        if new_ref != None and len(new_ref) > 0:
                             xlink_attribute = inkex.addNS("href", "xlink")
                             old_ref = u.get(xlink_attribute)[1:]
                             u.set(xlink_attribute, "#" + new_ref)
