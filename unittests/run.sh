@@ -1,5 +1,5 @@
 #!/bin/sh
 
-EXTENSIONSDIR=/usr/share/inkscape/extensions/
+export PYTHONPATH=/usr/share/inkscape/extensions/:/usr/local/share/inkscape/extensions
 
-PYTHONPATH=$EXTENSIONSDIR unittests/alltests.py "$@"
+unittests/alltests.py "$@"
