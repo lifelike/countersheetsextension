@@ -2508,7 +2508,7 @@ def stylereplace(oldv, pname, v):
     return out
 
 
-validreplacenamere = re.compile("^[-\w.:]+$", re.UNICODE)
+validreplacenamere = re.compile(r"^[-\w.:]+$", re.UNICODE)
 
 
 def is_valid_name_to_replace(s):
