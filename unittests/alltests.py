@@ -22,7 +22,8 @@ import csvcounterfactorytest
 #FIXME it is a bit silly to manually list all tests like this
 
 def make_suite(test):
-    return unittest.makeSuite(test, 'test_')
+    loader = unittest.TestLoader()
+    return loader.loadTestsFromTestCase(test)
 
 tests = (countersheetstest.CountersheetsTest,
          countersheetstest.SingleCounterTest,
